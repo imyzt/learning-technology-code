@@ -1,0 +1,40 @@
+spring:
+  rabbitmq:
+    addresses: localhost:5672
+    virtual-host: /
+    username: guest
+    password: guest
+    connection-timeout: 15000
+    listener:
+      simple:
+        # 并发数量
+        concurrency: 5
+        # 最大并发数量
+        max-concurrency: 10
+        # 设置为不自动签收
+        acknowledge-mode: manual
+        # 限流, 每次只拿一个(一个线程), 上面配置了5个并发, 能接收5个
+        prefetch: 1
+      order:
+        queue:
+          name: order-queue
+          durable: true
+        exchange:
+          name: order-exchange
+          durable: true
+          type: topic
+          ignore-declaration-exceptions: true
+        key: order.*
+
+  http:
+    encoding:
+      charset: UTF-8
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: NON_NULL
+
+server:
+  port: 8002
+  servlet:
+    context-path: /

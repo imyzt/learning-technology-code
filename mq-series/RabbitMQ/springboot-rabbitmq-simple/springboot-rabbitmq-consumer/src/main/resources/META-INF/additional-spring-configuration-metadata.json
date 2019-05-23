@@ -1,0 +1,38 @@
+{
+  "properties": [
+    {
+      "name": "spring.rabbitmq.listener.order.exchange.type",
+      "type": "org.springframework.amqp.core.ExchangeTypes",
+      "description": "Exchange type names."
+    },
+    {
+      "name": "spring.rabbitmq.listener.order.exchange.durable",
+      "type": "java.lang.Boolean",
+      "description": "Description for spring.rabbitmq.listener.order.exchange.durable."
+    },
+    {
+      "name": "spring.rabbitmq.listener.order.key",
+      "type": "java.lang.String",
+      "description": "Description for spring.rabbitmq.listener.order.key."
+    },
+    {
+      "name": "spring.rabbitmq.listener.order.exchange.ignore-declaration-exceptions",
+      "type": "java.lang.Boolean",
+      "description": "Description for spring.rabbitmq.listener.order.exchange.ignore-declaration-exceptions."
+    },
+    {
+      "name": "spring.rabbitmq.listener.order.exchange.name",
+      "type": "java.lang.String",
+      "description": "Description for spring.rabbitmq.listener.order.exchange.name."
+    },
+    {
+      "name": "spring.rabbitmq.listener.order.queue.durable",
+      "type": "java.lang.Boolean",
+      "description": "Description for spring.rabbitmq.listener.order.queue.durable."
+    },
+    {
+      "name": "spring.rabbitmq.listener.order.queue.name",
+      "type": "java.lang.String",
+      "description": "Description for spring.rabbitmq.listener.order.queue.name."
+    }
+  ] }
