@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    username: root
+    password: ntech
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/spring-security-demo?useSSL=false&serverTimezone=UTC
+  session:
+    store-type: hash_map
+security:
+  basic:
+    enabled: false

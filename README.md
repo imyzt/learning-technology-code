@@ -13,6 +13,12 @@
 - mq-series  
     消息队列系列, 内部包含README
 
+- design-pattern-java  
+    该项目是学习实际模式的代码记录, 里面有具体的README  
+    这个是博客对应的更新地址: [http://blog.imyzt.top/category/java-design-patterns](http://blog.imyzt.top/category/java-design-patterns)
+
+- spring-boot-security-simple  
+    该项目是学习spring-security的代码记录
 
 # 关于我
 
