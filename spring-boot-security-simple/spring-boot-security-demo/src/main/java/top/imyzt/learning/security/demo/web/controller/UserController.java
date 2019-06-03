@@ -1,4 +1,4 @@
-package top.imyzt.learning.security.demo.controller;
+package top.imyzt.learning.security.demo.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import top.imyzt.learning.security.demo.dto.User;
 import top.imyzt.learning.security.demo.dto.UserQueryCondition;
+import top.imyzt.learning.security.demo.exception.UserNotExistException;
 
 import javax.validation.Valid;
 import java.util.Collections;
@@ -38,6 +39,12 @@ public class UserController {
     @JsonView(User.UserDetailView.class)
     public User getInfo(@PathVariable String id) {
 
+        if (id.length() <= 1) {
+            throw new UserNotExistException(id);
+        }
+
+        System.out.println("进入getInfo服务");
+
         System.out.println(id);
 
         User user = new User();
@@ -55,5 +62,25 @@ public class UserController {
         System.out.println(user);
 
         return user.setId("1");
+    }
+
+    @PutMapping("{id:\\d+}")
+    public User create(@PathVariable String id,
+                       @Valid @RequestBody User user, BindingResult errors) {
+
+        if (errors.hasErrors()) {
+            errors.getAllErrors().forEach(error -> {
+                System.out.println(error.getDefaultMessage());
+            });
+        }
+
+        System.out.println(user);
+
+        return user.setId("1");
+    }
+
+    @DeleteMapping("{id:\\d+}")
+    public void create(@PathVariable String id) {
+        System.out.println(id);
     }
 }
