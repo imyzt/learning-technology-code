@@ -1,11 +1,15 @@
 package top.imyzt.learning.security.demo.web.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import top.imyzt.learning.security.demo.web.filter.TimeFilter;
+import top.imyzt.learning.security.demo.web.interceptor.TimeInterceptor;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,7 +19,10 @@ import java.util.List;
  * @description WebConfig
  */
 @Configuration
-public class WebConfig {
+public class WebConfig extends WebMvcConfigurationSupport {
+
+    @Autowired
+    private TimeInterceptor timeInterceptor;
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
@@ -27,5 +34,18 @@ public class WebConfig {
         List<String> urlPatterns = Collections.singletonList("/*");
         registrationBean.setUrlPatterns(urlPatterns);
         return registrationBean;
+    }
+
+    /**
+     * 配置异步拦截器.
+     */
+    /*@Override
+    protected void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+
+    }*/
+
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(timeInterceptor);
     }
 }

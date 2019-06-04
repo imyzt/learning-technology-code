@@ -9,3 +9,8 @@ spring:
 security:
   basic:
     enabled: false
+logging:
+  level:
+    top.imyzt.learning.security.demo.web.interceptor: error
+    top.imyzt.learning.security.demo.web.filter: error
+    top.imyzt.learning.security.demo.web.aspect: error
