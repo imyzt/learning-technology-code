@@ -1,5 +1,6 @@
 package top.imyzt.learning.security.demo.web.controller;
 
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.io.OutputStream;
 @RestController
 @RequestMapping("file")
 @Slf4j
+@Api(value = "文件服务")
 public class FileController {
 
     private static final String FOLDER = "D:\\dev\\imyzt\\learning-technology-code\\spring-boot-security-simple\\spring-boot-security-demo\\src\\main\\java\\top\\imyzt\\learning\\security\\demo\\web\\controller";

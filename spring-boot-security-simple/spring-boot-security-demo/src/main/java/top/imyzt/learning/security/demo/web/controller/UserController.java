@@ -1,6 +1,9 @@
 package top.imyzt.learning.security.demo.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("user")
+@Api(value = "用户服务")
 public class UserController {
 
     @GetMapping
@@ -37,7 +41,8 @@ public class UserController {
 
     @GetMapping("{id:\\d+}")
     @JsonView(User.UserDetailView.class)
-    public User getInfo(@PathVariable String id) {
+    @ApiOperation(value = "用户查询服务")
+    public User getInfo(@ApiParam(value = "用户id") @PathVariable String id) {
 
         if (id.length() <= 1) {
             throw new UserNotExistException(id);

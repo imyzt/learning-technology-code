@@ -29,6 +29,28 @@
 ![请求处理](https://i.loli.net/2019/06/04/5cf5e0bb91cbe93775.jpg)
 
 
+## WireMock的使用
+
+### 引入依赖
+```xml
+<dependency>
+    <groupId>com.github.tomakehurst</groupId>
+    <artifactId>wiremock-jre8</artifactId>
+    <version>2.23.2</version>
+    <scope>test</scope>
+</dependency>
+```
+
+### 下载服务器代码
+
+[http://wiremock.org/docs/download-and-installation/](http://wiremock.org/docs/download-and-installation/)
+
+### 运行服务器
+
+`java -jar wiremock-standalone-2.23.2.jar --port=8062`
+
+### 编写接口. 模拟测试
+
 ## about
 
 这个是学习spring-security的代码汇总, 学习的是慕课视频[Spring Security开发安全的REST服务](https://coding.imooc.com/class/consult/134.html)
