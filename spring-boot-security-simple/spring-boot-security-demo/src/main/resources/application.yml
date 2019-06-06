@@ -6,11 +6,17 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/spring-security-demo?useSSL=false&serverTimezone=UTC
   session:
     store-type: hash_map
-security:
-  basic:
-    enabled: false
+
+#security:
+#  basic:
+#    enabled: false
 logging:
   level:
     top.imyzt.learning.security.demo.web.interceptor: error
     top.imyzt.learning.security.demo.web.filter: error
     top.imyzt.learning.security.demo.web.aspect: error
+system:
+  security:
+    browser:
+      log-type: REDIRECT
+      #login-page: /demo-sign-in.html

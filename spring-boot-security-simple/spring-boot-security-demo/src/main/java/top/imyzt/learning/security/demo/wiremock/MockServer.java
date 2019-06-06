@@ -15,7 +15,8 @@ import java.io.IOException;
  */
 public class MockServer {
 
-    public static void main(String[] args) throws IOException {
+    public void main(String[] args) throws IOException {
+//    public static void main(String[] args) throws IOException {
 
         // 连接服务器
         WireMock.configureFor(8062);

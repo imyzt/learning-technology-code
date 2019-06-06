@@ -31,7 +31,7 @@ public class UserController {
     @GetMapping
     @JsonView(User.UserSimpleView.class)
     public List<User> getUserList(UserQueryCondition condition,
-                              @PageableDefault(size = 20, page = 1, sort = "username,asc") Pageable pageable) {
+                              @PageableDefault(size = 14, page = 2, sort = "username,asc") Pageable pageable) {
 
         System.out.println(ReflectionToStringBuilder.toString(condition, ToStringStyle.MULTI_LINE_STYLE));
         System.out.println(pageable);

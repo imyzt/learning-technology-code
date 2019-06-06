@@ -2,6 +2,7 @@ package top.imyzt.learning.security.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -11,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @date 2019/6/1
  * @description DemoApplication
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "top.imyzt.learning.security")
 @RestController
 @EnableSwagger2
 public class DemoApplication {

@@ -51,6 +51,21 @@
 
 ### 编写接口. 模拟测试
 
+
+## 个性化用户认证流程
+
+### 自定义登录页面
+```
+http.formLogin().loginPage("/authentication/require")
+```
+
+### 自定义登录成功处理与登录失败处理
+
+登陆成功后处理  
+org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler  
+登录失败后处理  
+org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler  
+
 ## about
 
 这个是学习spring-security的代码汇总, 学习的是慕课视频[Spring Security开发安全的REST服务](https://coding.imooc.com/class/consult/134.html)
