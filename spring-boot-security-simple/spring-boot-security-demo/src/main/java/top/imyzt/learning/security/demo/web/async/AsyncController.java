@@ -2,12 +2,12 @@ package top.imyzt.learning.security.demo.web.async;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import javax.annotation.Resource;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -21,10 +21,10 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class AsyncController {
 
-    @Autowired
+    @Resource
     private MockQueue mockQueue;
 
-    @Autowired
+    @Resource
     private DeferredResultHolder deferredResultHolder;
 
     @GetMapping("order")

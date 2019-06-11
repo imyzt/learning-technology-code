@@ -20,3 +20,8 @@ system:
     browser:
       log-type: REDIRECT
       #login-page: /demo-sign-in.html
+#    code:
+#      image:
+#        length: 6
+#        width: 100
+#        url: /user/*

@@ -19,4 +19,10 @@ public class BrowserProperties {
      * 登录访问类型
      */
     private LogType logType = LogType.JSON;
+
+    /**
+     * 记住我的时间(秒)
+     * 默认一小时
+     */
+    private int rememberMeSeconds = 3600;
 }

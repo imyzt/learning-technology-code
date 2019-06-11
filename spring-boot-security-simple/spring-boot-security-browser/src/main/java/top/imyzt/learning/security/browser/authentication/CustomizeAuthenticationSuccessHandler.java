@@ -44,13 +44,13 @@ public class CustomizeAuthenticationSuccessHandler extends SavedRequestAwareAuth
 
         log.info("登录成功, username = {}", userDetails.getUsername());
 
-        // 异步请求返回错误信息
+        // 异步请求返回成功信息
         if (LogType.JSON.equals(securityProperties.getBrowser().getLogType())) {
 
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(objectMapper.writeValueAsString(authentication));
         } else {
-            // 网页请求直接返回Spring错误页
+            // 网页请求直接跳转
             super.onAuthenticationSuccess(request, response, authentication);
         }
 

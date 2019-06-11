@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+import top.imyzt.learning.security.browser.support.SimpleResponse;
 import top.imyzt.learning.security.core.properties.LogType;
 import top.imyzt.learning.security.core.properties.SecurityProperties;
 
@@ -46,7 +47,8 @@ public class CustomizeAuthenticationFailureHandler extends SimpleUrlAuthenticati
 
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(exception));
+            // 只返回错误的消息
+            response.getWriter().write(objectMapper.writeValueAsString(SimpleResponse.of(exception.getMessage())));
         } else {
             // 网页请求直接返回Spring错误页
             super.onAuthenticationFailure(request, response, exception);

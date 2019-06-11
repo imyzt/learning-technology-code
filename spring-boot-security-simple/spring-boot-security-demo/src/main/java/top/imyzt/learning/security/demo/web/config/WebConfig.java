@@ -1,6 +1,5 @@
 package top.imyzt.learning.security.demo.web.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import top.imyzt.learning.security.demo.web.filter.TimeFilter;
 import top.imyzt.learning.security.demo.web.interceptor.TimeInterceptor;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,7 +24,7 @@ import java.util.List;
 @Configuration
 public class WebConfig extends WebMvcConfigurationSupport {
 
-    @Autowired
+    @Resource
     private TimeInterceptor timeInterceptor;
 
     @Bean

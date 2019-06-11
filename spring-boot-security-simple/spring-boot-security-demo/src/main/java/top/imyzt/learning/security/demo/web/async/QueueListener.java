@@ -2,11 +2,11 @@ package top.imyzt.learning.security.demo.web.async;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -14,16 +14,16 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author imyzt
  * @date 2019/6/4
- * @description QueueListener
+ * @description 队列消息监听器
  */
 @Component
 @Slf4j
 public class QueueListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    @Autowired
+    @Resource
     private MockQueue mockQueue;
 
-    @Autowired
+    @Resource
     private DeferredResultHolder deferredResultHolder;
 
     private static ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(1, 1,

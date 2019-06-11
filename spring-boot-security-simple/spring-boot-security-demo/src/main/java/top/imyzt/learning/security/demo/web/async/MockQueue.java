@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author imyzt
  * @date 2019/6/4
- * @description MockQueue
+ * @description 模拟的队列消息对象
  */
 @Data
 @Slf4j
@@ -28,7 +28,7 @@ public class MockQueue {
     /**
      * 模拟消息入队, 暂停一秒, 然后消费的过程
      */
-    public void setPlaceOrder(String placeOrder) {
+    void setPlaceOrder(String placeOrder) {
 
         poolExecutor.submit(() -> {
             log.info("接到下单请求: {}", placeOrder);

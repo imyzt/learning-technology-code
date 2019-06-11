@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * @author imyzt
  * @date 2019/6/4
- * @description DeferredResultHolder
+ * @description 延时处理结果
  */
 @Component
 @Data

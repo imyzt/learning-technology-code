@@ -1,8 +1,8 @@
 package top.imyzt.learning.security.demo.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import top.imyzt.learning.security.demo.service.HelloService;
 
+import javax.annotation.Resource;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -13,7 +13,7 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class MyConstraintValidator implements ConstraintValidator<MyConstraint, Object> {
 
-    @Autowired
+    @Resource
     private HelloService helloService;
 
     @Override

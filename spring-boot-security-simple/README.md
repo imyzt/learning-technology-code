@@ -66,6 +66,18 @@ org.springframework.security.web.authentication.SavedRequestAwareAuthenticationS
 登录失败后处理  
 org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler  
 
+
+# 图形验证码过滤器的设计模式
+
+1. 验证码基本参数可配置, 通过配置文件
+    - 默认配置: 配置值写在security-core中
+    - 应用级配置: 配置值写在对应子系统中
+    - 请求级配置: 配置值在调用接口时传递
+2. 验证码拦截的接口可配置
+3. 验证码的生成逻辑可配置, 通过抽象接口提供默认实现, 子类实现接口即可定制自己的验证码实现
+    - 提供统一行为接口, 子应用需要时重写对应接口即可
+
+
 ## about
 
 这个是学习spring-security的代码汇总, 学习的是慕课视频[Spring Security开发安全的REST服务](https://coding.imooc.com/class/consult/134.html)

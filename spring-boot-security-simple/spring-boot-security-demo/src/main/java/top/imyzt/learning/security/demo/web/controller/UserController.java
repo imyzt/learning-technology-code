@@ -4,10 +4,14 @@ import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import top.imyzt.learning.security.demo.dto.User;
@@ -26,15 +30,25 @@ import java.util.List;
 @RestController
 @RequestMapping("user")
 @Api(value = "用户服务")
+@Slf4j
 public class UserController {
+
+
+    @GetMapping("/me")
+    public Object getCurrentUser(Authentication authentication/*@AuthenticationPrincipal UserDetails userDetails*/) {
+        // 可直接通过入参拿到authentication, 也可通过SecurityContextHolder对象获取, 通过@AuthenticationPrincipal注解可以只拿principal对象
+//        return userDetails;
+        return authentication;
+//         return SecurityContextHolder.getContext().getAuthentication();
+    }
 
     @GetMapping
     @JsonView(User.UserSimpleView.class)
     public List<User> getUserList(UserQueryCondition condition,
                               @PageableDefault(size = 14, page = 2, sort = "username,asc") Pageable pageable) {
 
-        System.out.println(ReflectionToStringBuilder.toString(condition, ToStringStyle.MULTI_LINE_STYLE));
-        System.out.println(pageable);
+        log.info(ReflectionToStringBuilder.toString(condition, ToStringStyle.MULTI_LINE_STYLE));
+        log.info(pageable.toString());
 
         return Collections.singletonList(new User().setUsername("yzt").setPassword("xxx"));
     }

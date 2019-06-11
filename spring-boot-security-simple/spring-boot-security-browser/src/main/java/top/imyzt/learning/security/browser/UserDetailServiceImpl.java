@@ -1,7 +1,6 @@
 package top.imyzt.learning.security.browser;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * @author imyzt
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class UserDetailServiceImpl implements UserDetailsService {
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
     @Override
