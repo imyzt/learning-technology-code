@@ -1,8 +1,7 @@
 package top.imyzt.learning.security.demo.code;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-import top.imyzt.learning.security.core.validate.code.ImageCode;
+import top.imyzt.learning.security.core.validate.code.image.ImageCode;
 import top.imyzt.learning.security.core.validate.code.ValidateCodeGenerator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class DemoImageCodeGenerator implements ValidateCodeGenerator {
 
     @Override
-    public ImageCode createImage(HttpServletRequest request) {
+    public ImageCode generate(HttpServletRequest request) {
         // 模拟生成接口, 不编写具体代码实现
         log.info("demo 项目的验证码生成规则.");
         return null;

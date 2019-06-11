@@ -1,8 +1,9 @@
-package top.imyzt.learning.security.core.validate.code;
+package top.imyzt.learning.security.core.validate.code.image;
 
 import lombok.Setter;
 import org.springframework.web.bind.ServletRequestUtils;
 import top.imyzt.learning.security.core.properties.SecurityProperties;
+import top.imyzt.learning.security.core.validate.code.ValidateCodeGenerator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
     private SecurityProperties securityProperties;
 
     @Override
-    public ImageCode createImage(HttpServletRequest request) {
+    public ImageCode generate(HttpServletRequest request) {
         int width = ServletRequestUtils.getIntParameter(request, "width", securityProperties.getCode().getImage().getWidth());
         int height = ServletRequestUtils.getIntParameter(request, "height", securityProperties.getCode().getImage().getHeight());
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

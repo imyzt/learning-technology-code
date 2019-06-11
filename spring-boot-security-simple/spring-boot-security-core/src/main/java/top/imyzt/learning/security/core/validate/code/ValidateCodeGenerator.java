@@ -12,7 +12,7 @@ public interface ValidateCodeGenerator {
     /**
      * 生成验证码方法
      * @param request 请求
-     * @return 图片验证码信息
+     * @return 验证码信息
      */
-    ImageCode createImage(HttpServletRequest request);
+    ValidateCode generate(HttpServletRequest request);
 }

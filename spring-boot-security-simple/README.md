@@ -77,6 +77,8 @@ org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHa
 3. 验证码的生成逻辑可配置, 通过抽象接口提供默认实现, 子类实现接口即可定制自己的验证码实现
     - 提供统一行为接口, 子应用需要时重写对应接口即可
 
+![验证码处理器代码结构](https://i.loli.net/2019/06/11/5cff98b57bce850327.jpg)  
+![SpringSecurity基本流程图](https://i.loli.net/2019/06/11/5cff98b57e5e687071.jpg)
 
 ## about
 

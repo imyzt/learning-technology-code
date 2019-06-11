@@ -5,14 +5,17 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import top.imyzt.learning.security.core.properties.SecurityProperties;
+import top.imyzt.learning.security.core.validate.code.image.ImageCodeGenerator;
+import top.imyzt.learning.security.core.validate.code.sms.DefaultSmsCodeSender;
+import top.imyzt.learning.security.core.validate.code.sms.SmsCodeSender;
 
 /**
  * @author imyzt
  * @date 2019/6/11
- * @description ValidateCodeConfig
+ * @description 验证码配置
  */
 @Configuration
-public class ValidateCodeConfig {
+public class ValidateCodeBeanConfig {
 
     @Autowired
     private SecurityProperties securityProperties;
@@ -26,5 +29,14 @@ public class ValidateCodeConfig {
         ImageCodeGenerator imageCodeGenerator = new ImageCodeGenerator();
         imageCodeGenerator.setSecurityProperties(securityProperties);
         return imageCodeGenerator;
+    }
+
+    /**
+     * 短信发送默认使用 {@link DefaultSmsCodeSender} 实现
+     */
+    @Bean
+    @ConditionalOnMissingBean(SmsCodeSender.class)
+    public SmsCodeSender smsCodeSender() {
+        return new DefaultSmsCodeSender();
     }
 }
