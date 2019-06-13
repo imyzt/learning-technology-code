@@ -1,5 +1,6 @@
 package top.imyzt.learning.security.core.validate.code.image;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 import top.imyzt.learning.security.core.validate.code.impl.AbstractValidateCodeProcessor;
@@ -12,7 +13,8 @@ import java.io.IOException;
  * @date 2019/6/11
  * @description 图形验证码发送处理器
  */
-@Component("imageCodeProcessor")
+@Component("imageValidateCodeProcessor")
+@Slf4j
 public class ImageCodeProcessor extends AbstractValidateCodeProcessor<ImageCode> {
 
     /**
@@ -24,5 +26,6 @@ public class ImageCodeProcessor extends AbstractValidateCodeProcessor<ImageCode>
     @Override
     protected void send(ServletWebRequest request, ImageCode imageCode) throws IOException {
         ImageIO.write(imageCode.getImage(), "JPEG", request.getResponse().getOutputStream());
+        log.info("图片验证码 = {}", imageCode.getCode());
     }
 }

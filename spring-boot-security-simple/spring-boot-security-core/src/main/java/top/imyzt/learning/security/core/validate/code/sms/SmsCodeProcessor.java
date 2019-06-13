@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * @date 2019/6/11
  * @description 短信验证码发送处理器
  */
-@Component("smsCodeProcessor")
+@Component("smsValidateCodeProcessor")
 public class SmsCodeProcessor extends AbstractValidateCodeProcessor<ValidateCode> {
 
     @Resource

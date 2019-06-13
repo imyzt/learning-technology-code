@@ -1,8 +1,8 @@
 package top.imyzt.learning.security.demo.code;
 
 import lombok.extern.slf4j.Slf4j;
-import top.imyzt.learning.security.core.validate.code.image.ImageCode;
 import top.imyzt.learning.security.core.validate.code.ValidateCodeGenerator;
+import top.imyzt.learning.security.core.validate.code.image.ImageCode;
 
 import javax.servlet.http.HttpServletRequest;
 

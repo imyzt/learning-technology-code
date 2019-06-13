@@ -24,8 +24,8 @@ public class ValidateCodeBeanConfig {
      * 图片验证码默认使用 {@link ImageCodeGenerator} 实现, 当存在(即子应用自己创建)名为"imageCodeGenerator"的bean时, 不使用这个实现
      */
     @Bean
-    @ConditionalOnMissingBean(name = "imageCodeGenerator")
-    public ValidateCodeGenerator imageCodeGenerator() {
+    @ConditionalOnMissingBean(name = "imageValidateCodeGenerator")
+    public ValidateCodeGenerator imageValidateCodeGenerator() {
         ImageCodeGenerator imageCodeGenerator = new ImageCodeGenerator();
         imageCodeGenerator.setSecurityProperties(securityProperties);
         return imageCodeGenerator;

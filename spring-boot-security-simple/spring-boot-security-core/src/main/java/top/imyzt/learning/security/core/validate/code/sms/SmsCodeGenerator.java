@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2019/6/11
  * @description 短信验证码生成默认实现
  */
-@Component("smsCodeGenerator")
+@Component("smsValidateCodeGenerator")
 public class SmsCodeGenerator implements ValidateCodeGenerator {
 
     @Autowired
