@@ -1,6 +1,5 @@
 package top.imyzt.learning.security.core.validate.code;
 
-import com.sun.xml.internal.ws.api.policy.ValidationProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

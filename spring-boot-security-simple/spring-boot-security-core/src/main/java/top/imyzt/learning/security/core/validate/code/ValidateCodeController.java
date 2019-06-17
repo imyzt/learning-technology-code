@@ -10,7 +10,6 @@ import top.imyzt.learning.security.core.properties.SecurityConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 /**
  * @author imyzt

@@ -9,14 +9,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import top.imyzt.learning.security.browser.authentication.CustomizeAuthenticationFailureHandler;
-import top.imyzt.learning.security.browser.authentication.CustomizeAuthenticationSuccessHandler;
 import top.imyzt.learning.security.core.authentication.AbstractChannelSecurityConfig;
 import top.imyzt.learning.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import top.imyzt.learning.security.core.properties.SecurityConstants;
 import top.imyzt.learning.security.core.properties.SecurityProperties;
-import top.imyzt.learning.security.core.validate.code.SmsCodeFilter;
-import top.imyzt.learning.security.core.validate.code.ValidateCodeFilter;
 import top.imyzt.learning.security.core.validate.code.ValidateCodeSecurityConfig;
 
 import javax.sql.DataSource;
@@ -31,14 +27,6 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
 
     private final SecurityProperties securityProperties;
 
-    private final CustomizeAuthenticationSuccessHandler successHandler;
-
-    private final CustomizeAuthenticationFailureHandler failureHandler;
-
-    private final ValidateCodeFilter validateCodeFilter;
-
-    private final SmsCodeFilter smsCodeFilter;
-
     private final DataSource dataSource;
 
     @Autowired
@@ -50,18 +38,10 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     private UserDetailsService userDetailsServiceImpl;
 
     public BrowserSecurityConfig(SecurityProperties securityProperties,
-                                 CustomizeAuthenticationSuccessHandler successHandler,
-                                 CustomizeAuthenticationFailureHandler failureHandler,
-                                 ValidateCodeFilter validateCodeFilter,
                                  DataSource dataSource,
-                                 SmsCodeFilter smsCodeFilter,
                                  SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig) {
         this.securityProperties = securityProperties;
-        this.successHandler = successHandler;
-        this.failureHandler = failureHandler;
-        this.validateCodeFilter = validateCodeFilter;
         this.dataSource = dataSource;
-        this.smsCodeFilter = smsCodeFilter;
         this.smsCodeAuthenticationSecurityConfig = smsCodeAuthenticationSecurityConfig;
     }
 
