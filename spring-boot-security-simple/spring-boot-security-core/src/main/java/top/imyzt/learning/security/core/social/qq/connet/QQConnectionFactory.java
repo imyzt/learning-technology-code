@@ -1,4 +1,4 @@
-package top.imyzt.learning.security.core.social.qq.api.connet;
+package top.imyzt.learning.security.core.social.qq.connet;
 
 import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import top.imyzt.learning.security.core.social.qq.api.QQ;

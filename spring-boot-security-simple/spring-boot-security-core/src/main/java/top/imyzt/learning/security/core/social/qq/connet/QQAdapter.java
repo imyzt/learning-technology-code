@@ -1,4 +1,4 @@
-package top.imyzt.learning.security.core.social.qq.api.connet;
+package top.imyzt.learning.security.core.social.qq.connet;
 
 import org.springframework.social.connect.ApiAdapter;
 import org.springframework.social.connect.ConnectionValues;
@@ -34,7 +34,7 @@ public class QQAdapter implements ApiAdapter<QQ> {
         // 头像
         connectionValues.setImageUrl(userInfo.getFigureurl_qq_1());
         // 用户主页, qq没有对应概念
-        //connectionValues.setProfileUrl();
+        connectionValues.setProfileUrl(null);
         // 平台唯一标识
         connectionValues.setProviderUserId(userInfo.getOpenId());
     }

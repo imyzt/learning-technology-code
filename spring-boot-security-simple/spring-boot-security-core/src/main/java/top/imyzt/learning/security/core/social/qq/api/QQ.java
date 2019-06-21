@@ -7,5 +7,9 @@ package top.imyzt.learning.security.core.social.qq.api;
  */
 public interface QQ {
 
+    /**
+     * 获取用户信息
+     * @return qq 用户信息
+     */
     QQUserInfo getUserInfo();
 }

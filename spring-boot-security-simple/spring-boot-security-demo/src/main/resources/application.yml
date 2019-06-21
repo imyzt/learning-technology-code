@@ -1,8 +1,8 @@
 spring:
   datasource:
     username: root
-    password: ntech
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: Mysql@123
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/spring-security-demo?useSSL=false&serverTimezone=UTC
   session:
     store-type: hash_map
@@ -17,8 +17,15 @@ logging:
     top.imyzt.learning.security.demo.web.aspect: error
 system:
   security:
+    social:
+      filter-process-url: qqLogin
+      qq:
+        app-id: xxxx
+        app-secret: xxxx
+        provider-id: callback.do
     browser:
       log-type: REDIRECT
+      sign-up-url: demo-sign-up.html
       #login-page: /demo-sign-in.html
 #    code:
 #      image:

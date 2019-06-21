@@ -13,6 +13,11 @@ import static top.imyzt.learning.security.core.properties.SecurityConstants.DEFA
 public class BrowserProperties {
 
     /**
+     * 标准注册页面,该属性应由子系统自己编写处理
+     */
+    private String signUpUrl = "sign-up.html";
+
+    /**
      * 系统登录页配置, 如未指定则使用browser默认配置的统一登录页
      */
     private String loginPage = DEFAULT_LOGIN_PAGE_URL;

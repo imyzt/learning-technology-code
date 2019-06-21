@@ -82,6 +82,26 @@ org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHa
 ![自定义短信登录](https://i.loli.net/2019/06/13/5d0222103ae1657066.jpg)
 
 
+# 社交登录
+
+## social登录实现
+
+![继承关系](https://i.loli.net/2019/06/20/5d0b2afe261e228608.png)
+![Spring Social基本原理](https://i.loli.net/2019/06/20/5d0b2d28cea1e97008.png)
+![Spring Social处理流程](https://i.loli.net/2019/06/21/5d0c7204d2bbb95274.png)
+
+
+
+UserConnection.sql文件位置: org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.sql
+
+
+# SpringSecurity登录核心流程
+ 一个过滤器(AuthenticationFilter)拦截某一个特定的请求,拦截到请求之后,将请求中做身份认证所需要的信息, 包装到一个Authentication
+ 的实现里面,然后将Authentication交给AuthenticationManager,AuthenticationManager根据传进来的类型不同,从它所管理的
+ AuthenticationProvider实现里面,挑一个Provider处理传进来的Authentication,在处理的过程中,他会调用我们自己写的UserDetailService
+ 接口的实现, 获取业务系统中用户的信息,然后将信息封装到一个UserDetail的实现里面,然后做一系列的检查和校验,如果都通过,它会将信息放到我们
+ 实现的Authentication里,然后将Authentication标记成经过认证的,然后放到SecurityContext里面,完成整个登录 
+
 ## about
 
 这个是学习spring-security的代码汇总, 学习的是慕课视频[Spring Security开发安全的REST服务](https://coding.imooc.com/class/consult/134.html)

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
 import top.imyzt.learning.security.core.authentication.AbstractChannelSecurityConfig;
 import top.imyzt.learning.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import top.imyzt.learning.security.core.properties.SecurityConstants;
@@ -37,6 +38,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private UserDetailsService userDetailsServiceImpl;
 
+    @Autowired
+    private SpringSocialConfigurer springSocialConfigurer;
+
     public BrowserSecurityConfig(SecurityProperties securityProperties,
                                  DataSource dataSource,
                                  SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig) {
@@ -57,6 +61,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                     .and()
                 .apply(smsCodeAuthenticationSecurityConfig)
                     .and()
+                // 社交登录配置
+                .apply(springSocialConfigurer)
+                    .and()
                 .rememberMe()
                     .tokenRepository(persistentTokenRepository())
                     .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
@@ -67,7 +74,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                             SecurityConstants.DEFAULT_UN_AUTHENTICATION_URL,
                             SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
                             securityProperties.getBrowser().getLoginPage(),
-                            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*"
+                            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
+                            securityProperties.getBrowser().getSignUpUrl(),
+                            "/user/register"
                     )
                     .permitAll()
                     .anyRequest()
