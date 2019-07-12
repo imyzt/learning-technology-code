@@ -20,6 +20,9 @@
 - spring-boot-security-simple  
     该项目是学习spring-security的代码记录
 
+- feature-validator  
+     该项目是为了集成平时项目中用到的好用的参数校验器  
+
 # 关于我
 
 我叫杨镇涛, 现阶段本职工作是Java服务端开发, 平时会花一些时间做 Docker 以及 Spring Cloud 方面的学习研究.    
