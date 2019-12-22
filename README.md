@@ -26,6 +26,13 @@
 - intellij-plugin  
      该项目是学习和开发idea插件的仓库目录
 
+- mybatis-plus-advance  
+     该项目是学习MP高级功能的记录  
+
+- dive-in-springboot-projects   
+     该项目是学习慕课网上[Spring Boot2.0深度实践之核心技术篇
+](https://coding.imooc.com/class/evaluation/252.html#Anchor)课程的代码汇总以及笔记  
+
 # 关于我
 
 我叫杨镇涛, 现阶段本职工作是Java服务端开发, 平时会花一些时间做 Docker 以及 Spring Cloud 方面的学习研究.    
