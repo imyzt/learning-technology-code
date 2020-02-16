@@ -33,6 +33,10 @@
      该项目是学习慕课网上[Spring Boot2.0深度实践之核心技术篇
 ](https://coding.imooc.com/class/evaluation/252.html#Anchor)课程的代码汇总以及笔记  
 
+- thread-local-learn  
+     该项目是学习慕课网上[ThreadLocal](https://www.imooc.com/learn/1217) 课程的代码汇总以及笔记
+     
+
 # 关于我
 
 我叫杨镇涛, 现阶段本职工作是Java服务端开发, 平时会花一些时间做 Docker 以及 Spring Cloud 方面的学习研究.    
@@ -40,3 +44,4 @@
 从2018年10月份, 我开始将我平时的记录从[印象笔记](https://www.yinxiang.com/)转到[我的博客](http://blog.imyzt.top)上, 它运行在我的腾讯云服务器.  
 
 如果你想联系我, 可以通过在[我的博客](http://blog.imyzt.top/about)下面留言, 或者给我发邮件.我的邮箱是: <a href="mailto:imyzt01@gmail.com">imyzt01@gmail.com</a>  
+
