@@ -36,6 +36,8 @@
 - thread-local-learn  
      该项目是学习慕课网上[ThreadLocal](https://www.imooc.com/learn/1217) 课程的代码汇总以及笔记
      
+- lua-helloworld  
+     该项目是学习bilibili上[Lua语言快速入门精通](https://www.bilibili.com/video/av46428956?from=search&seid=5889915958102862127) 课程的代码汇总以及笔记
 
 # 关于我
 
