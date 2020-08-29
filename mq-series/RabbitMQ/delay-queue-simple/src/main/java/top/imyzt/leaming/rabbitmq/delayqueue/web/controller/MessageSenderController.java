@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
+import static top.imyzt.leaming.rabbitmq.delayqueue.config.DelayedRabbitMQConfig.DELAYED_EXCHANGE_NAME;
+import static top.imyzt.leaming.rabbitmq.delayqueue.config.DelayedRabbitMQConfig.DELAYED_ROUTING_KEY;
 import static top.imyzt.leaming.rabbitmq.delayqueue.config.RabbitMQConfig.*;
 
 /**
@@ -25,6 +27,11 @@ public class MessageSenderController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    /**
+     * 通过DLX和TTL实现的延迟队列
+     * @param msg 消息内容
+     * @param type 发送的队列
+     */
     @PostMapping
     public void sender(String msg, String type) {
 
@@ -40,5 +47,21 @@ public class MessageSenderController {
             default:
                 break;
         }
+    }
+
+    /**
+     * 通过插件实现的延迟消息
+     * @param msg 消息内容
+     * @param delayTime 延迟时间, 毫秒
+     */
+    @PostMapping("v2")
+    public void sender(String msg, Integer delayTime) {
+
+        log.info("当前时间：{},收到请求，msg:{},delayTime:{}", LocalDateTime.now().toString(), msg, delayTime);
+
+        rabbitTemplate.convertAndSend(DELAYED_EXCHANGE_NAME, DELAYED_ROUTING_KEY, msg, messagePostProcessor ->{
+            messagePostProcessor.getMessageProperties().setDelay(delayTime);
+            return messagePostProcessor;
+        });
     }
 }
