@@ -1,0 +1,29 @@
+server:
+  port: 9877
+
+# 指定当前eureka客户端的注册地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:9876/eureka
+  instance:
+    hostname: localhost
+
+spring:
+  application:
+    name: order-servie
+  datasource:
+    type: org.h2.jdbcx.JdbcDataSource
+    url: jdbc:h2:~/test
+    username: sa
+    password: sa
+
+# 监控信息
+info:
+  app:
+    name: ${spring.application.name}
+  company:
+    name: "www.imyzt.top"
+  build:
+    version: @project.version@
+    artifactId: @project.artifactId@
