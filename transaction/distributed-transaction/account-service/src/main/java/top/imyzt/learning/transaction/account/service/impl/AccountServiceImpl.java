@@ -1,6 +1,7 @@
 package top.imyzt.learning.transaction.account.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import top.imyzt.learning.transaction.account.pojo.entity.Account;
 import top.imyzt.learning.transaction.account.dao.mapper.AccountMapper;
 import top.imyzt.learning.transaction.account.service.AccountService;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements AccountService {
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deduct(String userId, int money) {
 
         log.info("开始扣余额");

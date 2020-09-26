@@ -18,6 +18,11 @@ spring:
     url: jdbc:mysql://localhost:3306/seata_demo?useSSL=false&serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 12345678
+  cloud:
+    alibaba:
+      seata:
+        # 定义事务组的名称
+        tx-service-group: seata_demo_group
 mybatis-plus:
   global-config:
     db-config:

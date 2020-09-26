@@ -31,7 +31,7 @@ class OrderServiceTest {
 
         Order order = new Order();
         order.setCommodityCode("TAOBAO");
-        order.setCount(1);
+        order.setCount(11);
         order.setUserId("imyzt");
         order.setMoney(2);
 

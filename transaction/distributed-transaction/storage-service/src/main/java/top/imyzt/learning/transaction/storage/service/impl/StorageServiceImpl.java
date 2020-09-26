@@ -1,6 +1,7 @@
 package top.imyzt.learning.transaction.storage.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import top.imyzt.learning.transaction.storage.pojo.entity.Storage;
 import top.imyzt.learning.transaction.storage.dao.mapper.StorageMapper;
 import top.imyzt.learning.transaction.storage.service.StorageService;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class StorageServiceImpl extends ServiceImpl<StorageMapper, Storage> implements StorageService {
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deduct(String code, Integer count) {
 
         log.info("开始减库存");

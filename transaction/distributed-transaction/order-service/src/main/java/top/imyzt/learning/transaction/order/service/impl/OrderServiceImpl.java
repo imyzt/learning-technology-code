@@ -1,6 +1,7 @@
 package top.imyzt.learning.transaction.order.service.impl;
 
 import feign.FeignException;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import top.imyzt.learning.transaction.order.client.AccountClient;
@@ -31,7 +32,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     private StorageClient storageClient;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+//    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional(rollbackFor = Exception.class)
     public Integer createOrder(Order order) {
 
         log.info("开始下单");
