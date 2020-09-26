@@ -11,13 +11,18 @@ eureka:
 
 spring:
   application:
-    name: order-servie
+    name: order-service
   datasource:
-    type: org.h2.jdbcx.JdbcDataSource
-    url: jdbc:h2:~/test
-    username: sa
-    password: sa
-
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seata_demo?useSSL=false&serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 12345678
+mybatis-plus:
+  global-config:
+    db-config:
+      insert-strategy: not_null
+      update-strategy: not_null
+      id-type: auto
 # 监控信息
 info:
   app:

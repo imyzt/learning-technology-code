@@ -12,8 +12,18 @@ eureka:
 #当前服务名称
 spring:
   application:
-    name: account-servie
-
+    name: account-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seata_demo?useSSL=false&serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 12345678
+mybatis-plus:
+  global-config:
+    db-config:
+      insert-strategy: not_null
+      update-strategy: not_null
+      id-type: auto
 # 监控信息
 info:
   app:

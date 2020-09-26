@@ -8,9 +8,9 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>order-service</artifactId>
+    <artifactId>account-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>order-service</name>
+    <name>account-service</name>
     <description>Demo project for Spring Boot</description>
 
     <dependencies>
