@@ -42,6 +42,9 @@
 - transaction/distributed-transaction  
      [seata](http://seata.io/zh-cn/docs/user/quickstart.html)分布式事务学习  
 
+- source-code
+	  此目录为学习源码的笔记内容  
+
 # 关于我
 
 我叫杨镇涛, 现阶段本职工作是Java服务端开发, 平时会花一些时间做 Docker 以及 Spring Cloud 方面的学习研究.    
