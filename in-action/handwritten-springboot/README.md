@@ -33,4 +33,31 @@
 
 - BeanDefinition: **Bean定义**, 封装Bean的配置信息, XML/yml/@annotations
 
-- BeanWrapper: 对原生**Bean对象**和代理对象的统一封装    
+- BeanWrapper: 对原生**Bean对象**和**代理对象**的**统一封装**    
+
+
+## 总结流程
+
+// ApplicationContext构造方法
+ApplicationContext() {
+    // 从配置文件读取bean的定义
+    List<BeanDefinition> beanDefinitions = reader.doLoadBeanDefinitions();
+    
+    // 将bean的定义保存到beanDefinitionMap中
+    beanDefinitionMap.put beanDefinitions
+}
+
+// ApplicationContext.getBean()方法
+ApplicationContext.getBean() {
+    // 初始化bean的实例
+    instaniateBean() {
+        // 判断bean的ClassName是否符合AOP规则
+        // 如果符合则创建**代理对象**
+        // 否则创建**原始对象**
+    }
+    
+    // 封装成BeanWrapper对象, 统一对象的结构
+    
+    // 完成依赖注入
+    populateBean()
+}
