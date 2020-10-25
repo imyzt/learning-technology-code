@@ -2,11 +2,9 @@ package top.imyzt.learning.framework.springboot.servlet;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import top.imyzt.learning.framework.springboot.annotations.Autowired;
-import top.imyzt.learning.framework.springboot.annotations.RequestMapping;
-import top.imyzt.learning.framework.springboot.annotations.RestController;
-import top.imyzt.learning.framework.springboot.annotations.Service;
+import top.imyzt.learning.framework.springboot.annotations.*;
 import top.imyzt.learning.framework.springboot.exception.BeanNameExistsException;
+import top.imyzt.learning.framework.springboot.exception.ParamErrorException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -266,6 +265,9 @@ public class DispatcherServlet extends HttpServlet {
         // 真正负责请求的分发
         try {
             doDispatch(req, resp);
+        } catch (ParamErrorException e) {
+            String message = e.getMessage();
+            resp.getWriter().write("400 Bad Request: \n" + message);
         } catch (Exception e) {
             e.printStackTrace();
             resp.getWriter().write("500 Server Error: \n" + Arrays.toString(e.getStackTrace()));
@@ -288,12 +290,70 @@ public class DispatcherServlet extends HttpServlet {
             return;
         }
 
-        Map<String, String[]> parameterMap = req.getParameterMap();
-
+        // 方法所在类名称
         String simpleName = method.getDeclaringClass().getSimpleName();
+        // 找到方法所在类的bean
         Object bean = IOC_MAP.get(toLowerFirstName(simpleName));
 
-        method.invoke(bean, new Object[]{req, resp, parameterMap.get("name")[0]});
+        // 请求的所有参数
+        Map<String, String[]> parameterMap = req.getParameterMap();
 
+
+        // 方法的实际参数
+        Object[] parameterValues = this.getParameterValues(req, resp, parameterMap, method);
+
+        method.invoke(bean, parameterValues);
+
+    }
+
+    /**
+     * 获取方法的实际参数
+     */
+    private Object[] getParameterValues(HttpServletRequest req, HttpServletResponse resp,
+                                        Map<String, String[]> parameterMap, Method method) {
+
+        // 方法的所有形式参数的注解
+        Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+        // 方法的所有形式参数的类型
+        Class<?>[] parameterTypes = method.getParameterTypes();
+
+        Object[] parameterValues = new Object[parameterTypes.length];
+
+        for (int i = 0; i < parameterTypes.length; i++) {
+            // 每一个参数的类型
+            Class<?> parameterType = parameterTypes[i];
+            if (parameterType.equals(HttpServletRequest.class)) {
+                parameterValues[i] = req;
+            } else if (parameterType.equals(HttpServletResponse.class)) {
+                parameterValues[i] = resp;
+            } else if (parameterType.equals(String.class)) {
+
+                // 拿到当前参数的注解
+                Annotation[] currParameterAnnotation = parameterAnnotations[i];
+                for (Annotation parameterAnnotation : currParameterAnnotation) {
+                    if (parameterAnnotation instanceof RequestParam) {
+                        RequestParam requestParam = (RequestParam) parameterAnnotation;
+                        String name = requestParam.name();
+
+                        String[] param = parameterMap.get(name);
+                        String value = Arrays.toString(param).replaceAll("[\\[\\]]", "")
+                                .replaceAll("\\s", "");
+
+                        if (ArrayUtil.isEmpty(param)) {
+                            String defaultValue = requestParam.defaultValue();
+                            // 如果没有值, 也没有默认值, 但是又需要值, 就报错
+                            if (requestParam.required() && StrUtil.isBlank(defaultValue)) {
+                                throw new ParamErrorException("param [" + name + "] required not null!");
+                            }
+                            value = defaultValue;
+                        }
+
+                        parameterValues[i] = value;
+
+                    }
+                }
+            }
+        }
+        return parameterValues;
     }
 }
