@@ -7,6 +7,8 @@
     <groupId>top.imyzt.learning.springboot</groupId>
     <artifactId>handwritten-springboot</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
     <build>
         <finalName>framework-springboot</finalName>
         <plugins>
@@ -17,12 +19,6 @@
                     <source>8</source>
                     <target>8</target>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.2.8.v20150217</version>
             </plugin>
         </plugins>
 
