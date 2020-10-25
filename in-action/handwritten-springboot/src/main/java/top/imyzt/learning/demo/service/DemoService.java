@@ -1,4 +1,4 @@
-package top.imyzt.learning.framework.springboot.demo.service;
+package top.imyzt.learning.demo.service;
 
 /**
  * @author imyzt

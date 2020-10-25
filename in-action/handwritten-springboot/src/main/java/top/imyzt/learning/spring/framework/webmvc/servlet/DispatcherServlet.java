@@ -1,10 +1,10 @@
-package top.imyzt.learning.framework.springboot.servlet;
+package top.imyzt.learning.spring.framework.webmvc.servlet;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
-import top.imyzt.learning.framework.springboot.annotations.*;
-import top.imyzt.learning.framework.springboot.exception.BeanNameExistsException;
-import top.imyzt.learning.framework.springboot.exception.ParamErrorException;
+import top.imyzt.learning.spring.framework.annotations.*;
+import top.imyzt.learning.spring.framework.exception.BeanNameExistsException;
+import top.imyzt.learning.spring.framework.exception.ParamErrorException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServlet;

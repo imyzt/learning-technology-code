@@ -1,4 +1,4 @@
-package top.imyzt.learning.framework.springboot.annotations;
+package top.imyzt.learning.spring.framework.annotations;
 
 import java.lang.annotation.*;
 

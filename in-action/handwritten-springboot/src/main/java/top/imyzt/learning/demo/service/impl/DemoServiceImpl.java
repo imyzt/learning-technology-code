@@ -1,7 +1,7 @@
-package top.imyzt.learning.framework.springboot.demo.service.impl;
+package top.imyzt.learning.demo.service.impl;
 
-import top.imyzt.learning.framework.springboot.annotations.Service;
-import top.imyzt.learning.framework.springboot.demo.service.DemoService;
+import top.imyzt.learning.spring.framework.annotations.Service;
+import top.imyzt.learning.demo.service.DemoService;
 
 /**
  * @author imyzt

@@ -1,10 +1,10 @@
-package top.imyzt.learning.framework.springboot.demo.controller;
+package top.imyzt.learning.demo.controller;
 
-import top.imyzt.learning.framework.springboot.annotations.Autowired;
-import top.imyzt.learning.framework.springboot.annotations.RequestMapping;
-import top.imyzt.learning.framework.springboot.annotations.RequestParam;
-import top.imyzt.learning.framework.springboot.annotations.RestController;
-import top.imyzt.learning.framework.springboot.demo.service.DemoService;
+import top.imyzt.learning.spring.framework.annotations.Autowired;
+import top.imyzt.learning.spring.framework.annotations.RequestMapping;
+import top.imyzt.learning.spring.framework.annotations.RequestParam;
+import top.imyzt.learning.spring.framework.annotations.RestController;
+import top.imyzt.learning.demo.service.DemoService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

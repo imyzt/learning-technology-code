@@ -1,4 +1,4 @@
-package top.imyzt.learning.framework.springboot.exception;
+package top.imyzt.learning.spring.framework.exception;
 
 /**
  * @author imyzt

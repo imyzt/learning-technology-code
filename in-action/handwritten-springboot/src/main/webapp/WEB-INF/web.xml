@@ -9,7 +9,7 @@
 
     <servlet>
         <servlet-name>handwritten-mvc</servlet-name>
-        <servlet-class>top.imyzt.learning.framework.springboot.servlet.DispatcherServlet</servlet-class>
+        <servlet-class>top.imyzt.learning.spring.framework.webmvc.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>application.properties</param-value>
