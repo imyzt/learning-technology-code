@@ -7,10 +7,7 @@ package top.imyzt.learning.spring.framework.exception;
  */
 public class BeanNameExistsException extends RuntimeException {
 
-    private String name;
-
-    public BeanNameExistsException(String name) {
-        super(name);
-        this.name = name;
+    public BeanNameExistsException(String existsBeanName) {
+        super("The bean [" + existsBeanName + "] is exists");
     }
 }
