@@ -125,4 +125,8 @@ public class BeanDefinitionReader {
         }
 
     }
+
+    public Properties getConfig() {
+        return CONTEXT_CONFIG;
+    }
 }

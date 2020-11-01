@@ -11,10 +11,7 @@ import top.imyzt.learning.spring.framework.annotations.Service;
 import top.imyzt.learning.spring.framework.exception.BeanNameExistsException;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author imyzt
@@ -205,6 +202,10 @@ public class ApplicationContext {
     }
 
     public String[] getBeanDefinitionNames() {
-        return this.beanDefinitionMap.entrySet().toArray(new String[this.beanDefinitionMap.size()]);
+        return this.beanDefinitionMap.keySet().toArray(new String[0]);
+    }
+
+    public Properties getConfig() {
+        return this.reader.getConfig();
     }
 }
