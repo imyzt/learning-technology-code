@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,7 +45,7 @@ public class View {
                 // 从modal中找到参数值
                 Object paramValue = modal.get(paramName);
                 // 替换表达式为参数值
-                line = matcher.replaceFirst(StrUtil.toString(paramValue));
+                line = matcher.replaceFirst(makeStrForRegExp(paramValue));
                 // 继续匹配后面的表达式
                 matcher = compile.matcher(line);
             }
@@ -54,5 +55,29 @@ public class View {
 
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(sb.toString());
+    }
+
+    private String makeStrForRegExp(Object content) {
+        if (Objects.isNull(content)) {
+            return "";
+        }
+
+        return content.toString().replace("\\", "\\\\")
+                .replace("*", "\\*")
+                .replace("+", "\\+")
+                .replace("|", "\\|")
+                .replace("{", "\\{")
+                .replace("}", "\\}")
+                .replace("(", "\\(")
+                .replace(")", "\\)")
+                .replace("^", "\\^")
+                .replace("$", "\\$")
+                .replace("[", "\\[")
+                .replace("]", "\\]")
+                .replace("?", "\\?")
+                .replace(",", "\\,")
+                .replace(".", "\\.")
+                .replace("&", "\\&");
+
     }
 }

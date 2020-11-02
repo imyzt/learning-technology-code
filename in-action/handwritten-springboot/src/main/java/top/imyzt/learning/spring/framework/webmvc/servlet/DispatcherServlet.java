@@ -141,7 +141,7 @@ public class DispatcherServlet extends HttpServlet {
         } catch (Exception e) {
             Map<String, Object> modal = new HashMap<>();
             modal.put("message", StrUtil.isNotBlank(e.getMessage()) ? e.getMessage() : "出错了请联系管理员!");
-            modal.put("stackTrace", "Arrays.toString(e.getStackTrace())");
+            modal.put("stackTrace", Arrays.toString(e.getStackTrace()));
             processDispatchResult(req, resp, new ModalAndView("500", modal));
         }
 
