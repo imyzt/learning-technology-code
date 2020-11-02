@@ -39,6 +39,7 @@
 ## 总结流程
 
 // ApplicationContext构造方法
+```
 ApplicationContext() {
     // 从配置文件读取bean的定义
     List<BeanDefinition> beanDefinitions = reader.doLoadBeanDefinitions();
@@ -46,8 +47,10 @@ ApplicationContext() {
     // 将bean的定义保存到beanDefinitionMap中
     beanDefinitionMap.put beanDefinitions
 }
+```
 
 // ApplicationContext.getBean()方法
+```
 ApplicationContext.getBean() {
     // 初始化bean的实例
     instaniateBean() {
@@ -61,3 +64,39 @@ ApplicationContext.getBean() {
     // 完成依赖注入
     populateBean()
 }
+```
+
+# 第三阶段, MVC流程
+
+- HandlerMapping  完成URL和Method的对应关系
+- HandlerAdapter  完成方法参数的动态匹配
+- ViewResolver  完成模板页面的解析和渲染
+
+- ModalAndView  封装传参信息和模板的名字
+- View  封装模板文件的解析过程
+
+
+## 总结流程
+
+// 初始化阶段
+```
+initStrategies() {
+    initHandlerMapping();
+    initHandlerAdapter();
+    initViewResolver();
+}
+```
+
+// 运行阶段
+```
+doDispatch() {
+    HandlerMapping handler = getHandler(req);
+    HandlerAdapter ha = getHandlerAdapter(handler);
+    ModalAndView mv = ha.handler(req, resp, handler);
+
+    processDispatchResult(req, resp, mv) {
+        View view = ViewResolver.resolverViewName(mv.getViewName());
+        view.reader(mv.getModal());
+    }
+}
+```

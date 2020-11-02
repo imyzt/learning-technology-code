@@ -1,10 +1,8 @@
 package top.imyzt.learning.demo.controller;
 
+import cn.hutool.core.lang.Pair;
 import top.imyzt.learning.demo.service.DemoService;
-import top.imyzt.learning.spring.framework.annotations.Autowired;
-import top.imyzt.learning.spring.framework.annotations.RequestMapping;
-import top.imyzt.learning.spring.framework.annotations.RequestParam;
-import top.imyzt.learning.spring.framework.annotations.RestController;
+import top.imyzt.learning.spring.framework.annotations.*;
 import top.imyzt.learning.spring.framework.webmvc.servlet.ModalAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,21 +22,21 @@ public class DemoController {
     private DemoService demoService;
 
     @RequestMapping("hello")
-    public ModalAndView demo(HttpServletRequest req,
+    @ResponseBody
+    public String demo(HttpServletRequest req,
                              @RequestParam(name = "name", defaultValue = "defaultValue") String nametest,
                              HttpServletResponse resp,
                              @RequestParam(name = "hello", required = true) String hello,
-                             @RequestParam(name = "world", required = true) String world) throws IOException {
+                             @RequestParam(name = "world", required = true) String world) {
 
-        String result = demoService.hello(nametest) + "  --- hello=[" + hello + "]"  + "  --- world=[" + world + "]";
+        return demoService.hello(nametest) + "  --- hello=[" + hello + "]"  + "  --- world=[" + world + "]";
+    }
 
-        try {
-            resp.getWriter().write(result);
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    @RequestMapping("json")
+    @ResponseBody
+    public Pair<String, String> demo(@RequestParam(name = "value", defaultValue = "defaultValue") String value) {
+
+        return new Pair<>("key", value);
     }
 
     @RequestMapping("regex*")

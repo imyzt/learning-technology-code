@@ -2,7 +2,9 @@ package top.imyzt.learning.spring.framework.webmvc.servlet;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
 import top.imyzt.learning.spring.framework.annotations.RequestParam;
+import top.imyzt.learning.spring.framework.annotations.ResponseBody;
 import top.imyzt.learning.spring.framework.exception.ParamErrorException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +51,15 @@ public class HandlerAdapter {
 
         if (mappedHandler.getMethod().getReturnType() == ModalAndView.class) {
             return (ModalAndView) result;
+        }
+
+        // 需要序列化为字符串
+        if (method.isAnnotationPresent(ResponseBody.class)) {
+            String jsonStr = JSON.toJSONString(result);
+            resp.getWriter().write(jsonStr);
+            resp.setCharacterEncoding("UTF-8");
+            resp.setHeader("content-type","application/json;charset=UTF-8");
+            return null;
         }
 
         return null;
