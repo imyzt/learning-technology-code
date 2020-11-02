@@ -41,6 +41,14 @@ public class DemoController {
         return null;
     }
 
+    @RequestMapping("regex*")
+    public ModalAndView testRegex(HttpServletResponse resp, HttpServletRequest req) throws IOException {
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("content-type","text/html;charset=UTF-8");
+        resp.getWriter().write("本次访问地址: " + req.getRequestURI());
+        return null;
+    }
+
     @RequestMapping("throwError")
     public ModalAndView throwError() {
         throw new RuntimeException("报错了");
