@@ -1,0 +1,3 @@
+spring:
+  datasource:
+    url: localhost:3306/test_db
