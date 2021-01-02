@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 /**
  * @author imyzt
  * @date 2021/01/02
- * @description 是否是MacOS
+ * @description 是否是对应OS
  */
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
