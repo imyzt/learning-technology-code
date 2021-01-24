@@ -11,7 +11,7 @@ import org.springframework.context.support.GenericApplicationContext;
  * 结果是无法收到监听事件, 因为在close()方法的doClose()中, destroyBeans()将所有Listener从ApplicationEventMulticaster关联缓存中删除
  *
  * 删除位置:
- * org.springframework.context.support.ApplicationListenerDetector#postProcessAfterInitialization(java.lang.Object, java.lang.String)
+ * org.springframework.context.support.ApplicationListenerDetector#postProcessBeforeDestruction(java.lang.Object, java.lang.String)
  * @author imyzt
  * @date 2021/01/24
  */
