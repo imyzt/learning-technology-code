@@ -5,9 +5,12 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.ResolvableType;
+import org.springframework.core.ResolvableTypeProvider;
 
 /**
  * 测试注解/泛型监听
+ * 通过ResolvableTypeProvider指明泛型类型
  * @author imyzt
  * @date 2021/01/24
  */
@@ -28,6 +31,9 @@ public class AnnotationListenerApplication {
         context.publishEvent(new User("imyzt on new User()"));
 
         context.close();
+
+        //onApplicationEvent: imyzt
+        //onUserEvent: imyzt
 
     }
 
@@ -58,7 +64,7 @@ public class AnnotationListenerApplication {
         }
     }
 
-    static class GenericEvent<T> extends ApplicationEvent {
+    static class GenericEvent<T> extends ApplicationEvent implements ResolvableTypeProvider {
 
         GenericEvent(T source) {
             super(source);
@@ -68,6 +74,12 @@ public class AnnotationListenerApplication {
         @SuppressWarnings("unchecked")
         public T getSource() {
             return (T) super.getSource();
+        }
+
+        @Override
+        public ResolvableType getResolvableType() {
+            return ResolvableType.forClassWithGenerics(getClass(),
+                    ResolvableType.forInstance(getSource()));
         }
     }
 
