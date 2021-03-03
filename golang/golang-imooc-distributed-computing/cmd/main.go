@@ -9,8 +9,8 @@ import (
 
 func main() {
 
-	const filename = "small.in"
-	const n = 50000000
+	const filename = "large.in"
+	const n = 800000000
 
 	file, err := os.Create(filename)
 	if err != nil {
@@ -29,7 +29,7 @@ func main() {
 	}
 	defer file.Close()
 
-	readerSource := pipeline.ReaderSource(bufio.NewReader(openFile))
+	readerSource := pipeline.ReaderSource(bufio.NewReader(openFile), -1)
 	count := 0
 	for v := range readerSource {
 		fmt.Println(v)

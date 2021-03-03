@@ -1,2 +1,5 @@
 .idea
 *.iml
+
+*.in
+*.out
