@@ -100,6 +100,9 @@ func ReaderSource(reader io.Reader, chunkSize int) <-chan int {
 	return out
 }
 
+/**
+将chan写入到write流中
+*/
 func WriteSlink(writer io.Writer, in <-chan int) {
 	for v := range in {
 		buffer := make([]byte, 8)
@@ -108,6 +111,9 @@ func WriteSlink(writer io.Writer, in <-chan int) {
 	}
 }
 
+/**
+生成随机数,传输到chan
+*/
 func RandomSource(count int) <-chan int {
 	out := make(chan int)
 	go func() {
@@ -119,6 +125,9 @@ func RandomSource(count int) <-chan int {
 	return out
 }
 
+/**
+合并N个chan
+*/
 func MergeN(inputs ...<-chan int) <-chan int {
 	if len(inputs) == 1 {
 		return inputs[0]

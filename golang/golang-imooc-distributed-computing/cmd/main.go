@@ -10,7 +10,7 @@ import (
 func main() {
 
 	const filename = "large.in"
-	const n = 800000000
+	const n = 100000000
 
 	file, err := os.Create(filename)
 	if err != nil {
