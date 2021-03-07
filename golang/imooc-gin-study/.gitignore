@@ -1,2 +1,5 @@
 *.iml
 .idea
+
+# 编译包
+router_statis/router_statis

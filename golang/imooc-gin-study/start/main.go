@@ -26,6 +26,7 @@ func main() {
 			"message": "put",
 		})
 	})
+	// 支持任意请求
 	r.Any("/any", func(context *gin.Context) {
 		context.String(200, "any")
 	})
