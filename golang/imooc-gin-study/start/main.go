@@ -6,10 +6,29 @@ func main() {
 
 	// 简单gin使用
 	r := gin.Default()
-	r.GET("ping", func(context *gin.Context) {
+	r.GET("/get", func(context *gin.Context) {
 		context.JSON(200, gin.H{
-			"message": "pong",
+			"message": "get",
 		})
 	})
+	r.POST("/post", func(context *gin.Context) {
+		context.JSON(200, gin.H{
+			"message": "post",
+		})
+	})
+	r.DELETE("/delete", func(context *gin.Context) {
+		context.JSON(200, gin.H{
+			"message": "delete",
+		})
+	})
+	r.PUT("/put", func(context *gin.Context) {
+		context.JSON(200, gin.H{
+			"message": "put",
+		})
+	})
+	r.Any("/any", func(context *gin.Context) {
+		context.String(200, "any")
+	})
+
 	r.Run()
 }
