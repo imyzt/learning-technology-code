@@ -452,3 +452,36 @@ func main() {
 
 }
 ```
+
+# 模板渲染
+
+```go
+func main() {
+
+	r := gin.Default()
+	r.LoadHTMLGlob("template/*")
+
+	r.GET("index", func(context *gin.Context) {
+
+		context.HTML(http.StatusOK, "index.html", gin.H{
+			"title": context.Query("title"),
+		})
+	})
+	r.Run()
+}
+```
+
+
+# tls
+
+```go
+func main() {
+
+	r := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
+	r.GET("ping", func(context *gin.Context) {
+		context.String(http.StatusOK, "pong")
+	})
+	log.Fatal(autotls.Run(r, "go.imyzt.top"))
+}
+```
