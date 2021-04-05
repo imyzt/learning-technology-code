@@ -4,6 +4,8 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @author imyzt
@@ -11,6 +13,8 @@ import org.springframework.context.annotation.Configuration;
  * @description factoryBean注册
  */
 @Configuration
+@EnableAspectJAutoProxy
+@EnableTransactionManagement
 public class FactoryBeanTest {
 
     public static void main(String[] args) {
