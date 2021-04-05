@@ -21,10 +21,19 @@ public class BeanFactoryPostProcessorTest {
 
         context.close();
 
+        // 纯MyBeanFactoryPostProcessor加载:
         //共有bean定义: 8
         //bean定义: [org.springframework.context.annotation.internalConfigurationAnnotationProcessor, org.springframework.context.annotation.internalAutowiredAnnotationProcessor, org.springframework.context.annotation.internalCommonAnnotationProcessor, org.springframework.context.event.internalEventListenerProcessor, org.springframework.context.event.internalEventListenerFactory, beanFactoryPostProcessorTest, myBeanFactoryPostProcessor, red]
         //15:22:17.031 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'red'
         //red constructor...
+
+        // 增加了MyBeanDefinitionRegistryPostProcessor加载:
+        //MyBeanDefinitionRegistryPostProcessor#postProcessBeanDefinitionRegistry beanCount=9
+        //MyBeanDefinitionRegistryPostProcessor#postProcessBeanDefinitionRegistry beanCount=10
+        //共有bean定义: 10
+        //bean定义: [org.springframework.context.annotation.internalConfigurationAnnotationProcessor, org.springframework.context.annotation.internalAutowiredAnnotationProcessor, org.springframework.context.annotation.internalCommonAnnotationProcessor, org.springframework.context.event.internalEventListenerProcessor, org.springframework.context.event.internalEventListenerFactory, beanFactoryPostProcessorTest, myBeanDefinitionRegistryPostProcessor, myBeanFactoryPostProcessor, red, blue]
+        //red constructor...
+        //blue constructor...
     }
 
     @Bean
