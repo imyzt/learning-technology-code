@@ -16,13 +16,18 @@ public class SelectionSort {
         List<Integer> list = ListUtils.randomNotRepeatList(10, 20);
         System.out.println("原数组: " + list);
 
+        ArrayList<Integer> newList = selectionSort(list);
+
+        System.out.println("选择排序后数组: " + newList);
+    }
+
+    public static ArrayList<Integer> selectionSort(List<Integer> list) {
         ArrayList<Integer> newList = new ArrayList<>(list.size());
         for (int i = list.size() - 1; i >= 0; i--) {
             int smallestIdx = findSmallestIdx(list);
             newList.add(list.remove(smallestIdx));
         }
-
-        System.out.println("选择排序后数组: " + newList);
+        return newList;
     }
 
     private static int findSmallestIdx(List<Integer> list) {
