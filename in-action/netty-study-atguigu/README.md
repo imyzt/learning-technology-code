@@ -8,7 +8,7 @@
 
 
 # NIO三大核心原理示意图
- ![图片](https://github.com/imyzt/learning-technology-code/tree/raw/master/in-action/netty-study-atguigu/docs/images/NIO_core.png)
+ ![图片](https://github.com/imyzt/learning-technology-code/raw/master/in-action/netty-study-atguigu/docs/images/NIO_core.png)
  
  1. 每个Channel都会对应一个Buffer
  2. Selector对应一个线程, 一个县城对应多个Channel
