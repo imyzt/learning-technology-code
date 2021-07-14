@@ -1,0 +1,6 @@
+.idea
+xiaomage-springboot-teach.iml
+*/.mvn
+*/mvnw
+*/mvnw.cmd
+*.iml

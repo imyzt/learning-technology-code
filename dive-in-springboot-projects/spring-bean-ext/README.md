@@ -1,0 +1,32 @@
+# BeanFactoryPostProcessor
+
+
+BeanPostProcessor: bean后置处理器，bean创建对象初始化前后进行拦截工作
+BeanFactoryPostProcessor：beanFactory的后置处理器，
+在beanFactory标准初始化之后调用，所有的bean定义已经加载到beanFactory，但bean的实例还未创建  
+
+
+1. IOC容器创建对象
+2. invokeBeanFactoryPostProcessors(beanFactory);执行所有BeanFactoryPostProcessors
+
+
+如何找到所有的BeanFactoryPostProcessors并执行他的方法？
+1. 直接在BeanFactory中找到所有类型是BeanFactoryPostProcessors的组件，并执行他的方法
+2. 在初始化其它组件之前执行
+
+代码位于：PostProcessorRegistrationDelegate#invokeBeanFactoryPostProcessors
+
+# BeanDefinitionRegistryPostProcessor
+
+BeanDefinitionRegistryPostProcessor extends BeanFactoryPostProcessor
+实现postProcessBeanDefinitionRegistry方法
+
+在所有bean定义将要被加载，bean实例还未创建时执行。
+优先于BeanFactoryPostProcessor执行，利用BeanDefinitionRegistryPostProcessor为容器添加额外组件信息
+
+原理：
+1. IOC创建对象
+2. refresh() -> invokeBeanFactoryPostProcessors(beanFactory);
+3. 从容器中获取所有的BeanDefinitionRegistryPostProcessor Bean，然后依次执行。
+
+`PostProcessorRegistrationDelegate#invokeBeanFactoryPostProcessors`

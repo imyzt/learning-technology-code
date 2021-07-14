@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.AutoConfigurationImportListener=\
+  top.imyzt.learning.autoconfig.DefaultAutoConfigurationImportListener
