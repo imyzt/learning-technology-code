@@ -1,5 +1,7 @@
 package top.imyzt.exception.handler;
 
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import top.imyzt.exception.enums.ErrorMsg;
 import top.imyzt.exception.exception.AbstractDemoException;
@@ -60,15 +62,24 @@ public class GlobalExceptionHandler {
         // 打印异常
         printErrorStack(request, errorMsg, e);
 
-        Map<String, Object> errorMap = new HashMap<>(2);
-        errorMap.put("code", errorMsg.getCode());
-        errorMap.put("message", errorMsg.getMessage());
-        // 判断请求方式, 如果是AJAX请求, 调整响应对象的ContentType
-        if (HttpKit.isAjax(request) && responseJson(errorMap, response)) {
-            return null;
-        } else {
-            return new ModelAndView("error", errorMap);
-        }
+        return returnResult(request, response, errorMsg);
+    }
+
+    /**
+     * 表单参数异常处理
+     */
+    @ExceptionHandler(value = {BindException.class})
+    public ModelAndView bindException(BindException exception, HttpServletRequest req, HttpServletResponse resp) {
+
+        BindingResult bindingResult = exception.getBindingResult();
+
+        String objectName = bindingResult.getFieldError().getObjectName();
+        String field = bindingResult.getFieldError().getField();
+        String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
+
+        log.error("表单参数错误, 请求地址: {}, 参数对象: {}, 错误字段: {}, 错误详情: {}",
+                req.getRequestURI(), objectName, field, defaultMessage);
+        return returnResult(req, resp, MISSING_REQUEST_PARAMETER);
     }
 
     /**
@@ -98,5 +109,22 @@ public class GlobalExceptionHandler {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 返回前台错误信息
+     * 如果是AJAX请求返回JSON
+     * 如果是表单请求返回ModelAndView
+     */
+    private ModelAndView returnResult(HttpServletRequest request, HttpServletResponse response, ErrorMsg errorMsg) {
+        Map<String, Object> errorMap = new HashMap<>(2);
+        errorMap.put("code", errorMsg.getCode());
+        errorMap.put("message", errorMsg.getMessage());
+        // 判断请求方式, 如果是AJAX请求, 调整响应对象的ContentType
+        if (HttpKit.isAjax(request) && responseJson(errorMap, response)) {
+            return null;
+        } else {
+            return new ModelAndView("error", errorMap);
+        }
     }
 }

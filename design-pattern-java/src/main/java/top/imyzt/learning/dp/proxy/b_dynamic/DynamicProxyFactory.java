@@ -30,6 +30,7 @@ public class DynamicProxyFactory<T> {
         return  (T) Proxy.newProxyInstance(
                 target.getClass().getClassLoader(),
                 target.getClass().getInterfaces(),
+                // InvocationHandler作为适配器
                 (Object proxy, Method method, Object[] args) -> {
 
                     Object returnValue;

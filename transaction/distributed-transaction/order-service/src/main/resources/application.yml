@@ -1,0 +1,39 @@
+server:
+  port: 9877
+
+# 指定当前eureka客户端的注册地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:9876/eureka
+  instance:
+    hostname: localhost
+
+spring:
+  application:
+    name: order-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seata_demo?useSSL=false&serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 12345678
+  cloud:
+    alibaba:
+      seata:
+        # 定义事务组的名称
+        tx-service-group: seata_demo_group
+mybatis-plus:
+  global-config:
+    db-config:
+      insert-strategy: not_null
+      update-strategy: not_null
+      id-type: auto
+# 监控信息
+info:
+  app:
+    name: ${spring.application.name}
+  company:
+    name: "www.imyzt.top"
+  build:
+    version: @project.version@
+    artifactId: @project.artifactId@

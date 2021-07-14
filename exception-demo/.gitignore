@@ -4,6 +4,7 @@ HELP.md
 .mvn/
 mvnw.cmd
 mvnw
+.DS_Store
 ### STS ###
 .apt_generated
 .classpath
