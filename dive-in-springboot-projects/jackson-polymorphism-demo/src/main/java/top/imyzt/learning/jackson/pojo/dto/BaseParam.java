@@ -1,6 +1,5 @@
 package top.imyzt.learning.jackson.pojo.dto;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
 
 /**
@@ -9,11 +8,6 @@ import lombok.Data;
  * @description 基础参数类
  */
 @Data
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "type"
-)
 public class BaseParam {
 
     /**

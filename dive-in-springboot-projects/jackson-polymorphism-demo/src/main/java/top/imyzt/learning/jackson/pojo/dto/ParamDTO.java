@@ -6,7 +6,7 @@ import lombok.Data;
 import top.imyzt.learning.jackson.common.enums.ParamEnum;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author imyzt
@@ -17,11 +17,18 @@ import javax.validation.constraints.NotBlank;
 public class ParamDTO<T extends BaseParam> {
 
     @JsonProperty("type")
-    @NotBlank(message = "type不能为空")
+    @NotNull(message = "type不能为空")
     private ParamEnum type;
-
 
     @JsonProperty("param")
     @Valid
+    @JsonTypeInfo(
+            // 必选, 使用哪一种特征识别码
+            use = JsonTypeInfo.Id.NAME,
+            include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
+            property = "type",
+            visible = true,
+            defaultImpl = BaseParam.class
+    )
     private T param;
 }

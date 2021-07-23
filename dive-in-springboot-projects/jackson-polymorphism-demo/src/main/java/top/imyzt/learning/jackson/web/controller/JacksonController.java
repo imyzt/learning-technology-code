@@ -27,8 +27,9 @@ public class JacksonController {
     private ApplicationContext applicationContext;
 
     @PostMapping
+    @SuppressWarnings("unchecked")
     public <T extends BaseParam> String jacksonTest(@Validated @RequestBody ParamDTO<T> param) {
-        IHandler iHandler = (IHandler) applicationContext.getBean(param.getType().getHandlerClazz());
+        IHandler<T> iHandler = (IHandler<T>) applicationContext.getBean(param.getType().getHandlerClazz());
         return iHandler.handler(param.getParam());
     }
 
