@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 import top.imyzt.learning.jackson.handler.HandlerA;
 import top.imyzt.learning.jackson.handler.HandlerB;
+import top.imyzt.learning.jackson.handler.IHandler;
 
 /**
  * @author imyzt
@@ -31,5 +32,14 @@ public enum ParamEnum {
     @JsonValue
     private String type;
 
-    private Class<?> handlerClazz;
+    private Class<? extends IHandler> handlerClazz;
+
+    public static ParamEnum get(String type) {
+        for (ParamEnum paramEnum : values()) {
+            if (paramEnum.getType().equalsIgnoreCase(type)) {
+                return paramEnum;
+            }
+        }
+        throw new RuntimeException("Not Found, type[" + type + "]");
+    }
 }

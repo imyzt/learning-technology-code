@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * @description 参数对象
  */
 @Data
-public class ParamDTO<T extends BaseParam> {
+public class ParamDTO {
 
     @JsonProperty("type")
     @NotNull(message = "type不能为空")
@@ -30,5 +30,5 @@ public class ParamDTO<T extends BaseParam> {
             visible = true,
             defaultImpl = BaseParam.class
     )
-    private T param;
+    private BaseParam param;
 }

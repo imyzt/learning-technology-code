@@ -1,8 +1,8 @@
 package top.imyzt.learning.arthas.arthaswebdemo.web.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Random;
@@ -18,8 +18,8 @@ public class IndexController {
 
     private static final Random random = new Random();
 
-    @GetMapping
-    public Result index(@RequestParam(defaultValue = "1") Integer num) throws InterruptedException {
+    @GetMapping("{num}")
+    public Result index(@PathVariable Integer num) throws InterruptedException {
         if (num > 3) {
             throw new NullPointerException();
         }
@@ -27,7 +27,7 @@ public class IndexController {
     }
 
     private Result getResult(int num) throws InterruptedException {
-        Thread.sleep(random.nextInt(3000));
+        Thread.sleep(random.nextInt(1000));
         return Result.builder().param(num).returnObj(num * 2).build();
     }
 
