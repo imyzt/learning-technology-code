@@ -1,7 +1,6 @@
 package top.imyzt.learning.jackson.pojo.dto;
 
 import lombok.Data;
-import top.imyzt.learning.jackson.pojo.IParamVO;
 
 /**
  * @author imyzt
@@ -9,7 +8,7 @@ import top.imyzt.learning.jackson.pojo.IParamVO;
  * @description 基础参数类
  */
 @Data
-public class BaseParam implements IParamVO {
+public class BaseParam {
 
     /**
      * 基础信息
