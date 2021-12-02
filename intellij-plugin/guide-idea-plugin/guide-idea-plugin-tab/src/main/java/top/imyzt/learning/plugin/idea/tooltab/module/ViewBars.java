@@ -39,6 +39,6 @@ public class ViewBars extends SimpleToolWindowPanel {
         jbSplitter.setSplitterProportionKey("main.splitter.key");
         jbSplitter.setFirstComponent(consoleUI.getPanel1());
         jbSplitter.setProportion(0.3f);
-        setContent(jbSplitter);
+        super.setContent(jbSplitter);
     }
 }

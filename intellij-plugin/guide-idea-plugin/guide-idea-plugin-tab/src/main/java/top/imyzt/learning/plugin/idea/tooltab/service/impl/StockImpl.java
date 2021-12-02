@@ -19,19 +19,14 @@ public class StockImpl implements IStock {
 
     @Override
     public List<Data> queryPresetStockData(List<String> gids) {
-
         ArrayList<Data> dataList = new ArrayList<>();
-
         for (String gid : gids) {
-
             StockResult stockResult = JSON.parseObject(get(gid), StockResult.class);
             Stock[] stocks = stockResult.getResult();
             for (Stock stock : stocks) {
-                dataList.add(stock.getDate());
+                dataList.add(stock.getData());
             }
-
         }
-
         return dataList;
     }
 

@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class Stock {
 
-    private top.imyzt.learning.plugin.idea.tooltab.model.vo.Data date;
+    private top.imyzt.learning.plugin.idea.tooltab.model.vo.Data data;
 
     private GoPicture goPicture;
 }
