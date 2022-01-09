@@ -14,11 +14,12 @@ public class ProjectConfigUI  {
     private JTextField groupIdValue;
     private JTextField artifactIdValue;
     private JTextField versionValue;
-    private JTextField textField4;
+    private JTextField packageFieldValue;
     private JLabel groupId;
     private JLabel projectInfo;
     private JLabel artifactId;
     private JLabel version;
     private JLabel packageField;
     private JPanel projectInfoPanel;
+    private JPanel mainPanel;
 }

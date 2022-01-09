@@ -15,7 +15,7 @@ import javax.swing.*;
  */
 public class DDDModuleConfigStep extends ModuleWizardStep {
 
-    private ProjectConfigUI projectConfigUI;
+    private final ProjectConfigUI projectConfigUI;
 
     public DDDModuleConfigStep(ProjectConfigUI projectConfigUI) {
         this.projectConfigUI = projectConfigUI;
@@ -23,7 +23,7 @@ public class DDDModuleConfigStep extends ModuleWizardStep {
 
     @Override
     public JComponent getComponent() {
-        return projectConfigUI.getProjectInfoPanel();
+        return projectConfigUI.getMainPanel();
     }
 
     @Override
@@ -38,11 +38,10 @@ public class DDDModuleConfigStep extends ModuleWizardStep {
 
         ProjectConfig projectConfig = DataSetting.getInstance().getProjectConfig();
 
-        projectConfig.set_groupId(projectConfig.get_groupId());
-        projectConfig.set_artifactId(projectConfig.get_artifactId());
-        projectConfig.set_version(projectConfig.get_version());
-        projectConfig.set_package(projectConfig.get_package());
-
+        projectConfig.set_groupId(projectConfigUI.getGroupIdValue().getText());
+        projectConfig.set_artifactId(projectConfigUI.getArtifactIdValue().getText());
+        projectConfig.set_version(projectConfigUI.getVersionValue().getText());
+        projectConfig.set_package(projectConfigUI.getPackageFieldValue().getText());
 
         return super.validate();
     }
