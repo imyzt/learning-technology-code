@@ -1,0 +1,29 @@
+<idea-plugin>
+    <id>org.example.guide-idea-plugin-toolwindow</id>
+    <name>Plugin display name here</name>
+    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+
+    <description><![CDATA[
+    Enter short description for your plugin here.<br>
+    <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+
+        <!--配置File -> Setting -> Tools -->
+        <projectConfigurable groupId="tools" displayName="READ-CONF" id="learning.toolwindow.id"
+                             instance="top.imyzt.learning.plugin.idea.toolwindow.factory.SettingFactory"/>
+
+        <!--窗体(IDEA界面右侧)-->
+        <toolWindow id="READ-CONF" secondary="false" anchor="right" icon="/icons/logo.png"
+        factoryClass="top.imyzt.learning.plugin.idea.toolwindow.factory.ReadFactory"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>

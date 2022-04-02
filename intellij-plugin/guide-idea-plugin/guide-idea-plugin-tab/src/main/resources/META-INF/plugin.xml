@@ -1,0 +1,32 @@
+<idea-plugin>
+    <id>org.example.guide-idea-plugin-tab</id>
+    <name>Plugin display name here</name>
+    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+
+    <description><![CDATA[
+    Enter short description for your plugin here.<br>
+    <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+
+        <!--anchor="bottom"展示在最下方-->
+        <toolWindow id="XUtil"
+                    canCloseContents="true"
+                    anchor="bottom"
+                    factoryClass="top.imyzt.learning.plugin.idea.tooltab.factory.TabFactory"
+                    icon="/icons/stock.png"
+                    />
+
+        <applicationService serviceImplementation="top.imyzt.learning.plugin.idea.tooltab.infrastructure.DataSetting"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
