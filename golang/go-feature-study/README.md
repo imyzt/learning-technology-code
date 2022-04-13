@@ -35,3 +35,34 @@ func main() {
     
 }
 ```
+
+# golang 随机字符串
+
+两种方案, rand.Read方案优于手写
+```go
+func init() {
+	rand.Seed(time.Now().Unix())
+}
+
+func RandStr1(n int) string {
+	bytes := []byte("ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz")
+	result := make([]byte, n)
+	for i := 0; i < n; i++ {
+		result[i] = bytes[rand.Int31()%int32(len(bytes))]
+	}
+	return string(result)
+}
+
+func RandStr2(n int) string {
+	// 一个byte最大值是0xFF,转化成字符串时就是两个, 所以除2
+	result := make([]byte, n/2)
+	rand.Read(result)
+	return hex.EncodeToString(result)
+}
+```
+
+# 单元测试
+
+1. 类必须是 `_test` 结尾
+2. func Test_xxx 作为单元测试名称
+3. func Benchmark_xxx 作为基准测试名称
