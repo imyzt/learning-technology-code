@@ -56,7 +56,7 @@ public class Server {
 
                     // 将channel绑定的buffer,以附件的形式绑定到selectorKey中
                     // 关注可读事件
-                    SelectionKey scKey = sc.register(selector, SelectionKey.OP_WRITE, null);
+                    SelectionKey scKey = sc.register(selector, SelectionKey.OP_READ, null);
                     log.info("scKey={}", scKey);
 
                     // 建立连接后, 向客户端发送大量数据
@@ -74,7 +74,7 @@ public class Server {
                         // 关注可写事件 + 之前关注的其他事件
                         scKey.interestOps(scKey.interestOps() + SelectionKey.OP_WRITE);
                         // 将未写完的内容, 挂载到附件中, 用于下次网卡空余时发送使用
-                        selectionKey.attach(buffer);
+                        scKey.attach(buffer);
                         log.info("start write not flush, listener writeable");
                     }
                 } else if (selectionKey.isReadable()) {
