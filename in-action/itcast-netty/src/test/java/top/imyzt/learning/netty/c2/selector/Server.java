@@ -103,7 +103,7 @@ public class Server {
                     } catch (IOException e) {
                         // 客户端异常断开, 会发送一个read事件, 消息=-1
                         log.error("client close", e);
-                        selectionKey.channel();
+                        selectionKey.cancel();
                     }
                 } else if (selectionKey.isWritable()) {
 
