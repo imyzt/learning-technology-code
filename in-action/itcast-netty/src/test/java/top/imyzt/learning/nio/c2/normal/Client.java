@@ -1,4 +1,4 @@
-package top.imyzt.learning.netty.c2.normal;
+package top.imyzt.learning.nio.c2.normal;
 
 import lombok.extern.slf4j.Slf4j;
 

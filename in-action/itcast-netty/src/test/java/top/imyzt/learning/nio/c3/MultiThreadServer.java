@@ -1,4 +1,4 @@
-package top.imyzt.learning.netty.c3;
+package top.imyzt.learning.nio.c3;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

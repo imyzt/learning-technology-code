@@ -1,4 +1,4 @@
-package top.imyzt.learning.netty.c2.selector;
+package top.imyzt.learning.nio.c2.selector;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,7 +12,7 @@ import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
-import static top.imyzt.learning.netty.c1.TestByteBufferExam.split;
+import static top.imyzt.learning.nio.c1.TestByteBufferExam.split;
 
 /**
  * @author imyzt
