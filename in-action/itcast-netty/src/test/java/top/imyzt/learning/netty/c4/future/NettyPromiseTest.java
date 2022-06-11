@@ -21,22 +21,21 @@ public class NettyPromiseTest {
         DefaultPromise<Integer> promise = new DefaultPromise<>(eventLoop);
 
         new Thread(() -> {
-
             log.info("开始计算");
-
             try {
                 int i = 1 / 0;
-
                 Thread.sleep(1000);
-
                 promise.setSuccess(100);
             } catch (Exception e) {
+                // 如遇异常, 将异常包装后在get方法原样返回堆栈
                 promise.setFailure(e);
             }
         }).start();
 
-
         log.info("等待结果...");
-        log.info("结果是: {}", promise.get());
+        // 异步等待结果
+        promise.addListener(future -> log.info("回调监听获取结果: {}", future.getNow()));
+        // 同步阻塞等待结果
+        log.info("同步阻塞获取结果: {}", promise.get());
     }
 }
