@@ -1,4 +1,4 @@
-<configuration>
+<logger>
 
 
     <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,%i索引【从数字0开始递增】,,, -->
@@ -11,6 +11,11 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
+
+    <logger name="io.netty.handler.logging.LoggingHandler" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
 
     <!-- 控制台输出日志级别 -->
     <root level="INFO">

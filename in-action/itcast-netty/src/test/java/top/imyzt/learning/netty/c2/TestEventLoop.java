@@ -23,6 +23,16 @@ public class TestEventLoop {
         // 可以执行普通任务, 定时任务
         // DefaultEventLoopGroup eventExecutors = new DefaultEventLoopGroup();
 
+        // 总共只有2个nThreads, 所以轮训获取EventLoop
+        System.out.println(group.next());
+        System.out.println(group.next());
+        System.out.println(group.next());
+        System.out.println(group.next());
+        //io.netty.channel.nio.NioEventLoop@357246de
+        //io.netty.channel.nio.NioEventLoop@28f67ac7
+        //io.netty.channel.nio.NioEventLoop@357246de
+        //io.netty.channel.nio.NioEventLoop@28f67ac7
+
         // 执行普通任务
         group.execute(() -> {
             try {
