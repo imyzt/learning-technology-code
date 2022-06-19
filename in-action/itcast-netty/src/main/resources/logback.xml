@@ -17,8 +17,9 @@
 
 
     <!-- 控制台输出日志级别 -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="io.netty.handler.logging.LoggingHandler" />
     </root>
 
 </configuration>
