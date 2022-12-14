@@ -23,8 +23,9 @@ public class FlowApi {
         CountDownLatch countDownLatch = new CountDownLatch(loop * 2);
 
         // 1. 创建观察者
-        Processor<String, String> process = new DataProcessor( "BBB", countDownLatch);
-        Subscriber<String> subscriber = new DataSubscriber(maxReqHandle, "AAA", countDownLatch);
+        Processor<String, String> process = new DataProcessor( "Processor", countDownLatch);
+        Subscriber<String> subscriberA = new DataSubscriber(maxReqHandle, "AAA", countDownLatch);
+        Subscriber<String> subscriberB = new DataSubscriber(maxReqHandle, "BBB", countDownLatch);
 
 
         // 2. 创建被观察者
@@ -32,7 +33,8 @@ public class FlowApi {
 
             // 3. 发布者和订阅者绑定关系
             publisher.subscribe(process);
-            process.subscribe(subscriber);
+            process.subscribe(subscriberA);
+            process.subscribe(subscriberB);
 
             for (int i = 0; i < loop; i++) {
                 String message = "hello flow api " + i;
