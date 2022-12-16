@@ -9,9 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author imyzt
@@ -22,40 +19,30 @@ public class PdfConvert {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
+        pdf2Image("/tmp/PdfBox/test.pdf", "/tmp/PdfBox/output");
+
+    }
+
+    public static void pdf2Image(String filePath, String output) throws IOException, InterruptedException {
         String pattern = "yyyy-MM-dd HH:mm:ss";
         System.out.println("开始" + LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern)));
-        PDDocument document = PDDocument.load(new File("/tmp/PdfBox/test.pdf"));
+        PDDocument document = PDDocument.load(new File(filePath));
 
         PDFRenderer pdfRenderer = new PDFRenderer(document);
 
         System.out.println("读取完成" + LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern)));
 
-        ExecutorService executorService = Executors.newFixedThreadPool(3);
-        int numberOfPages = document.getNumberOfPages();
-        CountDownLatch countDownLatch = new CountDownLatch(numberOfPages);
-
-        for (int page = 0; page < numberOfPages; page++) {
+//        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        for (int page = 0; page < document.getNumberOfPages(); page++) {
             int finalPage = page;
-            executorService.execute(() -> {
-                try {
-                    BufferedImage bufferedImage = pdfRenderer.renderImage(finalPage);
-                    boolean jpeg = ImageIO.write(bufferedImage, "JPEG", new File("/tmp/PdfBox/image" + finalPage + ".jpg"));
-                    if (finalPage % 20 == 0) {
-                        System.out.println(finalPage + ", image created " + jpeg + "," + LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern)));
-                    }
-
-                    countDownLatch.countDown();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            BufferedImage bufferedImage = pdfRenderer.renderImageWithDPI(finalPage, 100);
+            ImageIO.write(bufferedImage, "JPEG", new File(output + "/image" + finalPage + ".jpg"));
+            System.out.println(finalPage + "JPEG100 image created." + LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern)));
         }
 
-        countDownLatch.await();
-
         System.out.println("结束" + LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern)));
+        Thread.sleep(1000000);
 
         document.close();
-
     }
 }
