@@ -7,15 +7,19 @@ import org.apache.poi.hslf.usermodel.HSLFTextParagraph;
 import org.apache.poi.hslf.usermodel.HSLFTextRun;
 import org.apache.poi.hslf.usermodel.HSLFTextShape;
 import org.apache.poi.openxml4j.util.ZipSecureFile;
-import org.apache.poi.sl.usermodel.TextRun;
-import org.apache.poi.xslf.usermodel.*;
+import org.apache.poi.xslf.usermodel.XMLSlideShow;
+import org.apache.poi.xslf.usermodel.XSLFShape;
+import org.apache.poi.xslf.usermodel.XSLFSlide;
+import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
+import org.apache.poi.xslf.usermodel.XSLFTextRun;
+import org.apache.poi.xslf.usermodel.XSLFTextShape;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
+import java.awt.geom.*;
+import java.awt.image.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,8 +27,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * pptx 转为图片
+/**
+ * @author imyzt
+ * @date 2022/12/27
+ * @description ppt 转为图片
  */
 public class PPTToImageUtil {
     private static final Logger log = LoggerFactory.getLogger(PPTToImageUtil.class);
@@ -32,11 +38,9 @@ public class PPTToImageUtil {
     public static void main(String[] args) {
 
         ppt2Png(new File("/tmp/ppt/demo.ppt"));
+        pptx2Png(new File("/tmp/ppt/demo.ppt"), "/tmp/ppt/output/pptx");
+        pptx2Png(new File("/tmp/ppt/demo.pptm"), "/tmp/ppt/output/pptm");
 
-//        List<String> list = doPPT2007toImage(new File("/tmp/PPT/test.pptx"), "/tmp/PPT/output/");
-//        for (Object o : list) {
-//            System.out.println(o);
-//        }
     }
 
     /**
@@ -44,7 +48,7 @@ public class PPTToImageUtil {
      * @param pptFile PPT的路径
      * @param imgFile 将PPT转换为图片后的路径
      */
-    public static List<String> doPPT2007toImage(File pptFile, String imgFile) {
+    public static List<String> pptx2Png(File pptFile, String imgFile) {
         List<String> list = new ArrayList<>();
         FileInputStream is;
         try {
