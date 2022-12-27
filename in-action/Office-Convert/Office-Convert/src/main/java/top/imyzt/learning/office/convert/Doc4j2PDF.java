@@ -6,63 +6,49 @@ import org.docx4j.fonts.IdentityPlusMapper;
 import org.docx4j.fonts.Mapper;
 import org.docx4j.fonts.PhysicalFont;
 import org.docx4j.fonts.PhysicalFonts;
-import org.docx4j.model.datastorage.migration.VariablePrepare;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Objects;
 
 /**
  * @author imyzt
  * @date 2022/12/25
- * @description 描述信息
+ * @description docx/docm to image, doc转换失败
  */
 public class Doc4j2PDF {
 
-    // 间隔
-
-    // 目录和文件
-
-    public static void main(String[] args) throws Exception {
-//        WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage
-//                .load(new File("/tmp/test.doc"));
-//
-//        Docx4J.toPDF(wordMLPackage, Files.newOutputStream(new File("/tmp/test-topdf.pdf").toPath()));
+    public static void main(String[] args) {
 
         File file = new File("/tmp/doc");
         for (File f : Objects.requireNonNull(file.listFiles())) {
             try {
-                doc2pdf(f);
+                File pdfFile = doc2pdf(f);
+                PdfConvert.pdf2Image(pdfFile.getAbsolutePath(), "/tmp/pdf/output/word/" + pdfFile.getName());
             } catch (Exception e) {
+                System.out.println(f.getName() + "转换失败");
                 e.printStackTrace();
             }
         }
     }
 
-    private static void doc2pdf(File tempDocx) throws Exception {
-        //加载模板
+    private static File doc2pdf(File tempDocx) throws Exception {
+        // 加载模板
         WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.load(tempDocx);
 
-        //进行数据合并
-        //MainDocumentPart documentPart = wordMLPackage.getMainDocumentPart();
-        //数据替换预处理，调用API包
-        //在表格替换后调用这个方法
-        VariablePrepare.prepare(wordMLPackage);
-        //documentPart.variableReplace(variables);
         // 初始化，拿到系统中所有字体
         PhysicalFonts.discoverPhysicalFonts();
-        // Set up font mapper (optional)
 
         setFontMapper(wordMLPackage);
-        // FO exporter setup (required)
-        // .. the FOSettings object
         FOSettings foSettings = Docx4J.createFOSettings();
         foSettings.setWmlPackage(wordMLPackage);
-        OutputStream pdfOutput = new FileOutputStream("/tmp/doc/export/" + tempDocx.getName() + ".pdf");
-        Docx4J.toPDF(wordMLPackage, pdfOutput);
-        pdfOutput.close();
+        File file = new File("/tmp/doc/export/" + tempDocx.getName() + ".pdf");
+        try (OutputStream pdfOutput = Files.newOutputStream(file.toPath())) {
+            Docx4J.toPDF(wordMLPackage, pdfOutput);
+        }
+        return file;
     }
 
     private static void setFontMapper(WordprocessingMLPackage mlPackage) throws Exception {
@@ -70,7 +56,6 @@ public class Doc4j2PDF {
         //加载字体文件（解决linux环境下无中文字体问题）
         if (PhysicalFonts.get("SimSun") == null) {
             System.out.println("加载本地SimSun字体库");
-//        	PhysicalFonts.addPhysicalFonts("SimSun", WordUtils.class.getResource("/fonts/SIMSUN.TTC"));
         }
 
         //宋体&新宋体

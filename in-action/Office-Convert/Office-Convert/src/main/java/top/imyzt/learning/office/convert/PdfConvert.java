@@ -1,5 +1,6 @@
 package top.imyzt.learning.office.convert;
 
+import cn.hutool.core.io.FileUtil;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
@@ -15,24 +16,21 @@ import java.io.IOException;
  */
 public class PdfConvert {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException {
 
         pdf2Image("/tmp/PdfBox/test.pdf", "/tmp/PdfBox/output");
 
     }
 
-    public static void pdf2Image(String filePath, String output) throws IOException, InterruptedException {
+    public static void pdf2Image(String filePath, String output) throws IOException {
         PDDocument document = PDDocument.load(new File(filePath));
 
         PDFRenderer pdfRenderer = new PDFRenderer(document);
 
         for (int page = 0; page < document.getNumberOfPages(); page++) {
-            int finalPage = page;
-            BufferedImage bufferedImage = pdfRenderer.renderImageWithDPI(finalPage, 100);
-            ImageIO.write(bufferedImage, "JPEG", new File(output + "/image" + finalPage + ".jpg"));
+            BufferedImage bufferedImage = pdfRenderer.renderImageWithDPI(page, 100);
+            ImageIO.write(bufferedImage, "JPEG", FileUtil.touch(output + "/image" + page + ".jpg"));
         }
-
-        Thread.sleep(1000000);
 
         document.close();
     }
