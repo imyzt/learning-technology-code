@@ -23,7 +23,6 @@ public class HelloWorld {
 
         Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(2));
 
-
         vertx.setPeriodic(1000, id -> {
             log.info("timer fired.");
             try {
