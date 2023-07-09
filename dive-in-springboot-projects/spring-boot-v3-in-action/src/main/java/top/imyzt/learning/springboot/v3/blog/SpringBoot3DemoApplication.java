@@ -21,7 +21,7 @@ import java.util.List;
 @SpringBootApplication
 public class SpringBoot3DemoApplication {
 
-	public static void main(String[] args) {
+	public /*static*/ void main(String[] args) {
 		SpringApplication.run(SpringBoot3DemoApplication.class, args);
 	}
 
