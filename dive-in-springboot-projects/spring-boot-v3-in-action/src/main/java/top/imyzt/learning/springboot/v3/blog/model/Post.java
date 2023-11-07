@@ -3,6 +3,12 @@ package top.imyzt.learning.springboot.v3.blog.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * @author imyzt
  * @date 2023/06/19
@@ -57,6 +63,8 @@ public class Post {
     public String getBody() {
         return body;
     }
+
+
 
     public void setBody(String content) {
         this.body = content;
