@@ -34,5 +34,4 @@ public class LockSupportTest {
 }
 class SimpleThread2 {
 
-    private
 }
