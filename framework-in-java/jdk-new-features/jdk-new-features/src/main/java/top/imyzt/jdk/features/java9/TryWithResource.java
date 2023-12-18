@@ -1,9 +1,7 @@
-package top.imyzt.jdk.features.jdk9;
+package top.imyzt.jdk.features.java9;
 
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 /**
  * @author imyzt

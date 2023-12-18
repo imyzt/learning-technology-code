@@ -1,4 +1,4 @@
-package top.imyzt.jdk.features.jdk9;
+package top.imyzt.jdk.features.java9;
 
 
 import java.util.concurrent.TimeUnit;
