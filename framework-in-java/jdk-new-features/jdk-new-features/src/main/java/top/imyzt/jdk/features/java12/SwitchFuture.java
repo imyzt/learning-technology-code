@@ -50,5 +50,14 @@ public class SwitchFuture {
 
         }
 
+        var str = switch (2) {
+            case 12 -> "12";
+            default -> {
+                System.out.println("default111");
+                yield "default";
+            }
+        };
+        System.out.println(str);
+
     }
 }

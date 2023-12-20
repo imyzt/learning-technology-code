@@ -19,7 +19,10 @@ public class SwitchFuture {
             case 6, 7, 8 -> "summer";
             case 9, 10, 11 -> "fall";
             case 12, 1, 2 -> "winter";
-            default -> "err";
+            default -> {
+                System.out.println("err");
+                yield "err";
+            }
         };
         System.out.println(str);
         // winter
