@@ -10,7 +10,10 @@ import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,6 +27,8 @@ public class RedisLock {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    private static final Set<LockContext> LOCK_CONTEXTS = new HashSet<>();
+
     private DefaultRedisScript<Long> script;
 
     @PostConstruct
@@ -31,6 +36,15 @@ public class RedisLock {
         script = new DefaultRedisScript<>();
         script.setResultType(Long.class);
         script.setScriptSource(new ResourceScriptSource(new ClassPathResource("release_lock.lua")));
+
+        // watch dog
+        Executors.newScheduledThreadPool(1).schedule(() -> {
+            if (!LOCK_CONTEXTS.isEmpty()) {
+                // todo 判断提交线程是否已执行完毕
+            } else {
+                System.out.println("暂时无需处理");
+            }
+        }, 1, TimeUnit.SECONDS);
     }
 
     public LockContext tryLock(String lockKey, Long expireTime) {

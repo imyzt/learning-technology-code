@@ -3,6 +3,8 @@ package top.imyzt.learning.redis.lock.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import top.imyzt.learning.redis.lock.model.User;
 
+import java.util.List;
+
 /**
  * @author imyzt
  * @date 2024/02/24
@@ -11,4 +13,6 @@ import top.imyzt.learning.redis.lock.model.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findUserByName(String name);
+
+    List<User> findUsersByName(String name);
 }

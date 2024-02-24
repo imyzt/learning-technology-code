@@ -1,6 +1,7 @@
 package top.imyzt.learning.redis.lock;
 
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import top.imyzt.learning.redis.lock.common.RedisLock;
 import top.imyzt.learning.redis.lock.model.User;
 import top.imyzt.learning.redis.lock.repository.UserRepository;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,9 +32,9 @@ public class UserService {
     @Transactional(rollbackFor = Exception.class)
     public void save(String name) {
 
-        User user = userRepository.findUserByName(name);
-        if (user != null) {
-            printLog("已经写入, 不再写入");
+        List<User> users = userRepository.findUsersByName(name);
+        if (CollUtil.isNotEmpty(users)) {
+            printLog("已经写入, 不再写入" + users);
             return;
         }
 
@@ -54,17 +56,17 @@ public class UserService {
     @Transactional(rollbackFor = Exception.class)
     public void saveUser(String name) {
 
-        String lockKey = "lock_key";
+        String lockKey = "lock_key:" + name;
         RedisLock.LockContext lockContext = redisLock.tryLock(lockKey, 3000L);
         if (!lockContext.isLock()) {
             printLog("没拿到锁");
             return;
         }
 
-        printLog("拿到锁了");
-        User user = userRepository.findUserByName(name);
-        if (user != null) {
-            printLog("已经写入, 不再写入");
+        printLog("拿到锁了" + lockKey);
+        List<User> users = userRepository.findUsersByName(name);
+        if (CollUtil.isNotEmpty(users)) {
+            printLog("已经写入, 不再写入" + users);
             return;
         }
         try {

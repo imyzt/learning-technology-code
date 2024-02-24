@@ -23,14 +23,14 @@ public class DomainService {
 
     public void save(String name) {
 
-        String lockKey = "lock_key";
+        String lockKey = "lock_key:" + name;
         RedisLock.LockContext lockContext = redisLock.tryLock(lockKey, 3000L);
         if (!lockContext.isLock()) {
             printLog("没拿到锁");
             return;
         }
 
-        printLog("拿到锁了");
+        printLog("拿到锁了" + lockKey);
         try {
             userService.save(name);
         } finally {
