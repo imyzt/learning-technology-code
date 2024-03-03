@@ -6,12 +6,10 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import top.imyzt.learning.redis.lock.common.RedisLock;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author imyzt
  * @date 2024/02/24
- * @description 描述信息
+ * @description 模拟领域服务
  */
 @Service
 public class DomainService {
@@ -24,8 +22,8 @@ public class DomainService {
     public void save(String name) {
 
         String lockKey = "lock_key:" + name;
-        RedisLock.LockContext lockContext = redisLock.tryLock(lockKey, 3000L);
-        if (!lockContext.isLock()) {
+        RedisLock.LockContext lockContext = redisLock.tryLock(lockKey, 10000L);
+        if (!lockContext.getTryLock()) {
             printLog("没拿到锁");
             return;
         }
@@ -37,14 +35,6 @@ public class DomainService {
             redisLock.release(lockContext);
             printLog("释放锁了");
         }
-
-        // 模拟事务没提交上, 但锁已经释放了
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
     private void printLog(String log) {

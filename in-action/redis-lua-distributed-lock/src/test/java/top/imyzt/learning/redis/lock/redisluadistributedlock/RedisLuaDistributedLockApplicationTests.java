@@ -32,13 +32,16 @@ class RedisLuaDistributedLockApplicationTests {
     void success() throws InterruptedException {
 
         // 模拟多个线程竞争写入, 正常情况下, 3秒内, 只能写入成功一次
-        for (int i = 0; i < 10000; i++) {
-            CompletableFuture.runAsync(() -> {
-                domainService.save("yzt_1");
-            });
+        for (int j = 1; j > 0; j--) {
+            for (int i = 0; i < 1000; i++) {
+                CompletableFuture.runAsync(() -> {
+                    domainService.save("yzt_2");
+                });
+                TimeUnit.MILLISECONDS.sleep(20);
+            }
         }
 
-        TimeUnit.SECONDS.sleep(20);
+        TimeUnit.SECONDS.sleep(120);
 
         List<User> all = userRepository.findAll();
         System.out.println(all);
@@ -55,10 +58,13 @@ class RedisLuaDistributedLockApplicationTests {
 
         ExecutorService pool = Executors.newFixedThreadPool(20);
         // 模拟多个线程竞争写入, 正常情况下, 3秒内, 只能写入成功一次
-        for (int i = 0; i < 10000; i++) {
-            pool.execute(() -> {
-                userService.saveUser("yzt_2");
-            });
+        for (int j = 10; j > 0; j--) {
+            for (int i = 0; i < 10000; i++) {
+                pool.execute(() -> {
+                    userService.saveUserWithDistributedLock("yzt_2");
+                });
+            }
+            TimeUnit.SECONDS.sleep(10);
         }
 
         TimeUnit.SECONDS.sleep(10);

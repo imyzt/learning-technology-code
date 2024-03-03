@@ -3,12 +3,17 @@ package top.imyzt.learning.redis.lock.common;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @description 分布式锁
  */
 @Component
+@Slf4j
 public class RedisLock {
 
     @Resource
@@ -38,23 +44,32 @@ public class RedisLock {
         script.setScriptSource(new ResourceScriptSource(new ClassPathResource("release_lock.lua")));
 
         // watch dog
-        Executors.newScheduledThreadPool(1).schedule(() -> {
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             if (!LOCK_CONTEXTS.isEmpty()) {
-                // todo 判断提交线程是否已执行完毕
-            } else {
-                System.out.println("暂时无需处理");
+                for (LockContext lockContext : LOCK_CONTEXTS) {
+                    // 如果执行线程还未释放锁, 续期30s(模拟Redisson)
+                    stringRedisTemplate.expire(lockContext.getLockKey(), Duration.ofSeconds(30));
+                    Long expire = stringRedisTemplate.getExpire(lockContext.getLockKey());
+                    log.info("WatchDog, expire 30s, lockKey={}, ttl={}", lockContext.getLockKey(), expire);
+                }
             }
-        }, 1, TimeUnit.SECONDS);
+                }, 0,
+                // 10秒检测一次
+                10, TimeUnit.SECONDS);
     }
 
     public LockContext tryLock(String lockKey, Long expireTime) {
         String lockValue = UUID.randomUUID().toString();
-        Boolean b = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, lockValue, 3000, TimeUnit.MILLISECONDS);
-        return new LockContext(lockKey, lockValue, expireTime, TimeUnit.MILLISECONDS, b);
+        Boolean b = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, lockValue, expireTime, TimeUnit.MILLISECONDS);
+        LockContext lockContext = new LockContext(lockKey, lockValue, expireTime, TimeUnit.MILLISECONDS, b);
+        if (lockContext.getTryLock()) {
+            LOCK_CONTEXTS.add(lockContext);
+        }
+        return lockContext;
     }
 
     public void release(LockContext context) {
-        if (context.isLock()) {
+        if (context.getTryLock()) {
             ArrayList<String> keys = new ArrayList<>();
             keys.add(context.getLockKey());
             try {
@@ -62,9 +77,13 @@ public class RedisLock {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            LOCK_CONTEXTS.remove(context);
         }
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class LockContext {
 
         private String lockKey;
@@ -76,49 +95,5 @@ public class RedisLock {
         private TimeUnit timeUnit;
 
         private Boolean tryLock;
-
-        public LockContext(String lockKey, String lockValue, Long expireTime, TimeUnit timeUnit, Boolean tryLock) {
-            this.lockKey = lockKey;
-            this.lockValue = lockValue;
-            this.expireTime = expireTime;
-            this.timeUnit = timeUnit;
-            this.tryLock = tryLock;
-        }
-
-        public boolean isLock() {
-            return this.tryLock;
-        }
-
-        public String getLockKey() {
-            return lockKey;
-        }
-
-        public void setLockKey(String lockKey) {
-            this.lockKey = lockKey;
-        }
-
-        public String getLockValue() {
-            return lockValue;
-        }
-
-        public void setLockValue(String lockValue) {
-            this.lockValue = lockValue;
-        }
-
-        public Long getExpireTime() {
-            return expireTime;
-        }
-
-        public void setExpireTime(Long expireTime) {
-            this.expireTime = expireTime;
-        }
-
-        public TimeUnit getTimeUnit() {
-            return timeUnit;
-        }
-
-        public void setTimeUnit(TimeUnit timeUnit) {
-            this.timeUnit = timeUnit;
-        }
     }
 }

@@ -44,7 +44,8 @@ public class UserService {
 
         // 减慢事务提交过程
         try {
-            TimeUnit.MILLISECONDS.sleep(200);
+            // 模拟执行很慢, 等待watchdog续期
+            TimeUnit.SECONDS.sleep(70);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -54,35 +55,22 @@ public class UserService {
      * 事务内获取分布式锁
      */
     @Transactional(rollbackFor = Exception.class)
-    public void saveUser(String name) {
+    public void saveUserWithDistributedLock(String name) {
 
         String lockKey = "lock_key:" + name;
-        RedisLock.LockContext lockContext = redisLock.tryLock(lockKey, 3000L);
-        if (!lockContext.isLock()) {
-            printLog("没拿到锁");
+        RedisLock.LockContext lockContext = redisLock.tryLock(lockKey, 10000L);
+        if (!lockContext.getTryLock()) {
+            // printLog("没拿到锁");
             return;
         }
 
         printLog("拿到锁了" + lockKey);
-        List<User> users = userRepository.findUsersByName(name);
-        if (CollUtil.isNotEmpty(users)) {
-            printLog("已经写入, 不再写入" + users);
-            return;
-        }
+
         try {
-            // 业务保存
-            User save = userRepository.save(new User(name));
-            printLog("写入成功, id=" + save.getId());
+            this.save(name);
         } finally {
             redisLock.release(lockContext);
             printLog("释放锁了");
-        }
-
-        // 模拟事务没提交上
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 
