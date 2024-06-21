@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: spring-ai-alibaba-demo
+  cloud:
+    ai:
+      tongyi:
+        api-key: ${TONGYI_KEY}
+        images:
+         enabled: true
+        chat:
+          enabled: true
