@@ -18,14 +18,14 @@ public class GuessType {
 
         animals1.add(new BlackCat());
         // 编译报错
-        animals1.add(new Cat());
-        // 编译报错
-        animals1.add(new Animal());
-        Object o = animals1.getFirst();
-
-        animals2.add(new BlackCat());
-        animals2.add(new Cat());
-        animals2.add(new Animal());
+        // animals1.add(new Cat());
+        // // 编译报错
+        // animals1.add(new Animal());
+        // Object o = animals1.getFirst();
+        //
+        // animals2.add(new BlackCat());
+        // animals2.add(new Cat());
+        // animals2.add(new Animal());
     }
 }
 
