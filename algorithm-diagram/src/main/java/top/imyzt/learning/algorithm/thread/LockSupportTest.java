@@ -11,7 +11,7 @@ public class LockSupportTest {
 
     public static void main(String[] args) {
 
-        Thread[] threads = new Thread[2];
+        Thread[] threads = new Thread[3];
         threads[0] = new Thread(() -> {
             for (int i = 0; i < 50; i++) {
                 System.out.println("A");
@@ -24,14 +24,20 @@ public class LockSupportTest {
             for (int i = 0; i < 50; i++) {
                 LockSupport.park();
                 System.out.println("B");
+                LockSupport.unpark(threads[2]);
+            }
+        });
+
+        threads[2] = new Thread(() -> {
+            for (int i = 0; i < 50; i++) {
+                LockSupport.park();
+                System.out.println("C");
                 LockSupport.unpark(threads[0]);
             }
         });
 
-        threads[0].start();
-        threads[1].start();
+        for (Thread thread : threads) {
+            thread.start();
+        }
     }
-}
-class SimpleThread2 {
-
 }

@@ -37,7 +37,7 @@ class SimpleThread {
             synchronized (this) {
                 while (flag != currFlag) {
                     try {
-                        System.out.println("不等于, 休息" + printStr);
+                        // System.out.println("不等于, 休息" + printStr);
                         this.wait();
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
