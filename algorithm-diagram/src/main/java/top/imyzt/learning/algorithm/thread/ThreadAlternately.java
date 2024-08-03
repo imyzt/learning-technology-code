@@ -1,6 +1,13 @@
 package top.imyzt.learning.algorithm.thread;
 
+import cn.hutool.system.UserInfo;
+import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * @author imyzt
@@ -11,14 +18,19 @@ public class ThreadAlternately {
 
     public static void main(String[] args) throws InterruptedException {
 
-        SimpleThread simpleThread = new SimpleThread(1, 50);
-        CompletableFuture.runAsync(() -> simpleThread.print("A", 1, 2));
-        CompletableFuture.runAsync(() -> simpleThread.print("B", 2, 3));
-        CompletableFuture.runAsync(() -> simpleThread.print("C", 3, 1));
+        List<UserInfo1> s = new ArrayList<>();
+        // UserInfo1 e = new UserInfo1();
+        // s.add(e);
 
-        Thread.sleep(1000);
+        List<String> collect = s.stream().map(UserInfo1::getName).filter(Objects::nonNull).collect(Collectors.toList());
+        System.out.println(collect);
+
     }
 
+}
+@Data
+class UserInfo1 {
+    private String name;
 }
 class SimpleThread {
 
