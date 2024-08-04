@@ -11,11 +11,11 @@ import top.imyzt.learning.springbootevents.demos.entity.User;
  * @description 描述信息
  */
 @Getter
-public class UserEvent extends ApplicationEvent {
+public class AddUserEvent extends ApplicationEvent {
 
     private final User user;
 
-    public UserEvent(Object source, User user) {
+    public AddUserEvent(Object source, User user) {
         super(source);
         this.user = user;
     }

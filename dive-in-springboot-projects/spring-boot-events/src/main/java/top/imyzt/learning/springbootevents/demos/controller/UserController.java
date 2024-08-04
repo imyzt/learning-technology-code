@@ -18,12 +18,9 @@ import top.imyzt.learning.springbootevents.demos.service.UserService;
 @AllArgsConstructor
 @RequestMapping("user")
 public class UserController {
-
     private final UserService userService;
-
     @PostMapping("/add")
     public String add(String username, String address) {
         return userService.addUser(username, address);
     }
-
 }

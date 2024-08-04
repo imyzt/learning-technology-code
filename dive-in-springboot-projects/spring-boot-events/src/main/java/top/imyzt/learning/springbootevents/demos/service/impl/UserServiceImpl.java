@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.imyzt.learning.springbootevents.demos.entity.User;
-import top.imyzt.learning.springbootevents.demos.listener.event.UserEvent;
+import top.imyzt.learning.springbootevents.demos.listener.event.AddUserEvent;
 import top.imyzt.learning.springbootevents.demos.mapper.UserMapper;
 import top.imyzt.learning.springbootevents.demos.service.UserService;
 
@@ -30,8 +30,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         log.info("添加用户开始");
         super.save(user);
         log.info("添加用户成功, 发送事件开始");
-        applicationContext.publishEvent(new UserEvent(this, user));
+        applicationContext.publishEvent(new AddUserEvent(this, user));
         log.info("添加用户成功, 发送事件结束");
+
+        // 模拟异常场景
         if (address.equals("shanghai")) {
             throw new RuntimeException("rollback");
         }
