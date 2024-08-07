@@ -7,6 +7,9 @@ package top.imyzt.javaagent.bytecode;
  * 1. javac top/imyzt/javaagent/bytecode/Demo.java
  * 2. hexdump -C Demo.class 或者 javap -v Demo.class > demo-bytecode.txt, 将内容写入到文件中
  * 3. 执行(在/java-agent-demo/bytecode/src/main/java目录) java top/imyzt/javaagent/bytecode/Demo
+ * 结果:
+ * ➜  java git:(master) ✗ java top/imyzt/javaagent/bytecode/Demo
+ * 7
  *
  * @author imyzt
  * @date 2024/08/06

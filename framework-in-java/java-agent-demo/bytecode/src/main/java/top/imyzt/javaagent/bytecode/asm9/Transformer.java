@@ -7,10 +7,9 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * @author imyzt
@@ -53,8 +52,8 @@ public class Transformer {
     }
 
     public static void main(String[] args) throws IOException {
-        String file = Transformer.class.getResource("../Demo.class").getFile();
-        ClassReader cr = new ClassReader(Files.newInputStream(Paths.get(file)));
+        String file = "/Users/imyzt/dev/ideaWorkspace/learning-technology-code/framework-in-java/java-agent-demo/bytecode/src/main/java/top/imyzt/javaagent/bytecode/Demo.class";
+        ClassReader cr = new ClassReader(new FileInputStream(file));
         ClassWriter cw = new ClassWriter(cr, 0);
         ClassVisitor myClassVisitor = new MyClassVisitor(Opcodes.ASM9, cw);
         cr.accept(myClassVisitor, 0);
