@@ -15,12 +15,12 @@
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.9.2</version>
+            <version>1.10.21</version>
         </dependency>
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy-agent</artifactId>
-            <version>1.9.2</version>
+            <version>1.10.21</version>
         </dependency>
 
         <dependency>
@@ -44,10 +44,12 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifestEntries>
-                            <!-- 这里的配置和上面的是一一对应的 -->
-                            <Premain-Class>top.imyzt.agent.Agent</Premain-Class>
-                            <Agent-Class>top.imyzt.agent.Agent</Agent-Class>
+                            <!--Premain-Class ：包含 premain 方法的类（类的全路径名）-->
+                            <Premain-Class>top.imyzt.agent.javaagent.TimerAgent</Premain-Class>
+                            <Agent-Class>top.imyzt.agent.javaagent.TimerAgent</Agent-Class>
+                            <!--Can-Redefine-Classes ：true表示能重定义此代理所需的类，默认值为 false（可选）-->
                             <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                            <!--Can-Retransform-Classes ：true 表示能重转换此代理所需的类，默认值为 false （可选）-->
                             <Can-Retransform-Classes>true</Can-Retransform-Classes>
                         </manifestEntries>
                     </archive>

@@ -10,6 +10,7 @@
   <modules>
     <module>bytecode</module>
     <module>agent-helper</module>
+    <module>agent-demo</module>
   </modules>
 
   <properties>
