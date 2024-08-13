@@ -6,6 +6,7 @@ import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
 import net.bytebuddy.utility.JavaModule;
+import top.imyzt.agent.proxy.UserServiceAgent;
 
 import java.lang.instrument.Instrumentation;
 
@@ -25,6 +26,13 @@ import java.lang.instrument.Instrumentation;
  * demo2 is finishing
  * private static void top.imyzt.agent.demo.TimerMain.demo2() throws java.lang.InterruptedException 方法耗时： 2002ms
  *
+ *
+ * 执行顺序:
+ * JVM启动前执行:
+ * 有 premain(String args, Instrumentation instrumentation) 则先执行,否则执行 premain(String args)
+ * JVM启动后执行:
+ * agentmain(String agentArgs, Instrumentation instrumentation)
+ *
  * @author imyzt
  * @date 2024/8/12
  * @description Timer注解的字节码增强类
@@ -32,6 +40,8 @@ import java.lang.instrument.Instrumentation;
 public class TimerAgent {
 
     /**
+     * 基于字节码操作修改目标类字节码, 不用生成子类(当然也可以生成子类, 见{@link UserServiceAgent})
+     *
      * JVM 会优先加载 带 Instrumentation 签名的方法，加载成功忽略第二种，如果第一种没有，则加载第二种方法 {@link #premain(String)}
      */
     public static void premain(String args, Instrumentation instrumentation) {
@@ -71,6 +81,11 @@ public class TimerAgent {
 
     public static void premain(String agentArgs) {
 
+    }
+
+    public static void agentmain(String agentArgs, Instrumentation instrumentation) {
+        // 同 premain 方法实现
+        // instrumentation.addTransformer(new LogClassFileTransformer());
     }
 
 

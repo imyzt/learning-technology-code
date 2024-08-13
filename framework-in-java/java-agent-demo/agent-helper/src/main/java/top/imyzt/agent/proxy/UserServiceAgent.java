@@ -9,13 +9,16 @@ import net.bytebuddy.matcher.ElementMatchers;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * 使用ByteBuddy生成代理类, 代理含有{@link Log}注解的目标方法, 通过{@link LogIntercept}为目标类环绕生成新代码
+ * 使用ByteBuddy生成代理类, 代理含有{@link Log}注解的目标方法, 通过{@link LogInterceptor}为目标类环绕生成新代码
  * @author imyzt
  * @date 2024/08/11
  * @description <a href="https://www.cnblogs.com/yuarvin/p/16847117.html">教程</a>
  */
 public class UserServiceAgent {
 
+    /**
+     * 基于字节码操作的动态子类生成技术(同Spring AOP中的 JDK代理/CGLIB代理)
+     */
     public static void main(String[] args) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
         ByteBuddy byteBuddy = new ByteBuddy();
@@ -23,7 +26,7 @@ public class UserServiceAgent {
                 .subclass(UserService.class)
                 .name("top.imyzt.agent.proxy.UserServiceImpl")
                 .method(ElementMatchers.isAnnotatedWith(Log.class))
-                .intercept(MethodDelegation.to(new LogIntercept()))
+                .intercept(MethodDelegation.to(new LogInterceptor()))
                 .make()
                 .load(ByteBuddy.class.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
                 .getLoaded();

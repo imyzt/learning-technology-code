@@ -16,7 +16,7 @@ import java.util.concurrent.Callable;
  * @date 2024/08/11
  * @description 描述信息
  */
-public class LogIntercept {
+public class LogInterceptor {
 
     @RuntimeType //将返回值转换成具体的方法返回值类型,加了这个注解 intercept 方法才会被执行
     public Object intercept(

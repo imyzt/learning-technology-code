@@ -4,12 +4,9 @@ package top.imyzt.agent.demo;
 import com.sun.tools.attach.AgentInitializationException;
 import com.sun.tools.attach.AgentLoadException;
 import com.sun.tools.attach.AttachNotSupportedException;
-import com.sun.tools.attach.VirtualMachine;
-import com.sun.tools.attach.VirtualMachineDescriptor;
 import top.imyzt.agent.javaagent.Timer;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @author imyzt
@@ -25,15 +22,15 @@ public class TimerMain {
         demo2();
 
         // 获取当前系统中所有 运行中的 虚拟机
-        List<VirtualMachineDescriptor> list = VirtualMachine.list();
-        for (VirtualMachineDescriptor vm : list) {
-            if (vm.displayName().endsWith("top.imyzt.agent.demo.TimerMain")) {
-                VirtualMachine virtualMachine = VirtualMachine.attach(vm.id());
-                String agentAddress = "";
-                virtualMachine.loadAgent(agentAddress);
-                virtualMachine.detach();
-            }
-        }
+        // List<VirtualMachineDescriptor> list = VirtualMachine.list();
+        // for (VirtualMachineDescriptor vm : list) {
+        //     if (vm.displayName().endsWith("top.imyzt.agent.demo.TimerMain")) {
+        //         VirtualMachine virtualMachine = VirtualMachine.attach(vm.id());
+        //         String agentAddress = "";
+        //         virtualMachine.loadAgent(agentAddress);
+        //         virtualMachine.detach();
+        //     }
+        // }
     }
 
 
