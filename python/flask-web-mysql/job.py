@@ -1,12 +1,15 @@
 import random
 import string
 
-from app import db, app
-from entity.user import User
+from apscheduler.schedulers.background import BackgroundScheduler
+
 from log import log
 
 
 def scheduler_insert_user():
+    from entity.user import User
+    from app import app
+    from db import db
     with app.app_context():
         db.session.add(User(name=generate_random_string(10)))
         db.session.commit()
@@ -20,3 +23,6 @@ def generate_random_string(length):
     # 使用random.choice从字符集中随机选择字符
     random_string = ''.join(random.choice(characters) for _ in range(length))
     return random_string
+
+schedule = BackgroundScheduler()
+schedule.add_job(scheduler_insert_user, 'interval', seconds=10)
