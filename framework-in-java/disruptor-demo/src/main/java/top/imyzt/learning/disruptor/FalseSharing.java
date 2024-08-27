@@ -69,8 +69,8 @@ class Pointer {
 class Pointer2 {
     volatile long x;
     // long类型,占用8个字节, 8*7=56
-    // long p1, p2, p3, p4, p5, p6, p7;
+     long p1, p2, p3, p4, p5, p6, p7;
     // 包装Long类型,根据计算机不同有所不同,在我电脑上占用24字节, 24+24+8=56
-    Long z1, z2; long z3;
+    //Long z1, z2; long z3;
     volatile long y;
 }
