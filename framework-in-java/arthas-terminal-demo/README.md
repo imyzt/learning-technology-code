@@ -20,7 +20,7 @@
 ![open-terminal.png](docs/open-terminal.png)
 
 5. 弹出选择窗口，选择对应的`NameServer（一般是不同环境）`与`Agent（应用）`，点击`Exec`，弹出`ToolWindow`展示Arthas的信息。
-[player.mov](docs/player.mov)
+![open-window.gif](docs/open-window.gif)
 
 6. 可以选择拷贝命令后自动打开Terminal
 ![auto-open-terminal.png](docs/auto-open-terminal.png)
