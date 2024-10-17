@@ -1,31 +1,61 @@
 package main
 
 func longestCommonPrefix(strs []string) string {
-	shortStr := strs[0]
-	for _, str := range strs[1:] {
-		strLen := len(shortStr)
-		if strLen == 0 {
-			return ""
-		}
-		if len(str) < strLen {
-			shortStr = str
-		}
-	}
+	//方案1，先找到最短字符串
+	//shortStr := strs[0]
+	////先找到最短字符串
+	//for _, str := range strs[1:] {
+	//	strLen := len(shortStr)
+	//	if strLen == 0 {
+	//		return ""
+	//	}
+	//	if len(str) < strLen {
+	//		shortStr = str
+	//	}
+	//}
+	//var prefix string
+	////循环最短字符串的每个字符
+	//for j := 0; j < len(shortStr); j++ {
+	//	flag := true
+	//	//对比每个字符串
+	//	for i := 0; i < len(strs); i++ {
+	//		//如果有任何一位的字符串和最短字符串不相等，就跳出
+	//		if string(strs[i][j]) != string(shortStr[j]) {
+	//			flag = false
+	//		}
+	//	}
+	//	if flag {
+	//		prefix += string(shortStr[j])
+	//	} else {
+	//		break
+	//	}
+	//}
+
+	//方案2，用第一个字符串作为循环依据
 	var prefix string
-	for j := 0; j < len(shortStr); j++ {
+	firstStr := strs[0]
+label:
+	for j := 0; j < len(firstStr); j++ {
 		flag := true
-		for i := 0; i < len(strs); i++ {
-			if string(strs[i][j]) != string(shortStr[j]) {
+		for i := 1; i < len(strs); i++ {
+			v := strs[i]
+			//循环次数超过当前字符串的长度，直接跳出
+			if j >= len(v) {
+				break label
+			}
+			//如果有任何一位的字符串和最短字符串不相等，就跳出
+			if string(v[j]) != string(firstStr[j]) {
 				flag = false
 			}
 		}
 		if flag {
-			prefix += string(shortStr[j])
+			prefix += string(firstStr[j])
 		} else {
 			break
 		}
 	}
 
+	//方案3，借助查找函数
 	//  if len(strs) == 0 {
 	//        return ""
 	//    }

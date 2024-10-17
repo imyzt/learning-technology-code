@@ -12,11 +12,13 @@ func romanToInt(s string) int {
 		curr := romanMap[string(s[i])]
 		last := romanMap[string(s[i+1])]
 		if curr < last {
+			//先减小数，下一个循环时，会加上这一对数对应的整数
 			result -= curr
 		} else {
 			result += curr
 		}
 	}
+	//需要加上最后一位(个位)
 	result = result + romanMap[string(s[len(s)-1])]
 
 	//result := romanMap[string(s[len(s)-1])]

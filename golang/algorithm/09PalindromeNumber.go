@@ -1,5 +1,6 @@
 package main
 
+// PalindromeNumber 回文数 1221
 func PalindromeNumber(x int) bool {
 	if x < 0 || (x != 0 && x%10 == 0) {
 		return false
