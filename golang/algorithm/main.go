@@ -27,5 +27,9 @@ func main() {
 
 	//fmt.Println(removeElement([]int{3, 2, 2, 3}, 3))
 
-	fmt.Println(strStr("sa2dbuts3ad", "sad"))
+	//fmt.Println(strStr("sa2dbuts3ad", "sad"))
+
+	fmt.Println(searchInsert([]int{1, 3, 5, 6}, 2))
+	fmt.Println(searchInsert([]int{1, 3, 5, 6}, 7))
+	fmt.Println(searchInsert([]int{1, 3, 5, 6}, 0))
 }
