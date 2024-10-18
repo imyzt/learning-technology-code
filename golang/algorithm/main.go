@@ -23,5 +23,9 @@ func main() {
 	//l2 := &ListNode{Val: 1, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4}}}
 	//fmt.Printf("%v", mergeTwoLists(l1, l2))
 
-	fmt.Println(removeDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
+	//fmt.Println(removeDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
+
+	//fmt.Println(removeElement([]int{3, 2, 2, 3}, 3))
+
+	fmt.Println(strStr("sa2dbuts3ad", "sad"))
 }

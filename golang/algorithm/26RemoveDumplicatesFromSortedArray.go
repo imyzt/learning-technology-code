@@ -3,8 +3,8 @@ package main
 func removeDuplicates(nums []int) int {
 	duplicateMap := make(map[int]bool)
 
-	//方案1，双指针，头插，减少数组的切割
-	//双指针，读指针向前读取，写指针在头部插入（循环过之后当前位置的数据就无意义了）
+	//方案1，双指针，头插覆写，减少数组的切割
+	//双指针，读指针向前读取，写指针在头部覆盖写入（循环过之后当前位置的数据就无意义了）
 	writeIdx := 0
 	for readIdx, v := range nums {
 		if !duplicateMap[v] {
