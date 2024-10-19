@@ -1,94 +1,26 @@
 package main
 
-import (
-	"fmt"
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"os"
-	"strings"
-)
-
-var (
-	cyan  = lipgloss.NewStyle().Foreground(lipgloss.Color("#00FFFF"))
-	green = lipgloss.NewStyle().Foreground(lipgloss.Color("#32CD32"))
-	gray  = lipgloss.NewStyle().Foreground(lipgloss.Color("#696969"))
-	gold  = lipgloss.NewStyle().Foreground(lipgloss.Color("#B8860B"))
-)
-
-var initModel = model{
-	todos:    []string{"a", "b", "c"},
-	selected: make(map[int]struct{}),
-}
-
 func main() {
-	cmd := tea.NewProgram(initModel)
-	if err := cmd.Start(); err != nil {
-		fmt.Println("start fail: ", err)
-		os.Exit(1)
+	print(isPalindrome(121))
+}
+
+// 判断回文数
+func isPalindrome(x int) bool {
+	// 负数,10的倍数可以直接排除
+	if x < 0 || (x != 0 && x%10 == 0) {
+		return false
 	}
-}
-
-func (m model) Init() tea.Cmd {
-	return nil
-}
-
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	switch msg := msg.(type) {
-	case tea.KeyMsg:
-		switch msg.String() {
-		case "ctrl+c", "q":
-			return m, tea.Quit
-		case "up", "k":
-			if m.cursor > 0 {
-				m.cursor--
-			} else if m.cursor == 0 {
-				m.cursor = len(m.todos) - 1
-			}
-		case "down", "j":
-			if m.cursor < len(m.todos)-1 {
-				m.cursor++
-			} else if m.cursor == len(m.todos)-1 {
-				m.cursor = 0
-			}
-		case "enter", " ":
-			if _, ok := m.selected[m.cursor]; ok {
-				delete(m.selected, m.cursor)
-			} else {
-				m.selected[m.cursor] = struct{}{}
-			}
-		}
+	var half int
+	// 只要比x大,就不断将x除10(方便拿到x的最后一位)
+	for half = 0; x > half; x = x / 10 {
+		// half*10: 用于将half上一轮计算结果的最后一位往前移一位
+		// +x%10: 用于将x的最后一位作为half的最后一位
+		half = (half * 10) + x%10
 	}
-	return m, nil
-}
-
-func (m model) View() string {
-	s := "todo list: \n\n"
-
-	for i, choice := range m.todos {
-		cursor := " "
-		if m.cursor == i {
-			cursor = ">"
-		}
-
-		checked := " "
-		if _, ok := m.selected[i]; ok {
-			checked = "x"
-		}
-
-		sprintf := fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
-		if m.cursor == i {
-			s += strings.Trim(green.Render(sprintf), " ")
-		} else {
-			s += sprintf
-		}
-	}
-
-	s += "\n Press q to quit. \n"
-	return s
-}
-
-type model struct {
-	todos    []string
-	cursor   int
-	selected map[int]struct{}
+	// 相等(1221->1221)-偶数回文数
+	// 或者(121->121)-奇数回文数, 因为奇数回文数的for循环half=1
+	// half=(0*10)+1=1, x=12
+	// half=(1*10)+2=12, x=1
+	// x!>half, 退出for,此时就需要将half/10来和x对比是否相等
+	return x == half || x == half/10
 }
