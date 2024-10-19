@@ -19,9 +19,9 @@ func main() {
 	//fmt.Println(isValid("("))
 	//fmt.Println(isValid("{}"))
 
-	//l1 := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 4}}}
-	//l2 := &ListNode{Val: 1, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4}}}
-	//fmt.Printf("%v", mergeTwoLists(l1, l2))
+	l1 := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 4}}}
+	l2 := &ListNode{Val: 1, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4}}}
+	fmt.Printf("%v", mergeTwoLists(l1, l2))
 
 	//fmt.Println(removeDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
 
@@ -38,7 +38,9 @@ func main() {
 	//fmt.Println(lengthOfLastWord("luffy is still joyboy"))
 	//fmt.Println(lengthOfLastWord("a"))
 
-	fmt.Println(plusOne([]int{9, 9}))
-	fmt.Println(plusOne([]int{4, 3, 2, 1}))
-	fmt.Println(plusOne([]int{1, 2, 3}))
+	//fmt.Println(plusOne([]int{9, 9}))
+	//fmt.Println(plusOne([]int{4, 3, 2, 1}))
+	//fmt.Println(plusOne([]int{1, 2, 3}))
+
+	//fmt.Println(reverseList(&ListNode{Val: 0, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: nil}}}}))
 }
