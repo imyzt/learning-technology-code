@@ -1,5 +1,6 @@
 package main
 
+// 递归方案和双指针方案思路完全一样,只是利用递归可以使代码更简洁
 func reverse(pre, curr *ListNode) *ListNode {
 	if curr == nil {
 		return pre
@@ -9,6 +10,7 @@ func reverse(pre, curr *ListNode) *ListNode {
 	return reverse(curr, next)
 }
 
+// 指针翻转, 本质上是将当前元素的next从指向后, 变成指向前(curr.Next = pre)
 func reverseList(head *ListNode) *ListNode {
 	if head == nil {
 		return nil
@@ -21,7 +23,7 @@ func reverseList(head *ListNode) *ListNode {
 	//	next := curr.Next
 	//	// 翻转链表的方向
 	//	curr.Next = pre
-	//	// 向前进一位
+	//	// pre从前一位,到当前位(从左到右,向前进一位)
 	//	pre = curr
 	//	curr = next
 	//}
