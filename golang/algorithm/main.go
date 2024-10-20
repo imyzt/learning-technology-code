@@ -42,5 +42,9 @@ func main() {
 	//fmt.Println(plusOne([]int{4, 3, 2, 1}))
 	//fmt.Println(plusOne([]int{1, 2, 3}))
 
-	fmt.Println(reverseList(&ListNode{Val: 0, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: nil}}}}))
+	//fmt.Println(reverseList(&ListNode{Val: 0, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: nil}}}}))
+
+	fmt.Println(compress([]byte{'a', 'a', 'b', 'b', 'c', 'c', 'c'}))
+	fmt.Println(compress([]byte{'a'}))
+	fmt.Println(compress([]byte{'a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'}))
 }
