@@ -1,5 +1,6 @@
 package main
 
+// 双指针, 删除重复数字
 func removeDuplicates(nums []int) int {
 	duplicateMap := make(map[int]bool)
 

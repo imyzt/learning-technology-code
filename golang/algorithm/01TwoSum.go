@@ -1,5 +1,6 @@
 package main
 
+// 哈希
 func twoSum1(nums []int, target int) []int {
 	numMap := make(map[int]int, len(nums))
 	for i, num := range nums {

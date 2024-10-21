@@ -1,5 +1,6 @@
 package main
 
+// 最长公共串, 第一个字符串作为循环种子, 循环其他字符串, 当出现第一次字符不相等或长度不够时, 跳出返回
 func longestCommonPrefix(strs []string) string {
 	//方案1，先找到最短字符串
 	//shortStr := strs[0]

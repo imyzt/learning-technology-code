@@ -3,7 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	//print(PalindromeNumber(0))
+	fmt.Println(PalindromeNumber(0))
+	fmt.Println(PalindromeNumber(121))
+	fmt.Println(PalindromeNumber(110))
+
 	//println(romanToInt("IM"))
 	//println(romanToInt("III"))
 	//println(romanToInt("LVIII"))
@@ -49,6 +52,11 @@ func main() {
 	//fmt.Println(compress([]byte{'a'}))
 	//fmt.Println(compress([]byte{'a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'}))
 
-	fmt.Println(addBinary("11", "1"))
-	fmt.Println(addBinary("1010", "1011"))
+	//fmt.Println(addBinary("11", "1"))
+	//fmt.Println(addBinary("1010", "1011"))
+
+	//l1 = [2,4,3], l2 = [5,6,4]
+	//l1 := &ListNode{Val: 2, Next: &ListNode{Val: 4, Next: &ListNode{Val: 3}}}
+	//l2 := &ListNode{Val: 5, Next: &ListNode{Val: 6, Next: &ListNode{Val: 4}}}
+	//fmt.Println(addTwoNumbers(l1, l2))
 }

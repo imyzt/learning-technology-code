@@ -1,5 +1,6 @@
 package main
 
+// 字符串匹配,第一个出现的位置的索引
 func strStr(haystack string, needle string) int {
 	needleLen := len(needle)
 	if needleLen > len(haystack) {

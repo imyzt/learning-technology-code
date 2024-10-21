@@ -1,5 +1,6 @@
 package main
 
+// 罗马数字转普通数字, 单纯判断当前位是否小于下一位, 如果小于则先减掉, 下一位会加上当前数的整数
 func romanToInt(s string) int {
 	romanMap := map[string]int{"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
 

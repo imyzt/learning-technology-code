@@ -1,5 +1,6 @@
 package main
 
+// 通过空格分割, 计算最后一个字符串的长度
 func lengthOfLastWord(s string) int {
 	flag, length := false, 0
 	for i := len(s) - 1; i >= 0; i-- {

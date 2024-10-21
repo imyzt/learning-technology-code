@@ -1,5 +1,6 @@
 package main
 
+// 栈, 校验[]{}()
 func isValid(s string) bool {
 	//使用栈，后进先出
 	val := map[rune]rune{']': '[', '}': '{', ')': '('}

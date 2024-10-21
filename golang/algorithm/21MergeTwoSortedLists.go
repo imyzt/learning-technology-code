@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-//合并两个已排序的列表，返回新的已排序的列表
+//合并两个已排序的链表，返回新的已排序的链表
 func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 	if list1 == nil {
 		return list2

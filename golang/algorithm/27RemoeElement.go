@@ -1,5 +1,6 @@
 package main
 
+// 双指针, 删除指定元素,返回剩余元素数量
 func removeElement(nums []int, val int) int {
 
 	//[3,2,2,3], val = 3 output=2 Output: 2, nums = [2,2,_,_]

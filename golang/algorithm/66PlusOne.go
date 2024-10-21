@@ -1,5 +1,6 @@
 package main
 
+// 进位运算,
 func plusOne(digits []int) []int {
 	// 尾插
 	plus := 1
