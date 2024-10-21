@@ -6,7 +6,8 @@ import "fmt"
 func searchInsert(nums []int, target int) int {
 	low, high := 0, len(nums)-1
 	for low <= high {
-		mid := low + (high-low)/2
+		mid := (high + low) / 2
+		fmt.Printf("low=%d, mid=%d, high=%d, num=%d\n", low, mid, high, nums[mid])
 		if target > nums[mid] {
 			low = mid + 1
 		} else if target < nums[mid] {

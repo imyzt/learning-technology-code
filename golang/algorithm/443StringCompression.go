@@ -25,7 +25,6 @@ func compress(chars []byte) int {
 			if counter > 1 {
 				for _, c := range strconv.Itoa(counter) {
 					chars[writeIdx] = byte(c)
-					chars[writeIdx] = byte(c)
 					writeIdx++
 				}
 			}

@@ -32,6 +32,7 @@ func main() {
 	//fmt.Println(searchInsert([]int{1, 3, 5, 6}, 2))
 	//fmt.Println(searchInsert([]int{1, 3, 5, 6}, 7))
 	//fmt.Println(searchInsert([]int{1, 3, 5, 6}, 0))
+	//fmt.Println(searchInsert([]int{1, 13, 25, 36, 50}, 34))
 
 	//fmt.Println(lengthOfLastWord("Hello World"))
 	//fmt.Println(lengthOfLastWord("   fly me   to   the moon  "))
@@ -44,7 +45,10 @@ func main() {
 
 	//fmt.Println(reverseList(&ListNode{Val: 0, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: nil}}}}))
 
-	fmt.Println(compress([]byte{'a', 'a', 'b', 'b', 'c', 'c', 'c'}))
-	fmt.Println(compress([]byte{'a'}))
-	fmt.Println(compress([]byte{'a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'}))
+	//fmt.Println(compress([]byte{'a', 'a', 'b', 'b', 'c', 'c', 'c'}))
+	//fmt.Println(compress([]byte{'a'}))
+	//fmt.Println(compress([]byte{'a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'}))
+
+	fmt.Println(addBinary("11", "1"))
+	fmt.Println(addBinary("1010", "1011"))
 }
