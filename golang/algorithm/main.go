@@ -3,9 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(PalindromeNumber(0))
-	fmt.Println(PalindromeNumber(121))
-	fmt.Println(PalindromeNumber(110))
+	//fmt.Println(PalindromeNumber(0))
+	//fmt.Println(PalindromeNumber(121))
+	//fmt.Println(PalindromeNumber(110))
 
 	//println(romanToInt("IM"))
 	//println(romanToInt("III"))
@@ -59,4 +59,13 @@ func main() {
 	//l1 := &ListNode{Val: 2, Next: &ListNode{Val: 4, Next: &ListNode{Val: 3}}}
 	//l2 := &ListNode{Val: 5, Next: &ListNode{Val: 6, Next: &ListNode{Val: 4}}}
 	//fmt.Println(addTwoNumbers(l1, l2))
+
+	fmt.Println(lengthOfLongestSubstring("abcabcbb"))
+	fmt.Println(lengthOfLongestSubstring("bbbbb"))
+	fmt.Println(lengthOfLongestSubstring("pwwkew"))
+	fmt.Println(lengthOfLongestSubstring("a"))
+	fmt.Println(lengthOfLongestSubstring(" "))
+	fmt.Println(lengthOfLongestSubstring("au"))
+	fmt.Println(lengthOfLongestSubstring("aab"))
+	fmt.Println(lengthOfLongestSubstring("abba"))
 }
