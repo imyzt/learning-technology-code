@@ -4,27 +4,23 @@ package main
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 
 	// 从个位开始累加,加到不能加为止,有进位(carry>0)则加一
-	carry, p1, p2 := 0, l1, l2
-	result := &ListNode{}
-	curr := result
-	for p1 != nil || p2 != nil || carry > 0 {
+	carry, dummy := 0, &ListNode{}
+	curr := dummy
+	for l1 != nil || l2 != nil || carry > 0 {
 		sum := carry
-		if p1 != nil {
-			sum += p1.Val
-			p1 = p1.Next
+		if l1 != nil {
+			sum += l1.Val
+			l1 = l1.Next
 		}
-		if p2 != nil {
-			sum += p2.Val
-			p2 = p2.Next
+		if l2 != nil {
+			sum += l2.Val
+			l2 = l2.Next
 		}
 		carry = sum / 10
-		curr.Next = &ListNode{
-			Val:  sum % 10,
-			Next: nil,
-		}
+		curr.Next = &ListNode{Val: sum % 10}
 		curr = curr.Next
 	}
-	return result.Next
+	return dummy.Next
 }
 
 //You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
