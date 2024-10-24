@@ -9,12 +9,11 @@ func convert(s string, numRows int) string {
 	if numRows == 1 {
 		return s
 	}
-	length := len(s)
-	rows := make([]string, numRows)
+	// rows用来存储每一行的子串
 	// row代表行号, 上下上的不断换行
 	// down代表方向, 向下-true,向上-false
-	down := false
-	for i, row := 0, 0; i < length; i++ {
+	rows, row, down := make([]string, numRows), 0, false
+	for i := range s {
 		rows[row] += string(s[i])
 		if row == 0 || row == numRows-1 {
 			// 调换方向
@@ -27,8 +26,8 @@ func convert(s string, numRows int) string {
 		}
 	}
 	ans := ""
-	for _, row := range rows {
-		ans += row
+	for i := range rows {
+		ans += rows[i]
 	}
 	return ans
 }
