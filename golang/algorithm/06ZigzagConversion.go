@@ -1,41 +1,36 @@
 package main
 
-import "fmt"
-
+// Z字形变换
+// 第一行和最后一行时调换方向是关键, 开始向下,然后向上
+// 第0行  1↓    5↓     9↓
+// 第1行  2↓ 4↑ 6↓ 8↑ 10↓
+// 第2行  3↓    7↓    11↓
 func convert(s string, numRows int) string {
-
-	// 锯齿状，等比数列
-	// 14/3=4
-	// s[0]，      s[4]，    s[8]，      s[12]   4
-	// s[1]，s[3]，s[5]，s[7],s[9],s[11] s[13]      2
-	// s[2],      s[6],     s[10],           4
-	// 14/4=3
-	// s[0]           s[6]              s[12]   6
-	// s[1]      s[5] s[7]        s[11] s[13]   4,2,4,2
-	// s[2] s[4]      s[8]  s[10]               2,4,2
-	// s[3]           s[9]                      6
-
-	sLen := len(s)
-	// 列数量, numRows=行数量
-	numColumns := sLen / numRows
-
-	for r := 0; r < numRows; r++ {
-		for c := 0; c < numColumns; c++ {
-			i := (c * numColumns) + r
-			if r%numRows != 0 && c%numColumns != 0 {
-				// 当前行打印锯齿,
-				//当前列打印锯齿
-				fmt.Printf("%s ", string(s[c+numColumns]))
-			} else {
-
-				// 不用打印锯齿
-			}
-			fmt.Printf("%s ", string(s[i]))
-			fmt.Printf(" ")
-		}
-		fmt.Println()
+	if numRows == 1 {
+		return s
 	}
-	return ""
+	length := len(s)
+	rows := make([]string, numRows)
+	// row代表行号, 上下上的不断换行
+	// down代表方向, 向下-true,向上-false
+	down := false
+	for i, row := 0, 0; i < length; i++ {
+		rows[row] += string(s[i])
+		if row == 0 || row == numRows-1 {
+			// 调换方向
+			down = !down
+		}
+		if down {
+			row++
+		} else {
+			row--
+		}
+	}
+	ans := ""
+	for _, row := range rows {
+		ans += row
+	}
+	return ans
 }
 
 //The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
