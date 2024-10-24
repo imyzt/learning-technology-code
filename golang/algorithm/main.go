@@ -72,6 +72,6 @@ func main() {
 	//fmt.Println(longestPalindrome("babad"))
 	//fmt.Println(longestPalindrome("cbbd”"))
 
-	//fmt.Println(convert("PAYPALISHIRING", 3))
+	fmt.Println(convert("PAYPALISHIRING", 3))
 	fmt.Println(convert("AB", 1))
 }
