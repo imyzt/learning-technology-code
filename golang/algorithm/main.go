@@ -75,9 +75,16 @@ func main() {
 	//fmt.Println(convert("PAYPALISHIRING", 3))
 	//fmt.Println(convert("AB", 1))
 
-	fmt.Println(reverse07(123))
-	fmt.Println(reverse07(-123))
-	fmt.Println(reverse07(120))
-	fmt.Println(reverse07(0))
-	fmt.Println(reverse07(1534236469))
+	//fmt.Println(reverse07(123))
+	//fmt.Println(reverse07(-123))
+	//fmt.Println(reverse07(120))
+	//fmt.Println(reverse07(0))
+	//fmt.Println(reverse07(1534236469))
+
+	fmt.Println(myAtoi("0-1"))
+	fmt.Println(myAtoi("1337c0d3"))
+	fmt.Println(myAtoi("42"))
+	fmt.Println(myAtoi("-042"))
+	fmt.Println(myAtoi("words and 987"))
+	fmt.Println(myAtoi("-91283472332"))
 }
