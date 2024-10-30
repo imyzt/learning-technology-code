@@ -81,10 +81,41 @@ func main() {
 	//fmt.Println(reverse07(0))
 	//fmt.Println(reverse07(1534236469))
 
-	fmt.Println(myAtoi("0-1"))
-	fmt.Println(myAtoi("1337c0d3"))
-	fmt.Println(myAtoi("42"))
-	fmt.Println(myAtoi("-042"))
-	fmt.Println(myAtoi("words and 987"))
-	fmt.Println(myAtoi("-91283472332"))
+	//fmt.Println(myAtoi("0-1"))
+	//fmt.Println(myAtoi("1337c0d3"))
+	//fmt.Println(myAtoi("42"))
+	//fmt.Println(myAtoi("-042"))
+	//fmt.Println(myAtoi("words and 987"))
+	//fmt.Println(myAtoi("-91283472332"))
+
+	//testCases := []struct {
+	//	height []int
+	//	want   int
+	//}{
+	//	{[]int{1, 8}, 1},
+	//	{[]int{1}, 0},
+	//	{[]int{}, 0},
+	//	{[]int{1, 8, 6, 2, 5, 4, 8, 3, 7}, 49},
+	//	{[]int{1, 2, 4, 3}, 4},
+	//	{[]int{4, 3, 2, 1, 4}, 16},
+	//}
+	//
+	//for _, tc := range testCases {
+	//	got := maxArea(tc.height)
+	//	if got != tc.want {
+	//		fmt.Printf("maxArea(%v) = %d; want %d\n", tc.height, got, tc.want)
+	//	} else {
+	//		fmt.Printf("maxArea(%v) = %d; passed\n", tc.height, got)
+	//	}
+	//}
+	//
+	//// 极限情况测试
+	//largeHeight := make([]int, 100000)
+	//for i := range largeHeight {
+	//	largeHeight[i] = rand.Intn(10000) + 1
+	//}
+	//maxArea(largeHeight) // 输出结果取决于具体的数据
+	fmt.Println(maxArea([]int{1, 8, 6, 2, 5, 4, 8, 3, 7}))
+	fmt.Println(maxArea([]int{1, 1}))
+	fmt.Println(maxArea([]int{2, 3, 4, 5, 18, 17, 6}))
 }
