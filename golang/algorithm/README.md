@@ -7,6 +7,7 @@
 
 ### 2. 二分查找
 1. 查找字符串应该插入位置的索引 `35SearchInsertPosition.go`
+2. 开平方根向下取整 `69Sqrt.go`
 
 ### 3. 栈
 1. 校验符号{}[\]() `20ValidParentheses.go`
@@ -19,6 +20,7 @@
 3. 翻转链表 `206ReverseLinkedList.go`
 4. 字符串压缩 `443StringCompression.go`
 5. 容器盛水 `11ContainerWithMostWater.go`
+6. 三数之和 `15ThreeSum.go`
 
 ### 5. 进位运算
 > 关键在灵活运用 除法和取余   
@@ -45,3 +47,7 @@
 
 ### 9. 滑动窗口
 1. 最长无重复字符子串`03LongestSubstringWithoutRepeatingCharacters.go`
+
+### 10. 动态规划
+1. 最长连续字符 `05LongestPalindromicSubstring.go`
+2. 爬楼梯 `70ClimbingStairs.go`
