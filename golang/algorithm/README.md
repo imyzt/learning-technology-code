@@ -4,6 +4,7 @@
 ### 1. 链表运算
 1. 合并两个有序链表 `21MergeTwoSortedLists.go`
 2. 翻转链表 `206ReverseLinkedList.go`
+3. 删除重复元素 `83RemoveDuplicatesFromSortedList.go`
 
 ### 2. 二分查找
 1. 查找字符串应该插入位置的索引 `35SearchInsertPosition.go`
@@ -21,6 +22,7 @@
 4. 字符串压缩 `443StringCompression.go`
 5. 容器盛水 `11ContainerWithMostWater.go`
 6. 三数之和 `15ThreeSum.go`
+7. 合并两个有序数组 `88MergeSortedArray.go`
 
 ### 5. 进位运算
 > 关键在灵活运用 除法和取余   

@@ -1,28 +1,22 @@
 package main
 
-import "fmt"
-
 // 爬楼梯经典问题，动态规划，状态转移方程
 // 任何一级台阶(i)可以走的路线都是由其后一级(i-1)和后两级(i-2)台阶的路线累加所得
 func climbStairs(n int) int {
 	if n <= 2 {
 		return n
 	}
-	// 简版，易于理解，空间复杂度O(n)
+	p1, p2 := 1, 2
+	for i := 3; i <= n; i++ {
+		p1, p2 = p2, p1+p2
+	}
+	return p2
 	//dp := make([]int, n+1)
 	//dp[1], dp[2] = 1, 2
 	//for i := 3; i <= n; i++ {
 	//	dp[i] = dp[i-1] + dp[i-2]
 	//}
 	//return dp[n]
-
-	// 复杂版，空间复杂度O(1)
-	p1, p2 := 1, 2
-	for i := 3; i <= n; i++ {
-		p1, p2 = p2, p1+p2
-		fmt.Printf("第%d阶，%d种方案\n", i, p2)
-	}
-	return p2
 }
 
 //You are climbing a staircase. It takes n steps to reach the top.
