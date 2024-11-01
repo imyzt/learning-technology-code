@@ -108,24 +108,54 @@ func main() {
 	//merge([]int{1, 2, 3, 0, 0, 0}, 3, []int{2, 5, 6}, 3)
 	//merge([]int{0}, 0, []int{1}, 1)
 
-	root := &TreeNode{
-		Val: 5,
-		Left: &TreeNode{
-			Val: 3,
-			Left: &TreeNode{
-				Val: 2,
-				Left: &TreeNode{
-					Val: 1,
-				},
-				Right: nil,
-			},
-			Right: &TreeNode{
-				Val: 4,
-			},
-		},
-		Right: &TreeNode{
-			Val: 6,
-		},
-	}
-	fmt.Println(inorderTraversal(root))
+	//root := &TreeNode{
+	//	Val: 5,
+	//	Left: &TreeNode{
+	//		Val: 3,
+	//		Left: &TreeNode{
+	//			Val: 2,
+	//			Left: &TreeNode{
+	//				Val: 1,
+	//			},
+	//			Right: nil,
+	//		},
+	//		Right: &TreeNode{
+	//			Val: 4,
+	//		},
+	//	},
+	//	Right: &TreeNode{
+	//		Val: 6,
+	//	},
+	//}
+	//_ = &TreeNode{
+	//	Val: 51,
+	//	Left: &TreeNode{
+	//		Val: 3,
+	//		Left: &TreeNode{
+	//			Val: 2,
+	//			Left: &TreeNode{
+	//				Val: 1,
+	//			},
+	//			Right: nil,
+	//		},
+	//		Right: &TreeNode{
+	//			Val: 4,
+	//		},
+	//	},
+	//	Right: &TreeNode{
+	//		Val: 6,
+	//	},
+	//}
+	//fmt.Println(inorderTraversal(root))
+
+	//fmt.Println(isSameTree(root, root2))
+
+	root := &TreeNode{Val: 1}
+	root.Left = &TreeNode{Val: 2}
+	root.Right = &TreeNode{Val: 2}
+	root.Left.Left = &TreeNode{Val: 3}
+	root.Left.Right = &TreeNode{Val: 4}
+	root.Right.Left = &TreeNode{Val: 4}
+	root.Right.Right = &TreeNode{Val: 3}
+	fmt.Println(isSymmetric(nil))
 }

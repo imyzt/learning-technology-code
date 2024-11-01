@@ -48,8 +48,16 @@
 5. 查找分隔符字符串的长度 `58LengthOfLastWord.go`
 
 ### 9. 滑动窗口
+
 1. 最长无重复字符子串`03LongestSubstringWithoutRepeatingCharacters.go`
 
 ### 10. 动态规划
+
 1. 最长连续字符 `05LongestPalindromicSubstring.go`
 2. 爬楼梯 `70ClimbingStairs.go`
+
+### 11. 二叉树
+
+1. 中序遍历 `94BinaryTreeInorderTraversal.go`
+2. 判断2个二叉树是否相等 `100SameTree.go`
+3. 判断是否镜像相等的二叉树 `101SymmetricTree.go`
