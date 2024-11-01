@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	//fmt.Println(PalindromeNumber(0))
 	//fmt.Println(PalindromeNumber(121))
@@ -103,6 +105,27 @@ func main() {
 	//fmt.Println(deleteDuplicates(&ListNode{Val: 1, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 3}}}}}))
 	//fmt.Println(deleteDuplicates(&ListNode{Val: 1, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2}}}))
 
-	merge([]int{1, 2, 3, 0, 0, 0}, 3, []int{2, 5, 6}, 3)
-	merge([]int{0}, 0, []int{1}, 1)
+	//merge([]int{1, 2, 3, 0, 0, 0}, 3, []int{2, 5, 6}, 3)
+	//merge([]int{0}, 0, []int{1}, 1)
+
+	root := &TreeNode{
+		Val: 5,
+		Left: &TreeNode{
+			Val: 3,
+			Left: &TreeNode{
+				Val: 2,
+				Left: &TreeNode{
+					Val: 1,
+				},
+				Right: nil,
+			},
+			Right: &TreeNode{
+				Val: 4,
+			},
+		},
+		Right: &TreeNode{
+			Val: 6,
+		},
+	}
+	fmt.Println(inorderTraversal(root))
 }
