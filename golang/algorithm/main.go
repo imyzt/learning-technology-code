@@ -151,13 +151,33 @@ func main() {
 	//fmt.Println(isSameTree(root, root2))
 
 	root := &TreeNode{Val: 1}
-	//root.Left = &TreeNode{Val: 2}
+	root.Left = &TreeNode{Val: 2}
 	//root.Right = &TreeNode{Val: 2}
-	//root.Left.Left = &TreeNode{Val: 3}
-	//root.Left.Right = &TreeNode{Val: 4}
+	root.Left.Left = &TreeNode{Val: 3}
+	root.Left.Right = &TreeNode{Val: 4}
 	//root.Right.Left = &TreeNode{Val: 4}
 	//root.Right.Right = &TreeNode{Val: 3}
-	root1 := root
-	root1.Right = &TreeNode{Val: 2}
-	fmt.Println(maxDepth(root1))
+	//root1 := root
+	//root1.Right = &TreeNode{Val: 2}
+	//fmt.Println(maxDepth(root1))
+
+	//printTree(sortedArrayToBST([]int{-10, -3, 0, 5, 9}))
+
+	root2 := &TreeNode{
+		Val: 3,
+		Left: &TreeNode{
+			Val: 9,
+		},
+		Right: &TreeNode{
+			Val: 20,
+			Left: &TreeNode{
+				Val: 15,
+			},
+			Right: &TreeNode{
+				Val: 7,
+			},
+		},
+	}
+	fmt.Println(isBalanced(root))
+	fmt.Println(isBalanced(root2))
 }

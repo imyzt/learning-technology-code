@@ -61,3 +61,4 @@
 1. 中序遍历 `94BinaryTreeInorderTraversal.go`
 2. 判断2个二叉树是否相等 `100SameTree.go`
 3. 判断是否镜像相等的二叉树 `101SymmetricTree.go`
+4. 找到树的最大深度 `104MaximumDepthOfBinaryTree.go`
