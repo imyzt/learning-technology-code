@@ -62,3 +62,8 @@
 2. 判断2个二叉树是否相等 `100SameTree.go`
 3. 判断是否镜像相等的二叉树 `101SymmetricTree.go`
 4. 找到树的最大深度 `104MaximumDepthOfBinaryTree.go`
+5. 将有序数组转换为二叉搜索树 `108ConvertSortedArrayToBinarySearchTree.go`
+6. 判断二叉树是否平衡 `110BalancedBinaryTree.go`
+7. 找到树的最小深度 `111MinimumDepthOfBinaryTree.go`
+8. 路径总和-找出是否存在路径总和=TargetSum的路径 `112PathSum.go`
+8. 路径总和-找出所有路径总和=TargetSum的路径 `113PathSum2.go`

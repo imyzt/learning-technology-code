@@ -163,21 +163,115 @@ func main() {
 
 	//printTree(sortedArrayToBST([]int{-10, -3, 0, 5, 9}))
 
-	root2 := &TreeNode{
-		Val: 3,
-		Left: &TreeNode{
-			Val: 9,
-		},
-		Right: &TreeNode{
-			Val: 20,
-			Left: &TreeNode{
-				Val: 15,
-			},
-			Right: &TreeNode{
-				Val: 7,
-			},
-		},
+	//root2 := &TreeNode{
+	//	Val: 3,
+	//	Left: &TreeNode{
+	//		Val: 9,
+	//	},
+	//	Right: &TreeNode{
+	//		Val: 20,
+	//		Left: &TreeNode{
+	//			Val: 15,
+	//		},
+	//		Right: &TreeNode{
+	//			Val: 7,
+	//		},
+	//	},
+	//}
+	//fmt.Println(isBalanced(root))
+	//fmt.Println(isBalanced(root2))
+
+	// 测试用例
+	//root3 := &TreeNode{
+	//	Val: 3,
+	//	Left: &TreeNode{
+	//		Val: 9,
+	//	},
+	//	Right: &TreeNode{
+	//		Val: 20,
+	//		Left: &TreeNode{
+	//			Val: 15,
+	//		},
+	//		Right: &TreeNode{
+	//			Val: 7,
+	//		},
+	//	},
+	//}
+	//fmt.Println(minDepth(root3))
+
+	//fmt.Println(hasPathSum(root3, 30))
+	//fmt.Println(hasPathSum(root3, 31))
+	//fmt.Println(hasPathSum(root3, 38))
+
+	//root4 := &TreeNode{
+	//	Val: 5,
+	//	Left: &TreeNode{
+	//		Val: 4,
+	//		Left: &TreeNode{
+	//			Val: 11,
+	//			Left: &TreeNode{
+	//				Val: 7,
+	//			},
+	//			Right: &TreeNode{
+	//				Val: 2,
+	//			},
+	//		},
+	//	},
+	//	Right: &TreeNode{
+	//		Val: 8,
+	//		Left: &TreeNode{
+	//			Val: 13,
+	//		},
+	//		Right: &TreeNode{
+	//			Val: 4,
+	//			Right: &TreeNode{
+	//				Val: 5,
+	//			},
+	//			Left: &TreeNode{
+	//				Val: 1,
+	//			},
+	//		},
+	//	},
+	//}
+	//fmt.Println(pathSum(root4, 22))
+
+	root5 := buildTree([]interface{}{5, 4, 8, 11, nil, 13, 4, 7, 2, nil, nil, 5, 1})
+	fmt.Println(pathSum(root5, 22))
+	root6 := &TreeNode{Val: 1}
+	fmt.Println(pathSum(root6, 1))
+}
+
+// buildTree 从数组构建二叉树
+func buildTree(values []interface{}) *TreeNode {
+	if len(values) == 0 || values[0] == nil {
+		return nil
 	}
-	fmt.Println(isBalanced(root))
-	fmt.Println(isBalanced(root2))
+
+	// 创建根节点
+	root := &TreeNode{Val: values[0].(int)}
+	queue := []*TreeNode{root}
+	i := 1
+
+	for i < len(values) {
+		current := queue[0]
+		queue = queue[1:]
+
+		// 左子节点
+		if i < len(values) && values[i] != nil {
+			left := &TreeNode{Val: values[i].(int)}
+			current.Left = left
+			queue = append(queue, left)
+		}
+		i++
+
+		// 右子节点
+		if i < len(values) && values[i] != nil {
+			right := &TreeNode{Val: values[i].(int)}
+			current.Right = right
+			queue = append(queue, right)
+		}
+		i++
+	}
+
+	return root
 }

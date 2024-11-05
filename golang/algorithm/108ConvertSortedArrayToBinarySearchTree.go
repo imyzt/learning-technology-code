@@ -8,7 +8,5 @@ func sortedArrayToBST(nums []int) *TreeNode {
 	root := &TreeNode{Val: nums[mid]}
 	root.Left = sortedArrayToBST(nums[:mid])
 	root.Right = sortedArrayToBST(nums[mid+1:])
-	printTree(root.Left)
-	printTree(root.Right)
 	return root
 }
