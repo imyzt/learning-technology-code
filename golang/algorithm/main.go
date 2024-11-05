@@ -235,10 +235,30 @@ func main() {
 	//}
 	//fmt.Println(pathSum(root4, 22))
 
-	root5 := buildTree([]interface{}{5, 4, 8, 11, nil, 13, 4, 7, 2, nil, nil, 5, 1})
-	fmt.Println(pathSum(root5, 22))
-	root6 := &TreeNode{Val: 1}
-	fmt.Println(pathSum(root6, 1))
+	//root5 := buildTree([]interface{}{5, 4, 8, 11, nil, 13, 4, 7, 2, nil, nil, 5, 1})
+	//fmt.Println(pathSum(root5, 22))
+	//root6 := &TreeNode{Val: 1}
+	//fmt.Println(pathSum(root6, 1))
+
+	//for i, row := range generate(10) {
+	//	fmt.Printf("第%d行，数据=%v\n", i, row)
+	//}
+	//fmt.Println(generate(1))
+	//fmt.Println(generate(0))
+	//fmt.Println(getRow(5))
+	//fmt.Println(getRow(1))
+	//fmt.Println(getRow(0))
+	//fmt.Println(getRow2(5))
+	//fmt.Println(getRow2(1))
+	//fmt.Println(getRow2(0))
+
+	triangle := [][]int{
+		{2},
+		{3, 4},
+		{6, 5, 7},
+		{4, 1, 8, 3},
+	}
+	fmt.Println(minimumTotal(triangle))
 }
 
 // buildTree 从数组构建二叉树

@@ -55,6 +55,8 @@
 
 1. 最长连续字符 `05LongestPalindromicSubstring.go`
 2. 爬楼梯 `70ClimbingStairs.go`
+3. 生成杨辉三角 `118Pascal'sTriangle.go`
+4. 获取杨辉三角第N行 `119Pascal'sTriangle2.go`
 
 ### 11. 二叉树
 
@@ -66,4 +68,4 @@
 6. 判断二叉树是否平衡 `110BalancedBinaryTree.go`
 7. 找到树的最小深度 `111MinimumDepthOfBinaryTree.go`
 8. 路径总和-找出是否存在路径总和=TargetSum的路径 `112PathSum.go`
-8. 路径总和-找出所有路径总和=TargetSum的路径 `113PathSum2.go`
+9. 路径总和-找出所有路径总和=TargetSum的路径 `113PathSum2.go`
