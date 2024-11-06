@@ -1,22 +1,16 @@
 package main
 
+// 计算股票的最佳买入卖出时期(只能买入卖出一次),获得最大利润,动态规划
+// 不断计算当前是否最低价格,将最低价格存起来,和每次价格比较获得利润最大值
 func maxProfit(prices []int) int {
-
-	//dp := make([]int, len(prices))
-	maxProfit := 0
-	for i := 0; i < len(prices)-1; i++ {
-
-		for j := i + 1; j < len(prices)-1; j++ {
-			val := prices[j] - prices[i]
-			if val > 0 && maxProfit < val {
-				maxProfit = val
-			}
-		}
-		//if prices[i+1]-prices[i] > 0 {
-		//
-		//	maxProfit = prices[i+1] - prices[i]
-		//}
-
+	maxProfit, minPrice := 0, prices[0]
+	for i := 1; i < len(prices); i++ {
+		// 当前价格是否是最低价格
+		minPrice = min(minPrice, prices[i])
+		// 利润=当前价格-最低的价格
+		profit := prices[i] - minPrice
+		// 当前利润是否是最大利润
+		maxProfit = max(profit, maxProfit)
 	}
 	return maxProfit
 }

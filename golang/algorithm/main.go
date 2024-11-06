@@ -260,9 +260,10 @@ func main() {
 	//}
 	//fmt.Println(minimumTotal(triangle))
 
-	fmt.Println(maxProfit([]int{7, 1, 5, 3, 6, 4}))
-	fmt.Println(maxProfit([]int{1, 2, 3, 4, 5}))
-	fmt.Println(maxProfit([]int{7, 6, 4, 3, 1}))
+	//fmt.Println(maxProfit([]int{7, 1, 5, 3, 6, 4}))
+	//fmt.Println(maxProfit([]int{1, 2, 3, 4, 5}))
+	fmt.Println(maxProfit_2_1([]int{7, 1, 5, 66, 6, 4, 88}))
+	fmt.Println(maxProfit_2_2([]int{7, 1, 5, 66, 6, 4, 88}))
 }
 
 // buildTree 从数组构建二叉树

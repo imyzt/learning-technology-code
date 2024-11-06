@@ -58,6 +58,8 @@
 3. 生成杨辉三角 `118Pascal'sTriangle.go`
 4. 获取杨辉三角第N行 `119Pascal'sTriangle2.go`
 5. 三角形最短路径和 `120Triangle.go`
+6. 计算股票的最佳买入卖出时期,获得最大利润(只可买卖一次) `121BestTimeToBuyAndSellStock.go`
+7. 计算股票的最佳买入卖出时期,获得最大利润(可买卖多次) `122BestTimeToBuyAndSellStock2.go`
 
 ### 11. 二叉树
 
