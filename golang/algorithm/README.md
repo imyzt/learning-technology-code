@@ -57,6 +57,7 @@
 2. 爬楼梯 `70ClimbingStairs.go`
 3. 生成杨辉三角 `118Pascal'sTriangle.go`
 4. 获取杨辉三角第N行 `119Pascal'sTriangle2.go`
+5. 三角形最短路径和 `120Triangle.go`
 
 ### 11. 二叉树
 

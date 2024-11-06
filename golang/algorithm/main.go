@@ -252,13 +252,17 @@ func main() {
 	//fmt.Println(getRow2(1))
 	//fmt.Println(getRow2(0))
 
-	triangle := [][]int{
-		{2},
-		{3, 4},
-		{6, 5, 7},
-		{4, 1, 8, 3},
-	}
-	fmt.Println(minimumTotal(triangle))
+	//triangle := [][]int{
+	//	{2},
+	//	{3, 4},
+	//	{6, 5, 7},
+	//	{4, 1, 8, 3},
+	//}
+	//fmt.Println(minimumTotal(triangle))
+
+	fmt.Println(maxProfit([]int{7, 1, 5, 3, 6, 4}))
+	fmt.Println(maxProfit([]int{1, 2, 3, 4, 5}))
+	fmt.Println(maxProfit([]int{7, 6, 4, 3, 1}))
 }
 
 // buildTree 从数组构建二叉树
