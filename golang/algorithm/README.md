@@ -23,6 +23,7 @@
 5. 容器盛水 `11ContainerWithMostWater.go`
 6. 三数之和 `15ThreeSum.go`
 7. 合并两个有序数组 `88MergeSortedArray.go`
+8. 验证回文串 `125ValidPalindrome.go`
 
 ### 5. 进位运算
 > 关键在灵活运用 除法和取余   
@@ -46,6 +47,7 @@
 3. 最长公共串 `14LongestCommonPrefix.go`
 4. 查找字符串indexOf `28FindTheIndexOfTheFirstOccurrence.go`
 5. 查找分隔符字符串的长度 `58LengthOfLastWord.go`
+6. 最长连续序列 `128LongestConsecutiveSequence.go`
 
 ### 9. 滑动窗口
 
@@ -60,6 +62,7 @@
 5. 三角形最短路径和 `120Triangle.go`
 6. 计算股票的最佳买入卖出时期,获得最大利润(只可买卖一次) `121BestTimeToBuyAndSellStock.go`
 7. 计算股票的最佳买入卖出时期,获得最大利润(可买卖多次) `122BestTimeToBuyAndSellStock2.go`
+8. 计算股票的最佳买入卖出时期,获得最大利润(最多只可以买卖2次) `123BestTimeToBuyAndSellStock3.go`
 
 ### 11. 二叉树
 

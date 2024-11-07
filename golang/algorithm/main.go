@@ -262,8 +262,17 @@ func main() {
 
 	//fmt.Println(maxProfit([]int{7, 1, 5, 3, 6, 4}))
 	//fmt.Println(maxProfit([]int{1, 2, 3, 4, 5}))
-	fmt.Println(maxProfit_2_1([]int{7, 1, 5, 66, 6, 4, 88}))
-	fmt.Println(maxProfit_2_2([]int{7, 1, 5, 66, 6, 4, 88}))
+	//fmt.Println(maxProfit_2_1([]int{7, 1, 5, 66, 6, 4, 88}))
+	//fmt.Println(maxProfit_2_2([]int{7, 1, 5, 66, 6, 4, 88}))
+	//fmt.Println(maxProfit_3([]int{3, 3, 5, 0, 0, 3, 1, 4}))
+	//fmt.Println(maxProfit_3([]int{1, 2, 3, 4, 5}))
+	//fmt.Println(maxProfit_3([]int{7, 6, 4, 3, 1}))
+	//fmt.Println(maxProfit_3([]int{3, 2, 6, 5, 0, 3}))
+	//fmt.Println(maxProfit_3([]int{1, 2, 4, 2, 5, 7, 2, 4, 9, 0}))
+
+	//fmt.Println(isPalindrome("A man, a plan, a canal: Panama"))
+
+	fmt.Println(longestConsecutive([]int{100, 4, 200, 1, 3, 2}))
 }
 
 // buildTree 从数组构建二叉树
