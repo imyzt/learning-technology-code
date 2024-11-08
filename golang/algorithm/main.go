@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func main() {
 	//fmt.Println(PalindromeNumber(0))
 	//fmt.Println(PalindromeNumber(121))
@@ -272,7 +270,17 @@ func main() {
 
 	//fmt.Println(isPalindrome("A man, a plan, a canal: Panama"))
 
-	fmt.Println(longestConsecutive([]int{100, 4, 200, 1, 3, 2}))
+	//fmt.Println(longestConsecutive([]int{100, 4, 200, 1, 3, 2}))
+
+	//fmt.Println(sumNumbers(root))
+
+	board := [][]byte{
+		{'X', 'X', 'X', 'X'},
+		{'X', 'O', 'O', 'X'},
+		{'X', 'X', 'O', 'X'},
+		{'X', 'O', 'X', 'X'},
+	}
+	solve(board)
 }
 
 // buildTree 从数组构建二叉树

@@ -75,3 +75,4 @@
 7. 找到树的最小深度 `111MinimumDepthOfBinaryTree.go`
 8. 路径总和-找出是否存在路径总和=TargetSum的路径 `112PathSum.go`
 9. 路径总和-找出所有路径总和=TargetSum的路径 `113PathSum2.go`
+10. 从根节点到叶子节点，每条路径都组合成为数字，累加得到结果 `129SumRootToLeafNumbers.go`
