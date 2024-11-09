@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	//fmt.Println(PalindromeNumber(0))
 	//fmt.Println(PalindromeNumber(121))
@@ -274,13 +276,15 @@ func main() {
 
 	//fmt.Println(sumNumbers(root))
 
-	board := [][]byte{
-		{'X', 'X', 'X', 'X'},
-		{'X', 'O', 'O', 'X'},
-		{'X', 'X', 'O', 'X'},
-		{'X', 'O', 'X', 'X'},
-	}
-	solve(board)
+	//board := [][]byte{
+	//	{'X', 'X', 'X', 'X'},
+	//	{'X', 'O', 'O', 'X'},
+	//	{'X', 'X', 'O', 'X'},
+	//	{'X', 'O', 'X', 'X'},
+	//}
+	//solve(board)
+
+	fmt.Println(singleNumber([]int{4, 1, 2, 1, 2}))
 }
 
 // buildTree 从数组构建二叉树
