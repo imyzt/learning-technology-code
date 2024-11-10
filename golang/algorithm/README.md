@@ -76,3 +76,5 @@
 8. 路径总和-找出是否存在路径总和=TargetSum的路径 `112PathSum.go`
 9. 路径总和-找出所有路径总和=TargetSum的路径 `113PathSum2.go`
 10. 从根节点到叶子节点，每条路径都组合成为数字，累加得到结果 `129SumRootToLeafNumbers.go`
+11. 遍历二叉树-从根节点向下遍历 `144BinaryTreePreorderTraversal.go`
+11. 遍历二叉树-从根部往上遍历写入 `145BinaryTreePostorderTraversal.go`

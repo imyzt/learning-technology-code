@@ -284,7 +284,11 @@ func main() {
 	//}
 	//solve(board)
 
-	fmt.Println(singleNumber([]int{4, 1, 2, 1, 2}))
+	//fmt.Println(singleNumber([]int{4, 1, 2, 1, 2}))
+	//fmt.Println(singleNumber2([]int{2, 2, 3, 2}))
+
+	//fmt.Println(preorderTraversal(root))
+	fmt.Println(postorderTraversal(root))
 }
 
 // buildTree 从数组构建二叉树
