@@ -288,7 +288,21 @@ func main() {
 	//fmt.Println(singleNumber2([]int{2, 2, 3, 2}))
 
 	//fmt.Println(preorderTraversal(root))
-	fmt.Println(postorderTraversal(root))
+	//fmt.Println(postorderTraversal(root))
+
+	//[[2],[2],[2,6],[1],[1,5],[1,2],[1],[2]]
+	//lru := Constructor(2)
+	//println(lru.Get(2))
+	//lru.Put(2, 6)
+	//println(lru.Get(1))
+	//lru.Put(1, 5)
+	//lru.Put(1, 2)
+	//println(lru.Get(1))
+	//println(lru.Get(2))
+	//fmt.Println(lru)
+
+	//fmt.Println(reverseWords("the sky is blue"))
+	fmt.Println(reverseWords("a good   example"))
 }
 
 // buildTree 从数组构建二叉树
