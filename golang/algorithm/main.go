@@ -304,11 +304,15 @@ func main() {
 	//fmt.Println(reverseWords("the sky is blue"))
 	//fmt.Println(reverseWords("a good   example"))
 
-	fmt.Println(maxProduct([]int{2, 3, -2, 4}))
-	fmt.Println(maxProduct([]int{-2, 0, -1}))
-	fmt.Println(maxProduct([]int{-2}))
-	fmt.Println(maxProduct([]int{0, 2}))
-	fmt.Println(maxProduct([]int{-2, 3, -4}))
+	//fmt.Println(maxProduct([]int{2, 3, -2, 4}))
+	//fmt.Println(maxProduct([]int{-2, 0, -1}))
+	//fmt.Println(maxProduct([]int{-2}))
+	//fmt.Println(maxProduct([]int{0, 2}))
+	//fmt.Println(maxProduct([]int{-2, 3, -4}))
+
+	//fmt.Println(findMin([]int{11, 13, 15, 17}))
+	fmt.Println(findMin([]int{2, 1}))
+	fmt.Println(findMin([]int{4, 5, 6, 7, 0, 1, 2}))
 }
 
 // buildTree 从数组构建二叉树
