@@ -302,7 +302,13 @@ func main() {
 	//fmt.Println(lru)
 
 	//fmt.Println(reverseWords("the sky is blue"))
-	fmt.Println(reverseWords("a good   example"))
+	//fmt.Println(reverseWords("a good   example"))
+
+	fmt.Println(maxProduct([]int{2, 3, -2, 4}))
+	fmt.Println(maxProduct([]int{-2, 0, -1}))
+	fmt.Println(maxProduct([]int{-2}))
+	fmt.Println(maxProduct([]int{0, 2}))
+	fmt.Println(maxProduct([]int{-2, 3, -4}))
 }
 
 // buildTree 从数组构建二叉树
