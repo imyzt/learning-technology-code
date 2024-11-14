@@ -311,8 +311,18 @@ func main() {
 	//fmt.Println(maxProduct([]int{-2, 3, -4}))
 
 	//fmt.Println(findMin([]int{11, 13, 15, 17}))
-	fmt.Println(findMin([]int{2, 1}))
-	fmt.Println(findMin([]int{4, 5, 6, 7, 0, 1, 2}))
+	//fmt.Println(findMin([]int{2, 1}))
+	//fmt.Println(findMin([]int{4, 5, 6, 7, 0, 1, 2}))
+
+	//fmt.Println(titleToNumber("ZY"))
+	//fmt.Println(titleToNumber("AB"))
+
+	root1 := &TreeNode{1, nil, nil}
+	root1.Left = &TreeNode{2, nil, nil}
+	root1.Right = &TreeNode{3, nil, nil}
+	root1.Left.Left = &TreeNode{4, nil, nil}
+	root1.Left.Right = &TreeNode{5, nil, nil}
+	fmt.Println(revertBinaryTree(root1))
 }
 
 // buildTree 从数组构建二叉树
