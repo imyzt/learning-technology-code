@@ -9,6 +9,7 @@
 ### 2. 二分查找
 1. 查找字符串应该插入位置的索引 `35SearchInsertPosition.go`
 2. 开平方根向下取整 `69Sqrt.go`
+3. O(log n)找最小值 `153FindMinimumInRotatedSortedArray.go`
 
 ### 3. 栈
 1. 校验符号{}[\]() `20ValidParentheses.go`
