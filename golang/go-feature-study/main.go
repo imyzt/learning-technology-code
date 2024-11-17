@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main1() {
 
 	// 一般情况下, 流应该由生产端关闭
 	// 常规消费端关闭流, 生产端直接异常
