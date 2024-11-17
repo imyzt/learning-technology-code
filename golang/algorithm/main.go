@@ -317,12 +317,18 @@ func main() {
 	//fmt.Println(titleToNumber("ZY"))
 	//fmt.Println(titleToNumber("AB"))
 
-	root1 := &TreeNode{1, nil, nil}
-	root1.Left = &TreeNode{2, nil, nil}
-	root1.Right = &TreeNode{3, nil, nil}
-	root1.Left.Left = &TreeNode{4, nil, nil}
-	root1.Left.Right = &TreeNode{5, nil, nil}
-	fmt.Println(revertBinaryTree(root1))
+	//root1 := &TreeNode{1, nil, nil}
+	//root1.Left = &TreeNode{2, nil, nil}
+	//root1.Right = &TreeNode{3, nil, nil}
+	//root1.Left.Left = &TreeNode{4, nil, nil}
+	//root1.Left.Right = &TreeNode{5, nil, nil}
+	//fmt.Println(revertBinaryTree(root1))
+
+	//list1 := createList1()
+	//list2 := createList2()
+	//fmt.Println(getIntersectionNode(list1, list2))
+
+	fmt.Println(convertToTitle(2147483647))
 }
 
 // buildTree 从数组构建二叉树
