@@ -328,7 +328,9 @@ func main() {
 	//list2 := createList2()
 	//fmt.Println(getIntersectionNode(list1, list2))
 
-	fmt.Println(convertToTitle(2147483647))
+	//fmt.Println(convertToTitle(52))
+
+	fmt.Println(majorityElement([]int{3, 2, 3, 2, 3}))
 }
 
 // buildTree 从数组构建二叉树
