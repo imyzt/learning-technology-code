@@ -330,7 +330,12 @@ func main() {
 
 	//fmt.Println(convertToTitle(52))
 
-	fmt.Println(majorityElement([]int{3, 2, 3, 2, 3}))
+	//fmt.Println(majorityElement([]int{3, 2, 3, 2, 3}))
+
+	//fmt.Println(trailingZeroes(50))
+
+	fmt.Println(largestNumber([]int{10, 2}))
+	fmt.Println(largestNumber([]int{3, 30, 34, 5, 9}))
 }
 
 // buildTree 从数组构建二叉树
