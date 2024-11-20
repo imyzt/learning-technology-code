@@ -330,7 +330,11 @@ func main() {
 
 	//fmt.Println(convertToTitle(52))
 
-	fmt.Println(majorityElement([]int{3, 2, 3, 2, 3}))
+	//fmt.Println(majorityElement([]int{3, 2, 3, 2, 3}))
+
+	//fmt.Println(containsDuplicate([]int{1, 2, 3, 4, 1}))
+	//fmt.Println(containsDuplicate([]int{1, 2, 3, 4}))
+	fmt.Println(containsDuplicate([]int{1, 5, -2, -4, 0}))
 }
 
 // buildTree 从数组构建二叉树
