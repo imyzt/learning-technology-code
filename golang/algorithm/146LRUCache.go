@@ -13,7 +13,7 @@ type LRUCache struct {
 	lru *list.List
 }
 
-func Constructor(capacity int) LRUCache {
+func ConstructorLRUCache(capacity int) LRUCache {
 	return LRUCache{
 		size:     0,
 		capacity: capacity,

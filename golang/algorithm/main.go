@@ -332,6 +332,12 @@ func main() {
 
 	//fmt.Println(majorityElement([]int{3, 2, 3, 2, 3}))
 
+	//fmt.Println(trailingZeroes(50))
+
+	fmt.Println(largestNumber([]int{10, 2}))
+	fmt.Println(largestNumber([]int{3, 30, 34, 5, 9}))
+	//fmt.Println(majorityElement([]int{3, 2, 3, 2, 3}))
+
 	//fmt.Println(containsDuplicate([]int{1, 2, 3, 4, 1}))
 	//fmt.Println(containsDuplicate([]int{1, 2, 3, 4}))
 	fmt.Println(containsDuplicate([]int{1, 5, -2, -4, 0}))
