@@ -5,6 +5,7 @@
 1. 合并两个有序链表 `21MergeTwoSortedLists.go`
 2. 翻转链表 `206ReverseLinkedList.go`
 3. 删除重复元素 `83RemoveDuplicatesFromSortedList.go`
+4. 删除指定元素 `203RemoveLinkedListElements.go`
 
 ### 2. 二分查找
 1. 查找字符串应该插入位置的索引 `35SearchInsertPosition.go`
@@ -25,6 +26,7 @@
 6. 三数之和 `15ThreeSum.go`
 7. 合并两个有序数组 `88MergeSortedArray.go`
 8. 验证回文串 `125ValidPalindrome.go`
+9. 快慢指针查找快乐数 `202HappyNumber.go`
 
 ### 5. 进位运算
 > 关键在灵活运用 除法和取余   

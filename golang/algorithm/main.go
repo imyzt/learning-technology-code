@@ -334,8 +334,13 @@ func main() {
 
 	//fmt.Println(trailingZeroes(50))
 
-	fmt.Println(largestNumber([]int{10, 2}))
-	fmt.Println(largestNumber([]int{3, 30, 34, 5, 9}))
+	//fmt.Println(largestNumber([]int{10, 2}))
+	//fmt.Println(largestNumber([]int{3, 30, 34, 5, 9}))
+
+	//fmt.Println(isHappy(19))
+
+	head := &ListNode{Val: 0, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 2, Next: nil}}}}}
+	fmt.Println(removeElements(head, 3))
 }
 
 // buildTree 从数组构建二叉树
