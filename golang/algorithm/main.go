@@ -334,20 +334,23 @@ func main() {
 
 	//fmt.Println(trailingZeroes(50))
 
-	fmt.Println(largestNumber([]int{10, 2}))
-	fmt.Println(largestNumber([]int{3, 30, 34, 5, 9}))
+	//fmt.Println(largestNumber([]int{10, 2}))
+	//fmt.Println(largestNumber([]int{3, 30, 34, 5, 9}))
 	//fmt.Println(majorityElement([]int{3, 2, 3, 2, 3}))
 
 	//fmt.Println(containsDuplicate([]int{1, 2, 3, 4, 1}))
 	//fmt.Println(containsDuplicate([]int{1, 2, 3, 4}))
-	fmt.Println(containsDuplicate([]int{1, 5, -2, -4, 0}))
+	//fmt.Println(containsDuplicate([]int{1, 5, -2, -4, 0}))
 	//fmt.Println(largestNumber([]int{10, 2}))
 	//fmt.Println(largestNumber([]int{3, 30, 34, 5, 9}))
 
 	//fmt.Println(isHappy(19))
 
-	head := &ListNode{Val: 0, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 2, Next: nil}}}}}
-	fmt.Println(removeElements(head, 3))
+	//head := &ListNode{Val: 0, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 2, Next: nil}}}}}
+	//fmt.Println(removeElements(head, 3))
+
+	fmt.Println(countPrimes(629238))
+	fmt.Println(countPrimes(10))
 }
 
 // buildTree 从数组构建二叉树
