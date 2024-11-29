@@ -46,7 +46,7 @@ func main() {
 	//fmt.Println(plusOne([]int{4, 3, 2, 1}))
 	//fmt.Println(plusOne([]int{1, 2, 3}))
 
-	fmt.Println(reverseList(&ListNode{Val: 0, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: nil}}}}))
+	//fmt.Println(reverseList(&ListNode{Val: 0, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: nil}}}}))
 
 	//fmt.Println(compress([]byte{'a', 'a', 'b', 'b', 'c', 'c', 'c'}))
 	//fmt.Println(compress([]byte{'a'}))
@@ -352,7 +352,11 @@ func main() {
 	//fmt.Println(countPrimes(629238))
 	//fmt.Println(countPrimes(10))
 
-	fmt.Println(isIsomorphic("add", "egg"))
+	//fmt.Println(isIsomorphic("add", "egg"))
+
+	fmt.Println(containsNearbyDuplicate([]int{1, 0, 1, 1}, 1))
+	fmt.Println(containsNearbyDuplicate([]int{1, 2, 3, 1}, 3))
+	fmt.Println(containsNearbyDuplicate([]int{1, 2, 3, 1, 2, 3}, 2))
 }
 
 // buildTree 从数组构建二叉树
