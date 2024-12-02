@@ -354,9 +354,17 @@ func main() {
 
 	//fmt.Println(isIsomorphic("add", "egg"))
 
-	fmt.Println(containsNearbyDuplicate([]int{1, 0, 1, 1}, 1))
-	fmt.Println(containsNearbyDuplicate([]int{1, 2, 3, 1}, 3))
-	fmt.Println(containsNearbyDuplicate([]int{1, 2, 3, 1, 2, 3}, 2))
+	//fmt.Println(containsNearbyDuplicate([]int{1, 0, 1, 1}, 1))
+	//fmt.Println(containsNearbyDuplicate([]int{1, 2, 3, 1}, 3))
+	//fmt.Println(containsNearbyDuplicate([]int{1, 2, 3, 1, 2, 3}, 2))
+
+	root3 := &TreeNode{Val: 1}
+	root3.Left = &TreeNode{Val: 2}
+	root3.Left.Left = &TreeNode{Val: 4}
+	root3.Left.Right = &TreeNode{Val: 5}
+	root3.Right = &TreeNode{Val: 3}
+	root3.Right.Left = &TreeNode{Val: 6}
+	fmt.Println(countNodes(root))
 }
 
 // buildTree 从数组构建二叉树
