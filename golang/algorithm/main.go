@@ -364,7 +364,10 @@ func main() {
 	root3.Left.Right = &TreeNode{Val: 5}
 	root3.Right = &TreeNode{Val: 3}
 	root3.Right.Left = &TreeNode{Val: 6}
-	fmt.Println(countNodes(root))
+	root3.Right.Right = &TreeNode{Val: 7}
+	//fmt.Println(countNodes(root))
+
+	fmt.Println(invertTree(root3))
 }
 
 // buildTree 从数组构建二叉树
