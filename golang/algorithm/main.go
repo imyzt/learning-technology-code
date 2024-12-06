@@ -60,14 +60,14 @@ func main() {
 	//l2 := &ListNode{Val: 5, Next: &ListNode{Val: 6, Next: &ListNode{Val: 4}}}
 	//fmt.Println(addTwoNumbers(l1, l2))
 
-	//fmt.Println(lengthOfLongestSubstring("abcabcbb"))
-	//fmt.Println(lengthOfLongestSubstring("bbbbb"))
-	//fmt.Println(lengthOfLongestSubstring("pwwkew"))
-	//fmt.Println(lengthOfLongestSubstring("a"))
-	//fmt.Println(lengthOfLongestSubstring(" "))
-	//fmt.Println(lengthOfLongestSubstring("au"))
-	//fmt.Println(lengthOfLongestSubstring("aab"))
-	//fmt.Println(lengthOfLongestSubstring("abba"))
+	fmt.Println(lengthOfLongestSubstring("abcabcbb"))
+	fmt.Println(lengthOfLongestSubstring("bbbbb"))
+	fmt.Println(lengthOfLongestSubstring("pwwkew"))
+	fmt.Println(lengthOfLongestSubstring("a"))
+	fmt.Println(lengthOfLongestSubstring(" "))
+	fmt.Println(lengthOfLongestSubstring("au"))
+	fmt.Println(lengthOfLongestSubstring("aab"))
+	fmt.Println(lengthOfLongestSubstring("abba"))
 
 	//fmt.Println(longestPalindrome("babad"))
 	//fmt.Println(longestPalindrome("cbbd”"))
