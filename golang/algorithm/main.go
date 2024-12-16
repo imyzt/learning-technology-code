@@ -60,14 +60,14 @@ func main() {
 	//l2 := &ListNode{Val: 5, Next: &ListNode{Val: 6, Next: &ListNode{Val: 4}}}
 	//fmt.Println(addTwoNumbers(l1, l2))
 
-	fmt.Println(lengthOfLongestSubstring("abcabcbb"))
-	fmt.Println(lengthOfLongestSubstring("bbbbb"))
-	fmt.Println(lengthOfLongestSubstring("pwwkew"))
-	fmt.Println(lengthOfLongestSubstring("a"))
-	fmt.Println(lengthOfLongestSubstring(" "))
-	fmt.Println(lengthOfLongestSubstring("au"))
-	fmt.Println(lengthOfLongestSubstring("aab"))
-	fmt.Println(lengthOfLongestSubstring("abba"))
+	//fmt.Println(lengthOfLongestSubstring("abcabcbb"))
+	//fmt.Println(lengthOfLongestSubstring("bbbbb"))
+	//fmt.Println(lengthOfLongestSubstring("pwwkew"))
+	//fmt.Println(lengthOfLongestSubstring("a"))
+	//fmt.Println(lengthOfLongestSubstring(" "))
+	//fmt.Println(lengthOfLongestSubstring("au"))
+	//fmt.Println(lengthOfLongestSubstring("aab"))
+	//fmt.Println(lengthOfLongestSubstring("abba"))
 
 	//fmt.Println(longestPalindrome("babad"))
 	//fmt.Println(longestPalindrome("cbbd”"))
@@ -284,8 +284,9 @@ func main() {
 	//}
 	//solve(board)
 
-	//fmt.Println(singleNumber([]int{4, 1, 2, 1, 2}))
-	//fmt.Println(singleNumber2([]int{2, 2, 3, 2}))
+	fmt.Println(singleNumber([]int{4, 1, 2, 1, 2}))
+	fmt.Println(singleNumber([]int{2, 2, 3}))
+	fmt.Println(singleNumber2([]int{2, 2, 3}))
 
 	//fmt.Println(preorderTraversal(root))
 	//fmt.Println(postorderTraversal(root))
