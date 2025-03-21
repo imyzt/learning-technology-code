@@ -1,0 +1,34 @@
+package top.imyzt.rules;
+
+import top.imyzt.learning.ruleengine.Student;
+import java.math.BigDecimal
+import org.slf4j.LoggerFactory
+import org.slf4j.Logger
+import java.util.Objects;
+
+global java.util.Map config;
+
+rule "Calculate Student Score"
+    no-loop true
+when
+    // 如果是学生，且年龄大于等于 18 岁，且所在城市在指定城市列表中，则执行后续计算
+    $student : Student(
+         city memberOf (config.get("cityList")),
+         age >= (config.get("minAge"))
+    )
+then
+   Logger logger = LoggerFactory.getLogger("StudentCheckRules");
+   logger.info("Student [{}] is eligible for the scholarship.", $student.getName());
+
+    // 性别是未知, 则跳出
+    if (Objects.isNull($student.getGender())) {
+        logger.warn("Student [{}], gender is unknown, exit calculation!", $student.getName());
+        return;
+    }
+
+    // 更新会员成长值
+    $student.addScore(10);
+    update($student);
+
+    logger.info("Student [{}] score updated to [{}].", $student.getName(), $student.getScore());
+end
