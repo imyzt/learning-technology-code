@@ -284,8 +284,9 @@ func main() {
 	//}
 	//solve(board)
 
-	//fmt.Println(singleNumber([]int{4, 1, 2, 1, 2}))
-	//fmt.Println(singleNumber2([]int{2, 2, 3, 2}))
+	fmt.Println(singleNumber([]int{4, 1, 2, 1, 2}))
+	fmt.Println(singleNumber([]int{2, 2, 3}))
+	fmt.Println(singleNumber2([]int{2, 2, 3}))
 
 	//fmt.Println(preorderTraversal(root))
 	//fmt.Println(postorderTraversal(root))
@@ -334,13 +335,43 @@ func main() {
 
 	//fmt.Println(trailingZeroes(50))
 
-	fmt.Println(largestNumber([]int{10, 2}))
-	fmt.Println(largestNumber([]int{3, 30, 34, 5, 9}))
+	//fmt.Println(largestNumber([]int{10, 2}))
+	//fmt.Println(largestNumber([]int{3, 30, 34, 5, 9}))
 	//fmt.Println(majorityElement([]int{3, 2, 3, 2, 3}))
 
 	//fmt.Println(containsDuplicate([]int{1, 2, 3, 4, 1}))
 	//fmt.Println(containsDuplicate([]int{1, 2, 3, 4}))
-	fmt.Println(containsDuplicate([]int{1, 5, -2, -4, 0}))
+	//fmt.Println(containsDuplicate([]int{1, 5, -2, -4, 0}))
+	//fmt.Println(largestNumber([]int{10, 2}))
+	//fmt.Println(largestNumber([]int{3, 30, 34, 5, 9}))
+
+	//fmt.Println(isHappy(19))
+
+	//head := &ListNode{Val: 0, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 2, Next: nil}}}}}
+	//fmt.Println(removeElements(head, 3))
+
+	//fmt.Println(countPrimes(629238))
+	//fmt.Println(countPrimes(10))
+
+	//fmt.Println(isIsomorphic("add", "egg"))
+
+	//fmt.Println(containsNearbyDuplicate([]int{1, 0, 1, 1}, 1))
+	//fmt.Println(containsNearbyDuplicate([]int{1, 2, 3, 1}, 3))
+	//fmt.Println(containsNearbyDuplicate([]int{1, 2, 3, 1, 2, 3}, 2))
+
+	root3 := &TreeNode{Val: 1}
+	root3.Left = &TreeNode{Val: 2}
+	root3.Left.Left = &TreeNode{Val: 4}
+	root3.Left.Right = &TreeNode{Val: 5}
+	root3.Right = &TreeNode{Val: 3}
+	root3.Right.Left = &TreeNode{Val: 6}
+	root3.Right.Right = &TreeNode{Val: 7}
+	//fmt.Println(countNodes(root))
+
+	//fmt.Println(invertTree(root3))
+
+	//fmt.Println(summaryRanges([]int{0, 1, 2, 4, 5, 7}))
+	fmt.Println(summaryRanges([]int{0, 2, 3, 4, 6, 8, 9}))
 }
 
 // buildTree 从数组构建二叉树

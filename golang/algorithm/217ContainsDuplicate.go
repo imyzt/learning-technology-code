@@ -8,24 +8,23 @@ func containsDuplicate(nums []int) bool {
 		return false
 	}
 	// 空间换时间
-	v := make(map[int]bool, len(nums))
-	for i := range nums {
-		if _, ok := v[nums[i]]; ok {
-			return true
-		}
-		v[nums[i]] = true
-	}
+	//seen := make(map[int]bool, len(nums))
+	//for i := range nums {
+	//	if seen[nums[i]] {
+	//		return true
+	//	}
+	//	seen[nums[i]] = true
+	//}
+	//return false
 
+	// 不需要额外空间
 	sort.Slice(nums, func(i, j int) bool {
-		return i > j
+		return nums[i] < nums[j]
 	})
-	i, j := 0, 1
-	for i < j {
-		if nums[i] == nums[j] {
+	for i := 0; i < len(nums)-1; i++ {
+		if nums[i] == nums[i+1] {
 			return true
 		}
-		i++
 	}
-
 	return false
 }
