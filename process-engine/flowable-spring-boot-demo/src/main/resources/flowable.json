@@ -1,0 +1,61 @@
+[
+    {
+        "id": "node_root",
+        "type": "Start",
+        "name": "开始节点",
+        "color": "#80929C",
+        "props": {
+            "start_type": "event",
+            "event_code": "VisitShop",
+            "taskListeners": [
+                {
+                    "event": "create",
+                    "implementationType": "class",
+                    "implementation": "top.imyzt.flowable.service.MyTaskListener",
+                    "param": "参数测试"
+                }
+            ]
+        }
+    },
+    {
+        "id": "node_17480745822751792_fork",
+        "type": "Delay",
+        "name": "延迟节点",
+        "props": {
+            "waitType": "DURATION",
+            "unit": "PT%sS",
+            "duration": "10",
+            "timeDate": "2023-11-26 14:16"
+        }
+    },
+    {
+        "id": "node_17480750569133079",
+        "type": "Notify",
+        "name": "通知节点",
+        "props": {
+            "notifyType": "dingtalk",
+            "userList": [
+                "张三",
+                "李四"
+            ]
+        }
+    },
+    {
+        "id": "node_17480750569133072",
+        "type": "MyTask",
+        "name": "任务节点",
+        "props": {
+            "delegate": {
+                "implementationType": "class",
+                "implementation": "top.imyzt.flowable.service.MyDelegate"
+            },
+            "executionListeners": [
+                {
+                    "event": "start",
+                    "implementationType": "class",
+                    "implementation": "top.imyzt.flowable.service.MyExecutionListener"
+                }
+            ]
+        }
+    }
+]

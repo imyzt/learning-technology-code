@@ -9,9 +9,11 @@
                 <flowable:executionListener event="start" class="top.imyzt.flowable.service.MyExecutionListener"/>
             </extensionElements>
         </startEvent>
+        <serviceTask id="serviceTask" name="Service Task" flowable:class="top.imyzt.flowable.service.MyDelegate"/>
         <userTask id="userTask" name="User Task" flowable:assignee="${assignee}"/>
         <endEvent id="endEvent"/>
-        <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="userTask"/>
-        <sequenceFlow id="flow2" sourceRef="userTask" targetRef="endEvent"/>
+        <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="serviceTask"/>
+        <sequenceFlow id="flow2" sourceRef="serviceTask" targetRef="userTask"/>
+        <sequenceFlow id="flow3" sourceRef="userTask" targetRef="endEvent"/>
     </process>
 </definitions>
