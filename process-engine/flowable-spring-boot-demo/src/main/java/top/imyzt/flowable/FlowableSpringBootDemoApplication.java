@@ -91,6 +91,7 @@ public class FlowableSpringBootDemoApplication {
         builder.processDefinitionKey(flowCode);
         Map<String, Object> variables = new HashMap<>();
         variables.put("initiator", "imyzt");
+        variables.put("notifyDelegate", "top.imyzt.flowable.service.MyDelegate");
         builder.variables(variables);
         ProcessInstance processInstance = builder.start();
         System.out.println(processInstance.getId());

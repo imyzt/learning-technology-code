@@ -2,14 +2,10 @@ package top.imyzt.flowable.node;
 
 
 import org.flowable.bpmn.model.EventDefinition;
-import org.flowable.bpmn.model.FlowableListener;
-import org.flowable.bpmn.model.ImplementationType;
 import org.flowable.bpmn.model.IntermediateCatchEvent;
 import org.flowable.bpmn.model.TimerEventDefinition;
-import org.springframework.util.StringUtils;
 import top.imyzt.flowable.FlowContext;
 import top.imyzt.flowable.props.TimerProps;
-import top.imyzt.flowable.service.MyExecutionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +41,11 @@ public class TimerNode extends Node<TimerProps>{
         intermediateCatchEvent.setName(this.getName());
         intermediateCatchEvent.setEventDefinitions(eventDefinitions);
 
-        FlowableListener flowableListener = new FlowableListener();
-        flowableListener.setEvent("start");
-        flowableListener.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_CLASS);
-        flowableListener.setImplementation("top.imyzt.flowable.service.MyExecutionListener");
-        intermediateCatchEvent.getExecutionListeners().add(flowableListener);
+        // FlowableListener flowableListener = new FlowableListener();
+        // flowableListener.setEvent("start");
+        // flowableListener.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_CLASS);
+        // flowableListener.setImplementation("top.imyzt.flowable.service.MyExecutionListener");
+        // intermediateCatchEvent.getExecutionListeners().add(flowableListener);
 
         context.getElementMap().put(intermediateCatchEvent.getId(), intermediateCatchEvent);
 

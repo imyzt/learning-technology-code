@@ -7,12 +7,17 @@
         "props": {
             "start_type": "event",
             "event_code": "VisitShop",
-            "taskListeners": [
+            "delegate": {
+                "implementationType": "class",
+                "implementation": "top.imyzt.flowable.service.MyDelegate",
+                "param": "开始节点"
+            },
+            "executionListeners": [
                 {
-                    "event": "create",
+                    "event": "start",
                     "implementationType": "class",
-                    "implementation": "top.imyzt.flowable.service.MyTaskListener",
-                    "param": "参数测试"
+                    "implementation": "top.imyzt.flowable.service.MyExecutionListener",
+                    "param": "开始节点"
                 }
             ]
         }
@@ -47,13 +52,15 @@
         "props": {
             "delegate": {
                 "implementationType": "class",
-                "implementation": "top.imyzt.flowable.service.MyDelegate"
+                "implementation": "top.imyzt.flowable.service.MyDelegate",
+                "param": "任务节点"
             },
             "executionListeners": [
                 {
                     "event": "start",
                     "implementationType": "class",
-                    "implementation": "top.imyzt.flowable.service.MyExecutionListener"
+                    "implementation": "top.imyzt.flowable.service.MyExecutionListener",
+                    "param": "任务节点"
                 }
             ]
         }

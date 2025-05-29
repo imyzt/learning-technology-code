@@ -19,5 +19,7 @@ public class StartProps extends Props {
     private String event_code;
 
 
+    private Listener delegate;
+
     private List<Listener> taskListeners;
 }

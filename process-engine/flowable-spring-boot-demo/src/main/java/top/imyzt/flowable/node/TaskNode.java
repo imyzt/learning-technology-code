@@ -30,15 +30,15 @@ public class TaskNode extends Node<TaskProps>{
         Props.Listener delegate = props.getDelegate();
         serviceTask.setImplementation(delegate.getImplementation());
         serviceTask.setImplementationType(delegate.getImplementationType());
-        //
-        // this.getProps().getExecutionListeners().forEach(listener -> {
-        //     FlowableListener flowableListener = new FlowableListener();
-        //     /** @see BaseExecutionListener */
-        //     flowableListener.setEvent(listener.getEvent());
-        //     flowableListener.setImplementationType(listener.getImplementationType());
-        //     flowableListener.setImplementation(listener.getImplementation());
-        //     serviceTask.getExecutionListeners().add(flowableListener);
-        // });
+
+        this.getProps().getExecutionListeners().forEach(listener -> {
+            FlowableListener flowableListener = new FlowableListener();
+            /** @see BaseExecutionListener */
+            flowableListener.setEvent(listener.getEvent());
+            flowableListener.setImplementationType(listener.getImplementationType());
+            flowableListener.setImplementation(listener.getImplementation());
+            serviceTask.getExecutionListeners().add(flowableListener);
+        });
 
         context.getElementMap().put(this.getId(), serviceTask);
 
