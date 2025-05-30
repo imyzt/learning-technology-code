@@ -13,10 +13,13 @@ import java.util.List;
 @Data
 public class Props {
 
+    private Listener delegate;
+
     private List<Listener> executionListeners;
 
     @Data
     public static class Listener {
+
         private String event;
         private String implementationType;
         private String implementation;

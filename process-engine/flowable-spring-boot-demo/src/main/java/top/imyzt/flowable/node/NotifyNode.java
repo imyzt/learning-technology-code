@@ -21,9 +21,9 @@ public class NotifyNode extends Node<NotifyProps>{
         serviceTask.setId(this.getId());
         serviceTask.setName(this.getName());
         // serviceTask.setType("serviceTask");
-        serviceTask.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_CLASS);
-        serviceTask.setImplementation("top.imyzt.flowable.service.MyDelegate");
-        // serviceTask.setImplementation("${notifyDelegate}");
+        serviceTask.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_DELEGATEEXPRESSION);
+        // serviceTask.setImplementation("top.imyzt.flowable.service.MyDelegate");
+        serviceTask.setImplementation("${myNotifyDelegate}");
 
 
 

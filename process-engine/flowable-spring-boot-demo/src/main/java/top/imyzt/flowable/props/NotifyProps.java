@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author imyzt
@@ -18,4 +19,8 @@ public class NotifyProps extends Props {
     private String notifyType;
 
     private List<String> userList;
+
+    private String templateCode;
+
+    private Map<String, Object> templateParams;
 }

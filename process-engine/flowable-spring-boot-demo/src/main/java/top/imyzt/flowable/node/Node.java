@@ -23,7 +23,9 @@ import java.io.Serializable;
         @JsonSubTypes.Type(value = StartNode.class, name = "Start"),
         @JsonSubTypes.Type(value = TimerNode.class, name = "Delay"),
         @JsonSubTypes.Type(value = NotifyNode.class, name = "Notify"),
-        @JsonSubTypes.Type(value = TaskNode.class, name = "MyTask")
+        @JsonSubTypes.Type(value = TaskNode.class, name = "MyTask"),
+        @JsonSubTypes.Type(value = GatewayNode.class, name = "Gateway"),
+        @JsonSubTypes.Type(value = EndNode.class, name = "End")
 })
 public abstract class Node<T> implements Serializable {
 

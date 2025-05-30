@@ -56,31 +56,38 @@ public class FlowContext {
 
     public BpmnModel toBpmnModel() {
         BpmnModel bpmnModel = new BpmnModel();
-
-        bpmnModel.setTargetNamespace("0");
+        bpmnModel.setTargetNamespace("http://flowable.org/bpmn");
         bpmnModel.setExporter("Flowable Open Source Modeler");
 
         // 创建流程定义
         Process process = new Process();
-        // 设置流程的id
         process.setId(Optional.ofNullable(this.getFlowCode()).orElse(Node.generateId("flow-")));
-        // 设置流程的name
-        process.setName(Optional.ofNullable(this.getFlowName()).orElse("流程模型-"+process.getId()));
-        // 设置流程的文档
+        process.setName(Optional.ofNullable(this.getFlowName()).orElse("流程模型-" + process.getId()));
         process.setDocumentation(this.getFlowDesc());
+
         // 添加所有节点
         for (FlowElement element : elementMap.values()) {
             process.addFlowElement(element);
         }
+
         // 添加所有连线
         for (SequenceFlow sequence : sequences) {
-            process.addFlowElement(sequence);
+            if (sequence.getSourceRef() != null && sequence.getTargetRef() != null) {
+                process.addFlowElement(sequence);
+            }
         }
+
         // 设置流程
         bpmnModel.addProcess(process);
+
         // 自动布局
-        BpmnAutoLayout autoLayout = new BpmnAutoLayout(bpmnModel);
-        autoLayout.execute();
+        try {
+            BpmnAutoLayout autoLayout = new BpmnAutoLayout(bpmnModel);
+            autoLayout.execute();
+        } catch (Exception e) {
+            // 如果自动布局失败，至少保证流程可以执行
+            System.err.println("自动布局失败: " + e.getMessage());
+        }
 
         return bpmnModel;
     }

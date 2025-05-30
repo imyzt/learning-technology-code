@@ -1,7 +1,9 @@
 package top.imyzt.flowable.service;
 
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.flowable.common.engine.api.delegate.Expression;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.ExecutionListener;
 
@@ -11,10 +13,13 @@ import org.flowable.engine.delegate.ExecutionListener;
  * @description 描述信息
  */
 @Slf4j
+@Setter
 public class MyExecutionListener implements ExecutionListener {
+
+    private Expression source;
+
     @Override
     public void notify(DelegateExecution delegateExecution) {
-        String param = (String) delegateExecution.getVariable("param");
-        log.info("我是执行监听器: {}", param);
+        log.info("我是执行监听器: {}", source.getValue(delegateExecution));
     }
 }

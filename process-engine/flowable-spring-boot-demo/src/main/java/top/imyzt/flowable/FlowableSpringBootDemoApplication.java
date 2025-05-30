@@ -53,29 +53,31 @@ public class FlowableSpringBootDemoApplication {
 
     @PostConstruct
     public void init() throws JsonProcessingException {
-
+        // 读取流程定义
         cn.hutool.json.JSON json = JSONUtil.readJSON(new File("src/main/resources/flowable.json"), StandardCharsets.UTF_8);
 
-
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Node<?>> process  = objectMapper.readValue(json.toString(), objectMapper.getTypeFactory().constructCollectionType(List.class, Node.class));
+        List<Node<?>> process = objectMapper.readValue(json.toString(), objectMapper.getTypeFactory().constructCollectionType(List.class, Node.class));
         FlowContext flowContext = parserFlowElement(process);
         String flowCode = "flow-" + IdUtil.fastSimpleUUID();
         flowContext.setFlowCode(flowCode);
-        flowContext.setFlowName("流程模型");
-        flowContext.setFlowDesc("flowable remark");
+        flowContext.setFlowName("加购优惠券流程");
+        flowContext.setFlowDesc("用户加购后等待10分钟，未下单则发放优惠券");
         BpmnModel bpmnModel = flowContext.toBpmnModel();
 
-
-        Deployment deploy = repositoryService.createDeployment().key(flowContext.getFlowCode()).name(flowContext.getFlowName())
+        // 部署流程
+        Deployment deploy = repositoryService.createDeployment()
+                .key(flowContext.getFlowCode())
+                .name(flowContext.getFlowName())
                 .addBpmnModel(flowContext.getFlowCode() + ".bpmn20.xml", bpmnModel)
                 .deploy();
-        System.out.println(deploy.getId());
+        System.out.println("流程部署ID: " + deploy.getId());
 
-        // ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-        //         .deploymentId(deploy.getId()).singleResult();
-
-        Model modelData = repositoryService.createModelQuery().modelKey(flowContext.getFlowCode()).latestVersion().singleResult();
+        // 保存模型
+        Model modelData = repositoryService.createModelQuery()
+                .modelKey(flowContext.getFlowCode())
+                .latestVersion()
+                .singleResult();
         if (modelData == null) {
             modelData = repositoryService.newModel();
         }
@@ -87,20 +89,26 @@ public class FlowableSpringBootDemoApplication {
         modelData.setMetaInfo(json.toString());
         repositoryService.saveModel(modelData);
 
+        // 启动流程实例
         ProcessInstanceBuilder builder = runtimeService.createProcessInstanceBuilder();
         builder.processDefinitionKey(flowCode);
+        
+        // 设置流程变量
         Map<String, Object> variables = new HashMap<>();
-        variables.put("initiator", "imyzt");
-        variables.put("notifyDelegate", "top.imyzt.flowable.service.MyDelegate");
+        variables.put("userId", "user_" + IdUtil.fastSimpleUUID());  // 模拟用户ID
+        variables.put("productId", "product_" + IdUtil.fastSimpleUUID());  // 模拟商品ID
+        variables.put("initiator", "system");
         builder.variables(variables);
+        
         ProcessInstance processInstance = builder.start();
-        System.out.println(processInstance.getId());
+        System.out.println("流程实例ID: " + processInstance.getId());
 
+        // 查询定时任务
         JobQuery jobQuery = processEngine.getManagementService().createJobQuery().timers();
         for (Job job : jobQuery.list()) {
-            System.out.println("Timer job: " + job.getId() + " - " + job.getDuedate());
+            System.out.println("定时任务: " + job.getId() + " - " + job.getDuedate());
             if (job.getExceptionMessage() != null) {
-                System.out.println("Exception message: " + job.getExceptionMessage());
+                System.out.println("异常信息: " + job.getExceptionMessage());
             }
         }
 

@@ -1,68 +1,104 @@
 [
     {
-        "id": "node_root",
+        "id": "node_start",
         "type": "Start",
-        "name": "开始节点",
+        "name": "加购事件监听",
         "color": "#80929C",
         "props": {
             "start_type": "event",
-            "event_code": "VisitShop",
+            "event_code": "AddToCart",
             "delegate": {
                 "implementationType": "class",
-                "implementation": "top.imyzt.flowable.service.MyDelegate",
-                "param": "开始节点"
-            },
-            "executionListeners": [
-                {
-                    "event": "start",
-                    "implementationType": "class",
-                    "implementation": "top.imyzt.flowable.service.MyExecutionListener",
-                    "param": "开始节点"
-                }
-            ]
-        }
+                "implementation": "top.imyzt.flowable.service.AddToCartDelegate",
+                "param": "用户加购事件"
+            }
+        },
+        "next": "node_delay"
     },
     {
-        "id": "node_17480745822751792_fork",
+        "id": "node_delay",
         "type": "Delay",
-        "name": "延迟节点",
+        "name": "等待10秒",
         "props": {
             "waitType": "DURATION",
             "unit": "PT%sS",
-            "duration": "10",
-            "timeDate": "2023-11-26 14:16"
-        }
+            "duration": "10"
+        },
+        "next": "node_check_order"
     },
     {
-        "id": "node_17480750569133079",
-        "type": "Notify",
-        "name": "通知节点",
-        "props": {
-            "notifyType": "dingtalk",
-            "userList": [
-                "张三",
-                "李四"
-            ]
-        }
-    },
-    {
-        "id": "node_17480750569133072",
+        "id": "node_check_order",
         "type": "MyTask",
-        "name": "任务节点",
+        "name": "检查订单状态",
         "props": {
             "delegate": {
                 "implementationType": "class",
-                "implementation": "top.imyzt.flowable.service.MyDelegate",
-                "param": "任务节点"
-            },
-            "executionListeners": [
+                "implementation": "top.imyzt.flowable.service.CheckOrderDelegate",
+                "param": "检查用户是否下单"
+            }
+        },
+        "next": "node_gateway"
+    },
+    {
+        "id": "node_gateway",
+        "type": "Gateway",
+        "name": "订单状态判断",
+        "props": {
+            "type": "exclusive",
+            "conditions": [
                 {
-                    "event": "start",
-                    "implementationType": "class",
-                    "implementation": "top.imyzt.flowable.service.MyExecutionListener",
-                    "param": "任务节点"
+                    "id": "has_ordered",
+                    "name": "已下单",
+                    "condition": "${hasOrdered == true}",
+                    "next": "node_end_ordered"
+                },
+                {
+                    "id": "not_ordered",
+                    "name": "未下单",
+                    "condition": "${hasOrdered == false}",
+                    "next": "node_send_coupon"
                 }
             ]
         }
+    },
+    {
+        "id": "node_send_coupon",
+        "type": "MyTask",
+        "name": "发放折扣券",
+        "props": {
+            "delegate": {
+                "implementationType": "class",
+                "implementation": "top.imyzt.flowable.service.SendCouponDelegate",
+                "param": "发放优惠券"
+            },
+            "couponType": "discount",
+            "couponValue": "10",
+            "couponUnit": "percent"
+        },
+        "next": "node_sms_notify"
+    },
+    {
+        "id": "node_sms_notify",
+        "type": "Notify",
+        "name": "短信通知",
+        "props": {
+            "notifyType": "sms",
+            "templateCode": "COUPON_NOTIFY",
+            "templateParams": {
+                "couponValue": "10",
+                "couponUnit": "percent"
+            }
+        },
+        "next": "node_end_notify"
+    },
+    {
+        "id": "node_end_ordered",
+        "type": "End",
+        "name": "已下单结束"
+    },
+    {
+        "id": "node_end_notify",
+        "type": "End",
+        "name": "通知完成结束"
     }
 ]
