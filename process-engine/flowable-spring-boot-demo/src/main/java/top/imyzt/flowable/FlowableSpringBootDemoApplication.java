@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.flowable.bpmn.model.BpmnModel;
-import org.flowable.bpmn.model.EndEvent;
-import org.flowable.bpmn.model.FlowElement;
 import org.flowable.bpmn.model.SequenceFlow;
-import org.flowable.bpmn.model.StartEvent;
 import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
@@ -26,7 +23,6 @@ import top.imyzt.flowable.node.Node;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,38 +30,39 @@ import java.util.Map;
 @SpringBootApplication
 public class FlowableSpringBootDemoApplication {
 
-    private static final String START_EVENT_ID = "start";
-    private static final String END_EVENT_ID = "end";
-    // @Resource
-    // private ProcessService processService;
     @Resource
     private RuntimeService runtimeService;
     @Resource
     private ProcessEngine processEngine;
     @Resource
     private RepositoryService repositoryService;
-    // @Resource
-    // private MyTaskService taskService;
 
     public static void main(String[] args) {
         SpringApplication.run(FlowableSpringBootDemoApplication.class, args);
     }
 
     @PostConstruct
+    /**
+     * 初始化流程：加载流程定义，保存到数据库，部署流程。
+     * 然后模拟监听“加购”事件，触发对应流程实例启动。
+     */
     public void init() throws JsonProcessingException {
-        // 读取流程定义
+        // 1. 读取流程定义JSON
         cn.hutool.json.JSON json = JSONUtil.readJSON(new File("src/main/resources/flowable.json"), StandardCharsets.UTF_8);
 
+        // 2. 解析流程节点
         ObjectMapper objectMapper = new ObjectMapper();
         List<Node<?>> process = objectMapper.readValue(json.toString(), objectMapper.getTypeFactory().constructCollectionType(List.class, Node.class));
         FlowContext flowContext = parserFlowElement(process);
+
+        // 3. 生成流程唯一编码
         String flowCode = "flow-" + IdUtil.fastSimpleUUID();
         flowContext.setFlowCode(flowCode);
         flowContext.setFlowName("加购优惠券流程");
         flowContext.setFlowDesc("用户加购后等待10分钟，未下单则发放优惠券");
         BpmnModel bpmnModel = flowContext.toBpmnModel();
 
-        // 部署流程
+        // 4. 部署流程到Flowable
         Deployment deploy = repositoryService.createDeployment()
                 .key(flowContext.getFlowCode())
                 .name(flowContext.getFlowName())
@@ -73,7 +70,7 @@ public class FlowableSpringBootDemoApplication {
                 .deploy();
         System.out.println("流程部署ID: " + deploy.getId());
 
-        // 保存模型
+        // 5. 保存流程模型到数据库
         Model modelData = repositoryService.createModelQuery()
                 .modelKey(flowContext.getFlowCode())
                 .latestVersion()
@@ -81,7 +78,6 @@ public class FlowableSpringBootDemoApplication {
         if (modelData == null) {
             modelData = repositoryService.newModel();
         }
-
         modelData.setKey(flowCode);
         modelData.setName(flowContext.getFlowName());
         modelData.setCategory("flow");
@@ -89,95 +85,90 @@ public class FlowableSpringBootDemoApplication {
         modelData.setMetaInfo(json.toString());
         repositoryService.saveModel(modelData);
 
-        // 启动流程实例
-        ProcessInstanceBuilder builder = runtimeService.createProcessInstanceBuilder();
-        builder.processDefinitionKey(flowCode);
-        
-        // 设置流程变量
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("userId", "user_" + IdUtil.fastSimpleUUID());  // 模拟用户ID
-        variables.put("productId", "product_" + IdUtil.fastSimpleUUID());  // 模拟商品ID
-        variables.put("initiator", "system");
-        builder.variables(variables);
-        
-        ProcessInstance processInstance = builder.start();
-        System.out.println("流程实例ID: " + processInstance.getId());
+        // 6. 模拟监听到“加购”事件，查找所有监听“加购”事件的流程定义，启动流程实例
+        // 假设事件码为"add_to_cart"，可根据实际json结构调整
+        String eventCode = "AddToCart";
+        List<Model> models = repositoryService.createModelQuery()
+                .modelKey(flowCode)
+                .modelCategory("flow")
+                .latestVersion()
+                .list();
 
-        // 查询定时任务
-        JobQuery jobQuery = processEngine.getManagementService().createJobQuery().timers();
-        for (Job job : jobQuery.list()) {
-            System.out.println("定时任务: " + job.getId() + " - " + job.getDuedate());
-            if (job.getExceptionMessage() != null) {
-                System.out.println("异常信息: " + job.getExceptionMessage());
+        for (Model model : models) {
+            // 解析模型元信息，判断是否监听了“加购”事件
+            // 更加严谨地从StartNode的Props中解析eventCode
+            String metaInfo = model.getMetaInfo();
+            String modelEventCode = null;
+            if (metaInfo != null) {
+                try {
+                    ObjectMapper om = new ObjectMapper();
+                    // 反序列化为List<Node>
+                    List<Node<?>> nodeList = om.readValue(metaInfo, om.getTypeFactory().constructCollectionType(List.class, Node.class));
+                    for (Node<?> node : nodeList) {
+                        // 只处理StartNode类型
+                        if (node instanceof top.imyzt.flowable.node.StartNode) {
+                            Object props = ((top.imyzt.flowable.node.StartNode) node).getProps();
+                            if (props instanceof top.imyzt.flowable.props.StartProps) {
+                                modelEventCode = ((top.imyzt.flowable.props.StartProps) props).getEventCode();
+                                break;
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    // 解析失败，忽略
+                }
+            }
+            if (metaInfo != null && metaInfo.contains(eventCode)) {
+                // 查询流程定义
+                String processDefinitionKey = model.getKey();
+                // 启动流程实例
+                ProcessInstanceBuilder builder = runtimeService.createProcessInstanceBuilder();
+                builder.processDefinitionKey(processDefinitionKey);
+
+                // 设置流程变量
+                Map<String, Object> variables = new HashMap<>();
+                variables.put("userId", "user_" + IdUtil.fastSimpleUUID());  // 模拟用户ID
+                variables.put("productId", "product_" + IdUtil.fastSimpleUUID());  // 模拟商品ID
+                variables.put("initiator", "system");
+                builder.variables(variables);
+
+                ProcessInstance processInstance = builder.start();
+                System.out.println("监听到加购事件，启动流程实例ID: " + processInstance.getId());
+
+                // 查询定时任务
+                JobQuery jobQuery = processEngine.getManagementService().createJobQuery().timers();
+                for (Job job : jobQuery.list()) {
+                    System.out.println("定时任务: " + job.getId() + " - " + job.getDuedate());
+                    if (job.getExceptionMessage() != null) {
+                        System.out.println("异常信息: " + job.getExceptionMessage());
+                    }
+                }
             }
         }
-
-        //
-        //
-        // String processId = processService.startProcess("imyzt");
-        // System.out.println(processId);
-        //
-        // List<Task> imyztTaskList = taskService.getTasks("imyzt");
-        // for (Task task : imyztTaskList) {
-        //     System.out.println(task.getName());
-        //     taskService.completeTask(task.getId());
-        // }
     }
 
+    /**
+     * 解析流程节点，构建流程上下文
+     * @param process 流程节点列表
+     * @return FlowContext
+     */
     public static FlowContext parserFlowElement(List<Node<?>> process) {
-
-        // 初始化上下文
         FlowContext context = new FlowContext();
-        Map<String, FlowElement> elementMap = context.getElementMap();
         List<SequenceFlow> sequences = context.getSequences();
 
-        // 创建开始事件
-        StartEvent startEvent = new StartEvent();
-        startEvent.setId(START_EVENT_ID);
-        elementMap.put(startEvent.getId(), startEvent);
-
-        // 创建结束事件
-        EndEvent endEvent = new EndEvent();
-        endEvent.setId(END_EVENT_ID);
-        elementMap.put(endEvent.getId(), endEvent);
-
-        String startTargetRef = null;
-        String endSourceRef = null;
-
-        // 中间元素连线
-        List<SequenceFlow> sequencePath = new ArrayList<>();
-        for (int i = 0, pathNum = process.size(); i < pathNum; i++) {
-            Node<?> node = process.get(i);
-
-            String startId = node.getId();
-            // 递归解析元素
-            String endId = node.convert(context);
-
-            if (i == 0) {
-                startTargetRef = startId;
-            }
-
-            if (i == pathNum - 1) {
-                endSourceRef = endId;
-            }
-
-            if (i < pathNum - 1) {
-                Node<?> nextNode = process.get(i + 1);
-                String nextId = nextNode.getId();
-
-                SequenceFlow sequence = Node.createSequenceFlow(endId, nextId);
-                sequencePath.add(sequence);
-            }
+        if (process == null || process.isEmpty()) {
+            return context;
         }
 
-        // 起始连线、结束连线
-        SequenceFlow startSequence = Node.createSequenceFlow(START_EVENT_ID, startTargetRef);
-        SequenceFlow endSequence = Node.createSequenceFlow(endSourceRef, END_EVENT_ID);
-        sequences.add(startSequence);
-        if (!sequencePath.isEmpty()) {
-            sequences.addAll(sequencePath);
+        Node<?> prevNode = null;
+        for (Node<?> node : process) {
+            String currId = node.convert(context);
+            if (prevNode != null) {
+                SequenceFlow sequence = Node.createSequenceFlow(prevNode.getId(), currId);
+                sequences.add(sequence);
+            }
+            prevNode = node;
         }
-        sequences.add(endSequence);
 
         return context;
     }

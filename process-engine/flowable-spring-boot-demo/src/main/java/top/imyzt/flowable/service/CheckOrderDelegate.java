@@ -33,6 +33,6 @@ public class CheckOrderDelegate extends BaseDelegate {
 
     private boolean mockCheckOrderStatus(String userId, String productId) {
         // 模拟检查订单状态，这里随机返回true或false
-        return Math.random() > 0.5;
+        return Math.random() > 0.2;
     }
 }

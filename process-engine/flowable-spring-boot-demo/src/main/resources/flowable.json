@@ -11,7 +11,31 @@
                 "implementationType": "class",
                 "implementation": "top.imyzt.flowable.service.AddToCartDelegate",
                 "param": "用户加购事件"
-            }
+            },
+            "filters": [
+                {
+                    "type": "userProperty",
+                    "class": "top.imyzt.flowable.filter.UserPropertyFilter",
+                    "propertyName": "gender",
+                    "operator": "=",
+                    "propertyValue": "男"
+                },
+                {
+                    "type": "userProperty",
+                    "class": "top.imyzt.flowable.filter.UserPropertyFilter",
+                    "propertyName": "name",
+                    "operator": "like",
+                    "propertyValue": "张"
+                },
+                {
+                    "type": "userBehavior",
+                    "class": "top.imyzt.flowable.filter.UserBehaviorFilter",
+                    "behaviorType": "view",
+                    "targetId": "product_001",
+                    "timeRange": "PT24H",
+                    "count": 3
+                }
+            ]
         },
         "next": "node_delay"
     },
