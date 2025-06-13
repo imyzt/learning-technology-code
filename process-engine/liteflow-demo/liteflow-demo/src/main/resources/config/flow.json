@@ -1,0 +1,42 @@
+{
+  "flow": {
+    "nodes": {
+      "node": [
+        {
+          "id": "a",
+          "class": "top.imyzt.learning.liteflowdemo.ACmp"
+        },
+        {
+          "id": "b",
+          "class": "top.imyzt.learning.liteflowdemo.BCmp"
+        },
+        {
+          "id": "c",
+          "class": "top.imyzt.learning.liteflowdemo.CCmp"
+        },
+        {
+          "id": "d",
+          "class": "top.imyzt.learning.liteflowdemo.DCmp"
+        },
+        {
+          "id": "e",
+          "class": "top.imyzt.learning.liteflowdemo.ECmp"
+        },
+        {
+          "id": "f",
+          "class": "top.imyzt.learning.liteflowdemo.FCmp"
+        },
+        {
+          "id": "g",
+          "class": "top.imyzt.learning.liteflowdemo.GCmp"
+        }
+      ]
+    },
+    "chain": [
+      {
+        "name": "chain1",
+        "value": "THEN(a,SWITCH(b).to(THEN(c).id('t1'),THEN(d, e).id('t2')),f);"
+      }
+    ]
+  }
+}

@@ -40,9 +40,6 @@ public final class Lottery {
                 .multiply(totalWeight)
                 .setScale(SCALE, RoundingMode.FLOOR);
         Map.Entry<BigDecimal, Integer> entry = weightMap.ceilingEntry(r);
-        if (entry == null) {
-            throw new IllegalStateException("抽奖失败，未找到合适奖品。随机值: " + r);
-        }
         return entry.getValue();
     }
 
