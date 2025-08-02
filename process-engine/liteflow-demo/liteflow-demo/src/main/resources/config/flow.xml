@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flow>
     <chain name="chain1">
-        THEN(a, b, c);
+        THEN(aCmp, SWITCH(b).TO(c.tag('t1'),c.tag('t2')), d);
     </chain>
 </flow>
+

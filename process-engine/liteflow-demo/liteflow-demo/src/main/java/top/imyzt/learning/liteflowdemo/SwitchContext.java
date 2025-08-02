@@ -9,14 +9,9 @@ import com.yomahub.liteflow.context.ContextBean;
  * @description 描述信息
  */
 @ContextBean(value = "switchValue")
-public class SwitchContext {
-    private String switchValue;
+public record SwitchContext (String nodeId, String tag) {
 
-    public String getSwitchValue() {
-        return switchValue;
-    }
-
-    public void setSwitchValue(String switchValue) {
-        this.switchValue = switchValue;
+    public String next() {
+        return nodeId + ":" + tag;
     }
 }

@@ -2,12 +2,11 @@ package top.imyzt.learning.liteflowdemo;
 
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
-import com.yomahub.liteflow.slot.DefaultContext;
-import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 
 @SpringBootApplication
 public class LiteflowDemoApplication {
@@ -19,11 +18,12 @@ public class LiteflowDemoApplication {
         SpringApplication.run(LiteflowDemoApplication.class, args);
     }
 
-    @PostConstruct
+    @EventListener(ApplicationReadyEvent.class)
     public void init() {
-        SwitchContext context = new SwitchContext();
-        context.setSwitchValue("t2");
-        LiteflowResponse response = flowExecutor.execute2Resp("chain1", "arg", context);
+        StateContext stateContext = new StateContext();
+
+        SwitchContext context = new SwitchContext("c", "t2");
+        LiteflowResponse response = flowExecutor.execute2Resp("chain1", "arg", context, stateContext);
         System.out.println(response);
     }
 }

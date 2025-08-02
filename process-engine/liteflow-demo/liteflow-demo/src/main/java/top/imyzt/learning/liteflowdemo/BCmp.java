@@ -2,15 +2,15 @@ package top.imyzt.learning.liteflowdemo;
 
 import com.yomahub.liteflow.annotation.LiteflowComponent;
 import com.yomahub.liteflow.core.NodeComponent;
-import com.yomahub.liteflow.core.NodeSwitchComponent;
-import org.springframework.stereotype.Component;
+import top.imyzt.learning.liteflowdemo.decl.ISwitch;
 
 @LiteflowComponent("b")
-public class BCmp extends NodeSwitchComponent {
+public class BCmp implements ISwitch {
 
     @Override
-    public String processSwitch() throws Exception {
-        // 获取上下文
-        return this.getContextBean(SwitchContext.class).getSwitchValue();
+    public String process(NodeComponent bindCmp) {
+        System.out.println("b");
+        SwitchContext contextBean = bindCmp.getContextBean(SwitchContext.class);
+        return contextBean.next();
     }
 }
