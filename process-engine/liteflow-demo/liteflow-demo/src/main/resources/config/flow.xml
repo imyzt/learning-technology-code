@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flow>
     <chain name="chain1">
-        THEN(aCmp, SWITCH(b).TO(c.tag('t1'),c.tag('t2')), d);
+        if1 = THEN(b.data("b").bind("nodeData", "b"), c);
+        else1 = THEN(d.data("d").bind("nodeData", "d"), e);
+        THEN(a, IF(ifCmp, if1, else1).data("ifData").bind("nodeData", "ifData"), f);
     </chain>
 </flow>
 

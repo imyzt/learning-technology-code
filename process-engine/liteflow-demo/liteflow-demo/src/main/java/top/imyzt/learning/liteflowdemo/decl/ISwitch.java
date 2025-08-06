@@ -6,7 +6,7 @@ import com.yomahub.liteflow.core.proxy.LiteFlowProxyUtil;
 import com.yomahub.liteflow.enums.LiteFlowMethodEnum;
 import com.yomahub.liteflow.enums.NodeTypeEnum;
 import com.yomahub.liteflow.slot.DataBus;
-import top.imyzt.learning.liteflowdemo.StateContext;
+import top.imyzt.learning.liteflowdemo.context.StateContext;
 
 /**
  * @author imyzt

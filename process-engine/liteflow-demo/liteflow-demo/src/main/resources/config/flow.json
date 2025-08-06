@@ -4,31 +4,31 @@
       "node": [
         {
           "id": "a",
-          "class": "top.imyzt.learning.liteflowdemo.ACmp"
+          "class": "top.imyzt.learning.liteflowdemo.cmp.ACmp"
         },
         {
           "id": "b",
-          "class": "top.imyzt.learning.liteflowdemo.BCmp"
+          "class": "top.imyzt.learning.liteflowdemo.cmp.BCmp"
         },
         {
           "id": "c",
-          "class": "top.imyzt.learning.liteflowdemo.CCmp"
+          "class": "top.imyzt.learning.liteflowdemo.cmp.CCmp"
         },
         {
           "id": "d",
-          "class": "top.imyzt.learning.liteflowdemo.DCmp"
+          "class": "top.imyzt.learning.liteflowdemo.cmp.DCmp"
         },
         {
           "id": "e",
-          "class": "top.imyzt.learning.liteflowdemo.ECmp"
+          "class": "top.imyzt.learning.liteflowdemo.cmp.ECmp"
         },
         {
           "id": "f",
-          "class": "top.imyzt.learning.liteflowdemo.FCmp"
+          "class": "top.imyzt.learning.liteflowdemo.cmp.FCmp"
         },
         {
           "id": "g",
-          "class": "top.imyzt.learning.liteflowdemo.GCmp"
+          "class": "top.imyzt.learning.liteflowdemo.cmp.GCmp"
         }
       ]
     },

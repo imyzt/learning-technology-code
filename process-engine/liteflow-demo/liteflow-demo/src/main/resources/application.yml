@@ -1,2 +1,3 @@
 liteflow:
   rule-source: config/flow.xml
+  print-execution-log: false
