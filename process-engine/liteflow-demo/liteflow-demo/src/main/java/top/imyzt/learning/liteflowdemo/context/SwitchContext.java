@@ -12,6 +12,9 @@ import com.yomahub.liteflow.context.ContextBean;
 public record SwitchContext (String nodeId, String tag) {
 
     public String next() {
+        if (nodeId == null) {
+            return ":" + tag;
+        }
         return nodeId + ":" + tag;
     }
 }

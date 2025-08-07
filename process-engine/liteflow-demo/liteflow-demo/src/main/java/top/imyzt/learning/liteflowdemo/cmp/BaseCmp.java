@@ -2,6 +2,7 @@ package top.imyzt.learning.liteflowdemo.cmp;
 
 
 import com.yomahub.liteflow.core.NodeComponent;
+import top.imyzt.learning.liteflowdemo.context.StateContext;
 
 /**
  * @author imyzt
@@ -9,11 +10,28 @@ import com.yomahub.liteflow.core.NodeComponent;
  * @description 描述信息
  */
 public abstract class BaseCmp extends NodeComponent {
+
+    public static String getNodeUnionId(NodeComponent cmp) {
+        return cmp.getNodeId() + ":" + cmp.getTag();
+    }
+
+    @Override
+    public boolean isAccess() {
+        StateContext contextBean = this.getContextBean(StateContext.class);
+        return contextBean.isExecuted(getNodeUnionId(this));
+    }
+
     @Override
     public void process() throws Exception {
         String nodeData = String.format("cmpName: %s \n tag: %s \n data: %s \n bindData: %s",
                 this.getClass().getSimpleName(), this.getTag(), this.getCmpData(String.class),
                 this.getBindData("nodeData", String.class));
         System.out.println(nodeData);
+    }
+
+    @Override
+    public void onSuccess() throws Exception {
+        StateContext contextBean = this.getContextBean(StateContext.class);
+        contextBean.markExecuted(getNodeUnionId(this));
     }
 }

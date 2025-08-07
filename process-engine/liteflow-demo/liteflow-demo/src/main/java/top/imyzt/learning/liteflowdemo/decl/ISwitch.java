@@ -15,23 +15,21 @@ import top.imyzt.learning.liteflowdemo.context.StateContext;
  */
 public interface ISwitch {
 
+     org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ISwitch.class);
+
     @LiteflowMethod(value = LiteFlowMethodEnum.PROCESS_SWITCH, nodeType = NodeTypeEnum.SWITCH)
     default String processComponent(NodeComponent bindCmp) {
-        String switchResult = process(bindCmp);
         StateContext context = bindCmp.getContextBean(StateContext.class);
         String nodeId = bindCmp.getNodeId() + ":" + bindCmp.getTag();
-        context.saveDecision(nodeId, switchResult);
-        return switchResult;
+        if (context.hasDecision(nodeId)) {
+            // log.info("已存储决策，节点ID：{}, 决策值：{}", nodeId, context.getDecision(nodeId));
+            return context.getDecision(nodeId);
+        } else {
+            return this.process(bindCmp);
+        }
     }
 
     String process(NodeComponent bindCmp);
-
-    @LiteflowMethod(value = LiteFlowMethodEnum.IS_ACCESS, nodeType = NodeTypeEnum.SWITCH)
-    default boolean isAccess(NodeComponent bindCmp) {
-        StateContext context = bindCmp.getContextBean(StateContext.class);
-        String nodeId = bindCmp.getNodeId() + ":" + bindCmp.getTag();
-        return !context.hasDecision(nodeId);
-    }
 
     @LiteflowMethod(value = LiteFlowMethodEnum.ON_SUCCESS, nodeType = NodeTypeEnum.SWITCH)
     default void onSuccess(NodeComponent bindCmp) {

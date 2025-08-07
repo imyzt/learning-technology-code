@@ -5,5 +5,16 @@
         else1 = THEN(d.data("d").bind("nodeData", "d"), e);
         THEN(a, IF(ifCmp, if1, else1).data("ifData").bind("nodeData", "ifData"), f);
     </chain>
+
+    <!--用于验证switch组件在多叉树不聚拢情况下的处理流程, 核心在于ISwitch.processComponent需要实现对应的判断逻辑-->
+    <chain name="chain2">
+        then1 = THEN(c.tag("11"), delayCmp.tag("12"), d.tag("15")).tag("then1");
+        then2 = THEN(e.tag("13"), f.tag("14")).tag("then2");
+        bswitch = SWITCH(switchCmp.data("then2").tag("10")).TO(then1, then2);
+        then3 = THEN(b.tag("3"), delayCmp.tag("4"), c.tag("5"), bswitch).tag("then3");
+        then4 = THEN(d.tag("7"), e.tag("8")).tag("then4");
+        switch1 = SWITCH(switchCmp.data("then3").tag("2")).TO(then3, then4);
+        THEN(a.tag("1"), switch1, f.tag("9"));
+    </chain>
 </flow>
 
