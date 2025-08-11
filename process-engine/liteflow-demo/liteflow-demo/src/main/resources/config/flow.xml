@@ -16,5 +16,9 @@
         switch1 = SWITCH(switchCmp.data("then3").tag("2")).TO(then3, then4);
         THEN(a.tag("1"), switch1, f.tag("9"));
     </chain>
+
+    <chain name="chain3">
+        THEN(a, SWITCH(switchCmp.data("b")).TO(b, c).tag("1"), d);
+    </chain>
 </flow>
 

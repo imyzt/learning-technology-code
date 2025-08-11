@@ -35,6 +35,21 @@ public class LiteflowDemoApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void init() throws InterruptedException {
+
+        // chain2();
+
+        chain3();
+    }
+
+    private void chain3() {
+        StateContext stateContext = new StateContext();
+
+        SwitchContext context = new SwitchContext(null, "b");
+        LiteflowResponse response = flowExecutor.execute2Resp("chain3", "arg", context, stateContext);
+        System.out.println(response);
+    }
+
+    private void chain2() throws InterruptedException {
         StateContext stateContext = new StateContext();
 
         // 信号
