@@ -7,9 +7,13 @@ import top.imyzt.learning.liteflowdemo.context.StateContext;
 /**
  * @author imyzt
  * @date 2025/08/05
- * @description 描述信息
+ * @description 基础组件
  */
 public abstract class BaseCmp extends NodeComponent {
+
+    public void customerMethod(NodeComponent cmp) {
+        System.out.println("customerMethod: " + cmp.getNodeId() + ":" + cmp.getTag());
+    }
 
     public static String getNodeUnionId(NodeComponent cmp) {
         return cmp.getNodeId() + ":" + cmp.getTag();

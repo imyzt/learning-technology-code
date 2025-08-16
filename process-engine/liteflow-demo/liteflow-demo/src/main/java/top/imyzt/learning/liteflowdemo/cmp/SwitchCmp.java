@@ -9,8 +9,10 @@ public class SwitchCmp implements ISwitch {
 
     @Override
     public String process(NodeComponent bindCmp) {
-        System.out.println("-".repeat(10) + "switchCmp");
-        // return ":" + bindCmp.getCmpData(String.class);
+        String nodeData = String.format("cmpName: %s \n tag: %s \n data: %s \n bindData: %s",
+                this.getClass().getSimpleName(), bindCmp.getTag(), bindCmp.getCmpData(String.class),
+                bindCmp.getBindData("nodeData", String.class));
+        System.out.println(nodeData);
         return bindCmp.getCmpData(String.class);
     }
 }

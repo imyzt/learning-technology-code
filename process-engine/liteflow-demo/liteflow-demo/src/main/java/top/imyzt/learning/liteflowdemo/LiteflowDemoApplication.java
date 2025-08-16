@@ -45,7 +45,7 @@ public class LiteflowDemoApplication {
         StateContext stateContext = new StateContext();
 
         SwitchContext context = new SwitchContext(null, "b");
-        LiteflowResponse response = flowExecutor.execute2Resp("chain3", "arg", context, stateContext);
+        LiteflowResponse response = flowExecutor.execute2Resp("chain4", "arg", context, stateContext);
         System.out.println(response);
     }
 

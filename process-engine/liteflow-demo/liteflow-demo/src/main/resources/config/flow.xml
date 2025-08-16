@@ -20,5 +20,9 @@
     <chain name="chain3">
         THEN(a, SWITCH(switchCmp.data("b")).TO(b, c).tag("1"), d);
     </chain>
+
+    <chain name="chain4">
+        THEN(declCmp.tag("a"), declCmp.tag("b"));
+    </chain>
 </flow>
 
