@@ -1,0 +1,145 @@
+version: '3.8'
+
+services:
+  # PostgreSQL 数据源
+  postgres:
+    image: m.daocloud.io/docker.io/postgres:15-alpine
+    container_name: postgres-cdc
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cdc_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres-init.sql:/docker-entrypoint-initdb.d/init.sql
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+      - "-c"
+      - "max_wal_senders=4"
+      - "-c"
+      - "max_replication_slots=4"
+    networks:
+      - flink-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # StarRocks 目标数据仓库 (All-in-One 单容器部署)
+  starrocks-fe:
+    image: m.daocloud.io/docker.io/starrocks/allin1-ubuntu:latest
+    container_name: starrocks-fe
+    ports:
+      - "8030:8030"
+      - "9020:9020"
+      - "9030:9030"
+      - "8040:8040"
+    environment:
+      FE_MAJOR_VERSION: 3
+    volumes:
+      - fe_data:/opt/starrocks/fe/meta
+      - be_data:/opt/starrocks/be/storage
+    networks:
+      - flink-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8030/api/bootstrap"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Flink JobManager
+  jobmanager:
+    image: m.daocloud.io/docker.io/flink:1.18.0-scala_2.12-java11
+    container_name: flink-jobmanager
+    command: jobmanager
+    ports:
+      - "6123:6123"
+      - "8081:8081"
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        taskmanager.numberOfTaskSlots: 4
+        parallelism.default: 4
+    volumes:
+      - ./flink-config:/opt/flink-config
+      - ./sync-tables.json:/opt/flink-config/sync-tables.json
+    networks:
+      - flink-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      starrocks-fe:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/api/overview"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Flink TaskManager
+  taskmanager:
+    image: m.daocloud.io/docker.io/flink:1.18.0-scala_2.12-java11
+    container_name: flink-taskmanager
+    command: taskmanager
+    ports:
+      - "6124:6124"
+      - "8082:8082"
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        taskmanager.numberOfTaskSlots: 4
+    volumes:
+      - ./flink-config:/opt/flink-config
+      - ./sync-tables.json:/opt/flink-config/sync-tables.json
+    networks:
+      - flink-network
+    depends_on:
+      - jobmanager
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/api/overview"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # API 服务：用于配置和管理同步表
+  api-server:
+    build:
+      context: ./api-service
+      dockerfile: Dockerfile
+    container_name: flink-cdc-api
+    ports:
+      - "8888:8888"
+    environment:
+      - FLASK_ENV=production
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - STARROCKS_HOST=starrocks-fe
+      - STARROCKS_PORT=9030
+      - FLINK_HOST=jobmanager
+      - FLINK_PORT=8081
+      - CONFIG_FILE=/app/sync-tables.json
+    volumes:
+      - ./sync-tables.json:/app/sync-tables.json
+      - ./api-service:/app
+    networks:
+      - flink-network
+    depends_on:
+      - jobmanager
+      - postgres
+      - starrocks-fe
+
+networks:
+  flink-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  fe_data:
+  be_data:

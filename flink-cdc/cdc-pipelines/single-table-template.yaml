@@ -1,0 +1,32 @@
+# Pipeline模板：仅同步单个表 (Flink CDC 3.5)
+# 复制此文件并修改table-list和route配置
+
+source:
+  type: postgres
+  hostname: postgres
+  port: 5432
+  username: postgres
+  password: postgres
+  database: cdc_db
+  schema-list: public
+  # 修改这里：指定要同步的表
+  table-list: public.users
+  slot.name: flink_cdc_slot_single
+  scan.startup.mode: initial
+
+sink:
+  type: starrocks
+  jdbc-url: jdbc:mysql://starrocks:9030
+  load-url: starrocks:8040
+  username: root
+  password: ""
+  table.create.properties.replication_num: 1
+
+route:
+  # 修改这里：配置表映射
+  - source-table: public.users
+    sink-table: cdc_db.users
+
+pipeline:
+  name: Single Table CDC Pipeline
+  parallelism: 1

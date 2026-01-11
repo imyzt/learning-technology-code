@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flink CDC 管理界面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .status-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .status-item {
+            padding: 15px;
+            border-radius: 5px;
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+        }
+
+        .status-item label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .status-item .value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .status-item .value.ok {
+            color: #22c55e;
+        }
+
+        .status-item .value.error {
+            color: #ef4444;
+        }
+
+        main {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .table-header h2 {
+            color: #333;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 250px;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        .btn-success {
+            background: #22c55e;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #16a34a;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        thead {
+            background: #f9fafb;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            color: #666;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .table-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-enabled {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-disabled {
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+
+        .row-count {
+            background: #eff6ff;
+            color: #0c4a6e;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .modal-header h3 {
+            color: #333;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #7f1d1d;
+            border-left: 4px solid #ef4444;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card .label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Flink CDC 管理界面</h1>
+            <p style="color: #666; margin-top: 5px;">PostgreSQL to StarRocks 实时数据同步</p>
+            
+            <div class="status-bar">
+                <div class="status-item">
+                    <label>PostgreSQL</label>
+                    <div class="value" id="pg-status">检查中...</div>
+                </div>
+                <div class="status-item">
+                    <label>Flink</label>
+                    <div class="value" id="flink-status">检查中...</div>
+                </div>
+                <div class="status-item">
+                    <label>StarRocks</label>
+                    <div class="value" id="sr-status">检查中...</div>
+                </div>
+                <div class="status-item">
+                    <label>启用的同步表</label>
+                    <div class="value" id="enabled-count">0</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div id="alert-box"></div>
+
+            <div class="table-header">
+                <h2>📊 表管理</h2>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="搜索表名...">
+                    <button class="btn-primary" onclick="refreshTableList()">🔄 刷新</button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="label">总表数</div>
+                    <div class="value" id="total-tables">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">已启用</div>
+                    <div class="value" id="enabled-tables">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">未启用</div>
+                    <div class="value" id="disabled-tables">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">总行数</div>
+                    <div class="value" id="total-rows">-</div>
+                </div>
+            </div>
+
+            <div class="loading show" id="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 15px;">加载中...</p>
+            </div>
+
+            <div id="table-container"></div>
+        </main>
+    </div>
+
+    <!-- 表详情 Modal -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="detail-table-name">表详情</h3>
+            </div>
+            <div class="modal-body">
+                <div id="detail-content"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('detailModal')">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8888';
+        let tableData = [];
+
+        // 页面加载
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshTableList();
+            updateSystemStatus();
+            
+            // 每 10 秒更新一次状态
+            setInterval(updateSystemStatus, 10000);
+            
+            // 搜索功能
+            document.getElementById('search-input').addEventListener('input', function(e) {
+                filterTableList(e.target.value);
+            });
+        });
+
+        // 更新系统状态
+        async function updateSystemStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/api/status`);
+                const data = await response.json();
+                
+                if (data.code === 0) {
+                    const status = data.data;
+                    document.getElementById('pg-status').textContent = 
+                        status.postgres === 'connected' ? '✅ 连接' : '❌ 离线';
+                    document.getElementById('flink-status').textContent =
+                        status.flink === 'running' ? '✅ 运行' : '❌ 离线';
+                    document.getElementById('sr-status').textContent =
+                        status.starrocks === 'running' ? '✅ 运行' : '❌ 离线';
+                    
+                    document.getElementById('pg-status').className = 
+                        'value ' + (status.postgres === 'connected' ? 'ok' : 'error');
+                    document.getElementById('flink-status').className =
+                        'value ' + (status.flink === 'running' ? 'ok' : 'error');
+                    document.getElementById('sr-status').className =
+                        'value ' + (status.starrocks === 'running' ? 'ok' : 'error');
+                }
+            } catch (error) {
+                console.error('获取状态失败:', error);
+            }
+        }
+
+        // 刷新表列表
+        async function refreshTableList() {
+            try {
+                const response = await fetch(`${API_BASE}/api/tables`);
+                const data = await response.json();
+                
+                if (data.code === 0) {
+                    tableData = data.data.tables;
+                    
+                    // 更新统计
+                    document.getElementById('total-tables').textContent = data.data.total;
+                    document.getElementById('enabled-tables').textContent = data.data.enabled_count;
+                    document.getElementById('disabled-tables').textContent = data.data.total - data.data.enabled_count;
+                    document.getElementById('enabled-count').textContent = data.data.enabled_count;
+                    
+                    const totalRows = tableData.reduce((sum, t) => sum + (t.row_count || 0), 0);
+                    document.getElementById('total-rows').textContent = totalRows.toLocaleString();
+                    
+                    renderTableList(tableData);
+                    document.getElementById('loading').classList.remove('show');
+                } else {
+                    showAlert('加载失败: ' + data.message, 'error');
+                }
+            } catch (error) {
+                showAlert('加载失败: ' + error.message, 'error');
+                console.error(error);
+            }
+        }
+
+        // 渲染表列表
+        function renderTableList(tables) {
+            if (tables.length === 0) {
+                document.getElementById('table-container').innerHTML = 
+                    '<div class="empty-state">暂无表数据</div>';
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>表名</th>
+                            <th>状态</th>
+                            <th>行数</th>
+                            <th>列数</th>
+                            <th>同步模式</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            tables.forEach(table => {
+                const statusBadge = table.enabled 
+                    ? '<span class="badge badge-enabled">已启用</span>'
+                    : '<span class="badge badge-disabled">未启用</span>';
+                
+                html += `
+                    <tr>
+                        <td>
+                            <span class="table-name">${table.table_name}</span>
+                            ${table.description ? '<br><small style="color:#999;">' + table.description + '</small>' : ''}
+                        </td>
+                        <td>${statusBadge}</td>
+                        <td><span class="row-count">${(table.row_count || 0).toLocaleString()}</span></td>
+                        <td>${table.columns || 0}</td>
+                        <td>${table.sync_mode || '-'}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-secondary btn-small" onclick="showTableDetail('${table.table_name}')">查看</button>
+                                ${!table.enabled 
+                                    ? `<button class="btn-success btn-small" onclick="enableTable('${table.table_name}')">启用</button>`
+                                    : `<button class="btn-danger btn-small" onclick="disableTable('${table.table_name}')">禁用</button>`
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById('table-container').innerHTML = html;
+        }
+
+        // 过滤表列表
+        function filterTableList(searchTerm) {
+            const filtered = tableData.filter(table => 
+                table.table_name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            renderTableList(filtered);
+        }
+
+        // 启用表
+        async function enableTable(tableName) {
+            try {
+                const response = await fetch(`${API_BASE}/api/tables/${tableName}/enable`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.code === 0) {
+                    showAlert(`表 ${tableName} 已启用同步`, 'success');
+                    refreshTableList();
+                } else {
+                    showAlert('启用失败: ' + data.message, 'error');
+                }
+            } catch (error) {
+                showAlert('启用失败: ' + error.message, 'error');
+            }
+        }
+
+        // 禁用表
+        async function disableTable(tableName) {
+            try {
+                const response = await fetch(`${API_BASE}/api/tables/${tableName}/disable`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.code === 0) {
+                    showAlert(`表 ${tableName} 已禁用同步`, 'success');
+                    refreshTableList();
+                } else {
+                    showAlert('禁用失败: ' + data.message, 'error');
+                }
+            } catch (error) {
+                showAlert('禁用失败: ' + error.message, 'error');
+            }
+        }
+
+        // 显示表详情
+        async function showTableDetail(tableName) {
+            try {
+                const response = await fetch(`${API_BASE}/api/tables/${tableName}`);
+                const data = await response.json();
+                
+                if (data.code === 0) {
+                    const table = data.data;
+                    let columnsHtml = '<table style="width:100%; margin-top:10px;"><tr><th>列名</th><th>数据类型</th><th>允许 NULL</th></tr>';
+                    
+                    table.columns.forEach(col => {
+                        columnsHtml += `<tr><td>${col.column_name}</td><td>${col.data_type}</td><td>${col.is_nullable}</td></tr>`;
+                    });
+                    columnsHtml += '</table>';
+                    
+                    document.getElementById('detail-table-name').textContent = tableName;
+                    document.getElementById('detail-content').innerHTML = `
+                        <div>
+                            <p><strong>行数:</strong> ${table.row_count}</p>
+                            <p><strong>列数:</strong> ${table.columns.length}</p>
+                            <p><strong>同步模式:</strong> ${table.sync_config?.sync_mode || '-'}</p>
+                            <p><strong>目标表:</strong> ${table.sync_config?.target_table || '-'}</p>
+                            <p><strong>列信息:</strong></p>
+                            ${columnsHtml}
+                        </div>
+                    `;
+                    document.getElementById('detailModal').classList.add('show');
+                }
+            } catch (error) {
+                showAlert('加载详情失败: ' + error.message, 'error');
+            }
+        }
+
+        // 关闭 Modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+
+        // 显示提示
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alert-box');
+            const alert = document.createElement('div');
+            alert.className = `alert show alert-${type}`;
+            alert.textContent = message;
+            alertBox.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+
+        // 点击 Modal 外部关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('detailModal');
+            if (event.target == modal) {
+                modal.classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>

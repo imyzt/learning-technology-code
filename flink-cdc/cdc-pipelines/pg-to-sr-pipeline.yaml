@@ -1,0 +1,79 @@
+# Flink CDC 3.5 Pipeline 配置
+# PostgreSQL -> StarRocks 实时数据同步
+#
+# 这是一个示例配置，展示如何配置多表同步
+
+################################################################################
+# Source 配置 (PostgreSQL)
+################################################################################
+
+source:
+  type: postgres
+  # 数据库连接配置
+  hostname: postgres
+  port: 5432
+  username: postgres
+  password: postgres
+  database: cdc_db
+  schema-list: public
+  
+  # 需要同步的表（支持正则表达式）
+  # 格式: schema.table
+  # 示例: 
+  #   - public.* (同步public schema下的所有表)
+  #   - public.users (仅同步users表)
+  #   - public.(users|orders|products) (同步指定的多个表)
+  table-list: public.users,public.orders,public.products
+  
+  # 复制槽配置
+  slot.name: flink_cdc_slot
+  decoding.plugin.name: pgoutput
+  
+  # 启动模式: initial（全量+增量）, latest-offset（仅增量）
+  scan.startup.mode: initial
+
+################################################################################
+# Sink 配置 (StarRocks)
+################################################################################
+
+sink:
+  type: starrocks
+  # StarRocks FE节点
+  jdbc-url: jdbc:mysql://starrocks:9030
+  load-url: starrocks:8040
+  username: root
+  password: ""
+  
+  # StarRocks配置
+  table.create.num-buckets: 8
+  
+  # 表创建选项
+  table.create.properties.replication_num: 1
+
+################################################################################
+# Route 配置 (表映射和转换规则)
+################################################################################
+
+route:
+  # 路由规则：将源表映射到目标表
+  # 支持通配符和正则表达式
+  
+  # 规则1: 直接映射（表名相同）
+  - source-table: public.users
+    sink-table: cdc_db.users
+  
+  # 规则2: 直接映射
+  - source-table: public.orders
+    sink-table: cdc_db.orders
+  
+  # 规则3: 直接映射
+  - source-table: public.products
+    sink-table: cdc_db.products
+
+################################################################################
+# Pipeline 配置
+################################################################################
+
+pipeline:
+  name: PostgreSQL to StarRocks CDC Pipeline
+  parallelism: 2

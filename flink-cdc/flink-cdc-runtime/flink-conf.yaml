@@ -1,0 +1,122 @@
+# Flink Configuration for CDC Pipeline
+# 生产级配置
+
+# ==============================================================================
+# Common
+# ==============================================================================
+
+# JobManager和TaskManager的主机名（在Docker中由环境变量覆盖）
+jobmanager.rpc.address: localhost
+jobmanager.rpc.port: 6123
+jobmanager.bind-host: 0.0.0.0
+
+# ==============================================================================
+# JobManager
+# ==============================================================================
+
+jobmanager.memory.process.size: 1600m
+jobmanager.memory.flink.size: 1024m
+jobmanager.memory.jvm-overhead.min: 192m
+jobmanager.memory.jvm-overhead.max: 512m
+
+# Web UI
+rest.port: 8081
+rest.bind-address: 0.0.0.0
+
+# ==============================================================================
+# TaskManager
+# ==============================================================================
+
+taskmanager.bind-host: 0.0.0.0
+taskmanager.host: localhost
+taskmanager.memory.process.size: 2048m
+taskmanager.memory.flink.size: 1280m
+taskmanager.memory.managed.fraction: 0.4
+taskmanager.numberOfTaskSlots: 4
+
+# ==============================================================================
+# Parallelism
+# ==============================================================================
+
+parallelism.default: 2
+
+# ==============================================================================
+# State Backend
+# ==============================================================================
+
+state.backend: rocksdb
+state.backend.incremental: true
+state.checkpoints.dir: file:///tmp/flink-checkpoints
+state.savepoints.dir: file:///tmp/flink-savepoints
+
+# ==============================================================================
+# Checkpointing
+# ==============================================================================
+
+# 每60秒触发一次checkpoint
+execution.checkpointing.interval: 60000
+execution.checkpointing.mode: EXACTLY_ONCE
+execution.checkpointing.timeout: 10min
+execution.checkpointing.max-concurrent-checkpoints: 1
+execution.checkpointing.min-pause: 0
+
+# ==============================================================================
+# Restart Strategy
+# ==============================================================================
+
+restart-strategy: fixed-delay
+restart-strategy.fixed-delay.attempts: 3
+restart-strategy.fixed-delay.delay: 10s
+
+# ==============================================================================
+# High Availability (optional, 生产环境建议启用)
+# ==============================================================================
+
+# high-availability: zookeeper
+# high-availability.storageDir: hdfs:///flink/ha/
+# high-availability.zookeeper.quorum: localhost:2181
+
+# ==============================================================================
+# Web UI
+# ==============================================================================
+
+web.submit.enable: true
+web.cancel.enable: true
+web.upload.dir: /tmp/flink-web-uploads
+
+# ==============================================================================
+# Metrics
+# ==============================================================================
+
+metrics.reporter.promgateway.class: org.apache.flink.metrics.prometheus.PrometheusPushGatewayReporter
+metrics.reporter.promgateway.interval: 60 SECONDS
+
+# ==============================================================================
+# Logging
+# ==============================================================================
+
+# 日志级别
+# rootLogger.level: INFO
+# logger.akka.level: INFO
+# logger.kafka.level: INFO
+# logger.hadoop.level: WARN
+# logger.zookeeper.level: WARN
+
+# ==============================================================================
+# Advanced
+# ==============================================================================
+
+# 网络缓冲区
+taskmanager.network.memory.fraction: 0.1
+taskmanager.network.memory.min: 64mb
+taskmanager.network.memory.max: 1gb
+
+# ClassLoader
+classloader.resolve-order: child-first
+
+# 时区
+table.local-time-zone: Asia/Shanghai
+
+# SQL相关
+table.exec.resource.default-parallelism: 2
+table.optimizer.join-reorder-enabled: true

@@ -1,0 +1,34 @@
+# Docker volumes
+postgres_data/
+fe_data/
+be_data/
+
+logs
+# Flink logs
+flink-logs/
+*.log
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+*.tmp
+.env.local

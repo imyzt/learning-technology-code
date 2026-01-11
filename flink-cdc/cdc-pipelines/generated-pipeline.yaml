@@ -1,0 +1,47 @@
+pipeline:
+  name: CDC Pipeline - 20260111_220655
+  parallelism: 2
+source:
+  database: ${POSTGRES_DB:-cdc_db}
+  heartbeat.interval: 10s
+  hostname: ${POSTGRES_HOST:-postgres}
+  password: ${POSTGRES_PASSWORD:-postgres}
+  port: ${POSTGRES_PORT:-5432}
+  scan.incremental.snapshot.chunk.size: 8192
+  scan.incremental.snapshot.enabled: true
+  scan.startup.mode: initial
+  schema: public
+  slot.name: flink_cdc_slot
+  type: postgres
+  username: ${POSTGRES_USER:-postgres}
+  table-list: public.users,public.orders,public.products
+sink:
+  database: cdc_db
+  jdbc-url: jdbc:mysql://${STARROCKS_HOST:-starrocks}:${STARROCKS_QUERY_PORT:-9030}
+  load-url: ${STARROCKS_HOST:-starrocks}:${STARROCKS_BE_HTTP_PORT:-8040}
+  password: ${STARROCKS_PASSWORD:-}
+  sink.buffer-flush.interval: 10s
+  sink.buffer-flush.max-bytes: 10485760
+  sink.buffer-flush.max-rows: 50000
+  sink.parallelism: 2
+  sink.properties.format: json
+  sink.properties.strip_outer_array: true
+  table.create.properties.replication_num: 1
+  table.create.properties.storage_medium: HDD
+  type: starrocks
+  username: ${STARROCKS_USER:-root}
+route:
+- source-table: public.users
+  sink-table: cdc_db.users
+  description: 用户表
+- source-table: public.orders
+  sink-table: cdc_db.orders
+  description: 订单表
+- source-table: public.products
+  sink-table: cdc_db.products
+  description: 产品表
+execution.checkpointing.interval: 60s
+execution.checkpointing.mode: EXACTLY_ONCE
+schema.change.behavior: evolve
+state.backend.incremental: true
+state.backend.type: rocksdb

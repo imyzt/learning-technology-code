@@ -1,0 +1,57 @@
+{
+  "postgres": {
+    "host": "postgres",
+    "port": 5432,
+    "username": "postgres",
+    "password": "postgres",
+    "database": "cdc_db",
+    "schema": "public"
+  },
+  "starrocks": {
+    "host": "starrocks-fe",
+    "port": 9030,
+    "username": "root",
+    "password": ""
+  },
+  "sync_config": {
+    "database": "cdc_db",
+    "tables": [
+      {
+        "table_name": "users",
+        "enabled": true,
+        "target_table": "users",
+        "sync_mode": "full_and_incremental",
+        "description": "用户表",
+        "row_count": 3,
+        "columns": 6
+      },
+      {
+        "table_name": "products",
+        "enabled": false,
+        "target_table": "products",
+        "sync_mode": "full_and_incremental",
+        "description": "产品表",
+        "row_count": 3,
+        "columns": 6
+      },
+      {
+        "table_name": "orders",
+        "enabled": false,
+        "target_table": "orders",
+        "sync_mode": "full_and_incremental",
+        "description": "订单表",
+        "row_count": 2,
+        "columns": 6
+      }
+    ],
+    "options": {
+      "scan.startup.mode": "initial",
+      "scan.incremental.snapshot.enabled": true,
+      "chunk.size": 8096,
+      "incremental.parallelism": 4,
+      "server.id": 5400,
+      "scan.snapshot.fetch.size": 1024,
+      "connection.pool.size": 20
+    }
+  }
+}

@@ -1,0 +1,227 @@
+version: '3.8'
+
+# Flink CDC 3.x 完整解决方案
+# 支持: PostgreSQL -> StarRocks 实时同步
+# 包含: Flink CDC Pipeline, 管理API, Web UI
+
+services:
+  # ==================== 数据源: PostgreSQL ====================
+  postgres:
+    image: postgres:15-alpine
+    container_name: flink-cdc-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cdc_db
+      # 设置时区
+      TZ: Asia/Shanghai
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts/postgres-init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"                    # CDC必需
+      - "-c"
+      - "max_wal_senders=10"                   # 支持多个CDC连接
+      - "-c"
+      - "max_replication_slots=10"             # 支持多个复制槽
+      - "-c"
+      - "max_connections=200"                  # 增加连接数
+    networks:
+      - cdc-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ==================== 数据目标: StarRocks ====================
+  starrocks:
+    image: starrocks/allin1-ubuntu:3.2-latest
+    container_name: flink-cdc-starrocks
+    hostname: starrocks
+    environment:
+      TZ: Asia/Shanghai
+      # StarRocks配置
+      SR_FE_EDIT_LOG_PORT: 9010
+      SR_FE_QUERY_PORT: 9030
+      SR_FE_HTTP_PORT: 8030
+      SR_BE_HEARTBEAT_SERVICE_PORT: 9050
+      SR_BE_BRPC_PORT: 8060
+      SR_BE_HTTP_PORT: 8040
+    ports:
+      - "${SR_FE_HTTP_PORT:-8030}:8030"       # FE HTTP API
+      - "${SR_FE_QUERY_PORT:-9030}:9030"      # FE MySQL协议
+      - "${SR_BE_HTTP_PORT:-8040}:8040"       # BE HTTP API
+    volumes:
+      - starrocks_fe:/opt/starrocks/fe/meta
+      - starrocks_be:/opt/starrocks/be/storage
+      - ./init-scripts/starrocks-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - cdc-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8030/api/bootstrap"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    restart: unless-stopped
+
+  # ==================== Flink CDC Runtime ====================
+  flink-cdc-runtime:
+    build:
+      context: ./flink-cdc-runtime
+      dockerfile: Dockerfile
+    container_name: flink-cdc-runtime
+    hostname: flink-cdc-runtime
+    environment:
+      TZ: Asia/Shanghai
+      # Flink配置
+      FLINK_PROPERTIES: |
+        jobmanager.rpc.address: flink-cdc-runtime
+        taskmanager.numberOfTaskSlots: 4
+        parallelism.default: 2
+        state.backend: rocksdb
+        state.checkpoints.dir: file:///tmp/flink-checkpoints
+        state.savepoints.dir: file:///tmp/flink-savepoints
+        execution.checkpointing.interval: 60000
+        execution.checkpointing.mode: EXACTLY_ONCE
+        restart-strategy: fixed-delay
+        restart-strategy.fixed-delay.attempts: 3
+        restart-strategy.fixed-delay.delay: 10s
+      # PostgreSQL连接信息（供管理脚本使用）
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: cdc_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      # StarRocks连接信息
+      STARROCKS_FE_HOST: starrocks
+      STARROCKS_FE_HTTP_PORT: 8030
+      STARROCKS_FE_QUERY_PORT: 9030
+      STARROCKS_BE_HTTP_PORT: 8040
+      STARROCKS_USER: root
+      STARROCKS_PASSWORD: ""
+    ports:
+      - "${FLINK_WEB_UI_PORT:-8081}:8081"     # Flink Web UI
+      - "6123:6123"                           # JobManager RPC
+    volumes:
+      # Pipeline配置文件
+      - ./cdc-pipelines:/opt/cdc-pipelines:ro
+      # 检查点和保存点
+      - flink_checkpoints:/tmp/flink-checkpoints
+      - flink_savepoints:/tmp/flink-savepoints
+      # 日志
+      - ./logs/flink:/opt/flink/log
+      # 自定义启动脚本
+      - ./flink-cdc-runtime/scripts:/opt/scripts:ro
+    networks:
+      - cdc-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      starrocks:
+        condition: service_healthy
+    command: >
+      bash -c "
+        echo 'Waiting for dependencies...';
+        sleep 30;
+        echo 'Starting Flink standalone cluster...';
+        /opt/flink/bin/start-cluster.sh;
+        echo 'Flink cluster started. Web UI: http://localhost:8081';
+        tail -f /opt/flink/log/flink-*.log
+      "
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    restart: unless-stopped
+
+  # ==================== 管理API服务 ====================
+  cdc-manager:
+    build:
+      context: ./cdc-manager
+      dockerfile: Dockerfile
+    container_name: flink-cdc-manager
+    hostname: cdc-manager
+    environment:
+      TZ: Asia/Shanghai
+      # 数据库连接
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: cdc_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      # StarRocks连接
+      STARROCKS_HOST: starrocks
+      STARROCKS_FE_HTTP_PORT: 8030
+      STARROCKS_QUERY_PORT: 9030
+      STARROCKS_USER: root
+      STARROCKS_PASSWORD: ""
+      # Flink连接
+      FLINK_CDC_HOST: flink-cdc-runtime
+      FLINK_WEB_UI_PORT: 8081
+      # 应用配置
+      FLASK_ENV: production
+      LOG_LEVEL: INFO
+      # Pipeline配置文件路径
+      PIPELINE_CONFIG_DIR: /opt/cdc-pipelines
+    ports:
+      - "${CDC_MANAGER_PORT:-8888}:8888"
+    volumes:
+      # Pipeline配置（读写）
+      - ./cdc-pipelines:/opt/cdc-pipelines
+      # 日志
+      - ./logs/manager:/var/log/cdc-manager
+    networks:
+      - cdc-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      flink-cdc-runtime:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  # ==================== Web管理界面 (可选) ====================
+  cdc-web-ui:
+    image: nginx:alpine
+    container_name: flink-cdc-web-ui
+    ports:
+      - "${WEB_UI_PORT:-8080}:80"
+    volumes:
+      - ./web-ui:/usr/share/nginx/html:ro
+      - ./web-ui/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - cdc-network
+    depends_on:
+      - cdc-manager
+    restart: unless-stopped
+
+networks:
+  cdc-network:
+    name: flink-cdc-network
+    driver: bridge
+
+volumes:
+  postgres_data:
+    name: flink-cdc-postgres-data
+  starrocks_fe:
+    name: flink-cdc-starrocks-fe
+  starrocks_be:
+    name: flink-cdc-starrocks-be
+  flink_checkpoints:
+    name: flink-cdc-checkpoints
+  flink_savepoints:
+    name: flink-cdc-savepoints

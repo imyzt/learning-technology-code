@@ -1,0 +1,74 @@
+defaults:
+  pipeline:
+    execution.checkpointing.interval: 60s
+    execution.checkpointing.mode: EXACTLY_ONCE
+    parallelism: 2
+    schema.change.behavior: evolve
+    state.backend.incremental: true
+    state.backend.type: rocksdb
+  sink:
+    database: cdc_db
+    jdbc-url: jdbc:mysql://${STARROCKS_HOST:-starrocks}:${STARROCKS_QUERY_PORT:-9030}
+    load-url: ${STARROCKS_HOST:-starrocks}:${STARROCKS_BE_HTTP_PORT:-8040}
+    password: ${STARROCKS_PASSWORD:-}
+    sink.buffer-flush.interval: 10s
+    sink.buffer-flush.max-bytes: 10485760
+    sink.buffer-flush.max-rows: 50000
+    sink.parallelism: 2
+    sink.properties.format: json
+    sink.properties.strip_outer_array: true
+    table.create.properties.replication_num: 1
+    table.create.properties.storage_medium: HDD
+    type: starrocks
+    username: ${STARROCKS_USER:-root}
+  source:
+    database: ${POSTGRES_DB:-cdc_db}
+    heartbeat.interval: 10s
+    hostname: ${POSTGRES_HOST:-postgres}
+    password: ${POSTGRES_PASSWORD:-postgres}
+    port: ${POSTGRES_PORT:-5432}
+    scan.incremental.snapshot.chunk.size: 8192
+    scan.incremental.snapshot.enabled: true
+    scan.startup.mode: initial
+    schema: public
+    slot.name: flink_cdc_slot
+    type: postgres
+    username: ${POSTGRES_USER:-postgres}
+production:
+  sink:
+    database: ${PROD_STARROCKS_DB}
+    jdbc-url: jdbc:mysql://${PROD_STARROCKS_HOST}:${PROD_STARROCKS_QUERY_PORT:-9030}
+    load-url: ${PROD_STARROCKS_HOST}:${PROD_STARROCKS_BE_HTTP_PORT:-8040}
+    password: ${PROD_STARROCKS_PASSWORD}
+    username: ${PROD_STARROCKS_USER}
+  source:
+    database: ${PROD_POSTGRES_DB}
+    hostname: ${PROD_POSTGRES_HOST}
+    password: ${PROD_POSTGRES_PASSWORD}
+    port: ${PROD_POSTGRES_PORT:-5432}
+    username: ${PROD_POSTGRES_USER}
+tables:
+- description: 用户表
+  enabled: true
+  sink_database: cdc_db
+  sink_table: users
+  source_schema: public
+  source_table: users
+  table_name: users
+- description: 订单表
+  enabled: true
+  sink_database: cdc_db
+  sink_table: orders
+  source_schema: public
+  source_table: orders
+  table_name: orders
+  updated_at: '2026-01-11T22:06:27.034254'
+- description: 产品表
+  enabled: true
+  sink_database: cdc_db
+  sink_table: products
+  source_schema: public
+  source_table: products
+  table_name: products
+  updated_at: '2026-01-11T22:06:49.176765'
+updated_at: '2026-01-11T22:06:49.176786'
