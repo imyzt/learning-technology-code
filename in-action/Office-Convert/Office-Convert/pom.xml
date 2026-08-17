@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j-core</artifactId>
-            <version>8.2.9</version>
+            <version>11.5.14</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
